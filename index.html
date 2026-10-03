@@ -3,131 +3,198 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#15103d">
+<meta name="theme-color" content="#07040f">
 <title>Starfall Gacha</title>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--night:#15103d;--dusk:#241a5e;--lav:#cdbfff;--gold:#ffd36e;--rose:#ff6b9d}
+:root{--bk:#07040f;--pn:#150c2b;--ln:#35205f;--v:#8b5cf6;--v2:#c084fc;--tx:#f5ecff;--mu:#a995d6;--gold:#ffd36e}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{background:radial-gradient(120% 60% at 50% 0,#3a2a9a,var(--night) 70%) fixed;color:#fff;font-family:'Zen Maru Gothic',system-ui,sans-serif}
-#app{display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top)}
-header{display:flex;justify-content:space-between;padding:14px 20px;font-weight:900;font-size:20px}
-main{flex:1;overflow:auto;padding:4px 20px 20px}
-nav{display:flex;background:var(--dusk);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;padding:14px 0;background:none;border:0;color:var(--lav);font:700 15px 'Zen Maru Gothic',sans-serif;opacity:.65}
-nav .on{opacity:1;color:var(--gold)}
-h1,h2{font-weight:900}
-.box{background:var(--dusk);border-radius:20px;padding:20px;margin-bottom:16px}
-.btn{display:block;width:100%;padding:16px;margin-top:12px;border:0;border-radius:16px;background:var(--rose);color:#fff;font:900 17px 'Zen Maru Gothic',sans-serif}
-.btn.gold{background:var(--gold);color:#3a2a00}
-.btn.ghost{background:none;border:2px solid var(--lav);color:var(--lav)}
+html,body{height:100%;background:var(--bk)}
+body{color:var(--tx);font-family:'Zen Maru Gothic',system-ui,sans-serif}
+#app{display:flex;flex-direction:column;height:100%;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top);background:radial-gradient(90% 45% at 50% 0,#33157a,var(--bk))}
+header{display:flex;gap:8px;align-items:center;padding:12px 16px}
+header b{flex:1;font-size:20px;font-weight:900;color:var(--v2)}
+.chip{background:var(--pn);border:1px solid var(--ln);border-radius:99px;padding:6px 12px;font-weight:700;font-size:14px;text-align:center}
+main{flex:1;overflow:auto;padding:0 16px 24px}
+nav{display:flex;background:#0b0618;border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:9px 0;background:none;border:0;color:var(--mu);font:700 12px 'Zen Maru Gothic',sans-serif}
+nav span{display:block;font-size:21px}
+nav .on{color:var(--v2)}
+h2,h3{font-weight:900;margin:14px 0 6px}
+.mu{color:var(--mu)}
+.box,.stat{background:var(--pn);border:1px solid var(--ln);border-radius:18px;padding:16px;margin:14px 0}
+.row{display:flex;gap:8px;margin:10px 0}.row>*{flex:1}
+.stat{text-align:center;margin:0;font-size:13px;color:var(--mu)}.stat b{display:block;font-size:22px;color:var(--tx)}
+.btn{display:block;width:100%;padding:15px;margin:10px 0 0;border:0;border-radius:15px;background:linear-gradient(135deg,var(--v),#c026d3);color:#fff;font:900 17px 'Zen Maru Gothic',sans-serif}
+.btn.gold{background:linear-gradient(135deg,#ffd36e,#f59e0b);color:#2a1d00}
+.btn.alt{background:var(--ln)}
+.btn.ghost{background:none;border:2px solid var(--ln);color:var(--mu)}
+.btn.danger{background:#7f1d1d}
 .btn:active{transform:scale(.97)}
-input{width:100%;padding:14px;margin-top:12px;border-radius:14px;border:2px solid #4a3caa;background:var(--night);color:#fff;font:500 16px 'Zen Maru Gothic',sans-serif}
-.bar{height:10px;background:var(--night);border-radius:9px;margin:14px 0 8px;overflow:hidden}
-.bar span{display:block;height:100%;background:var(--gold)}
-.rates{display:flex;gap:8px;margin-top:12px}
-.rates span{flex:1;text-align:center;padding:6px;border-radius:10px;background:var(--night);font-weight:700;font-size:14px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--v2)}
+.hero{position:relative;height:200px;border-radius:20px;overflow:hidden;margin:4px 0 14px;background:linear-gradient(135deg,#4c1d95,#0b0618)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero div{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(transparent 25%,#07040fe8)}
+.hero h1{font-size:30px;font-weight:900}
+.fb{position:relative;height:210px;border-radius:20px;overflow:hidden;display:flex;align-items:flex-end;border:1px solid var(--ln)}
+.fb em{position:absolute;right:20px;top:16px;font-size:80px;font-style:normal}
+.fb div{padding:16px;width:100%;background:linear-gradient(transparent,#07040fee)}
+.fb h2{margin:6px 0 2px}.fb p{font-size:13px}
+.scroll{display:flex;gap:10px;overflow-x:auto;padding:12px 0}
+.scroll .card{width:108px;flex:none}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .grid.ten{grid-template-columns:repeat(5,1fr);gap:6px}
-.grid.one{grid-template-columns:1fr;width:62%;margin:auto}
-.card{position:relative;aspect-ratio:3/4;border-radius:14px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;text-align:center;border:2px solid #fff4;background:linear-gradient(160deg,hsl(var(--h) 70% 48%),hsl(calc(var(--h) + 50) 60% 20%));font-size:12px;line-height:1.2}
-.card b{text-align:left;font-size:12px}
-.card .art{font-size:34px}
-.card .nm{font-weight:900;font-size:14px}
-.card small{opacity:.9;font-size:11px}
-.card i{position:absolute;right:6px;top:6px;font-style:normal;font-weight:900}
-.ten .card small{display:none}
-.ten .card .art{font-size:22px}
-.ten .card .nm{font-size:11px}
-.SR{border-color:#c77dff;box-shadow:0 0 12px #c77dffaa}
-.SSR{border-color:var(--gold);box-shadow:0 0 22px var(--gold);animation:glow 1.4s infinite alternate}
-.lock{background:var(--dusk);border:2px dashed #4a3caa;align-items:center;justify-content:center;font-size:28px;color:#6a5cc8}
-.ov{position:fixed;inset:0;background:#0a0720ee;display:flex;flex-direction:column;justify-content:center;padding:20px;z-index:9;text-align:center}
-.ov p{margin-top:24px;color:var(--lav)}
-.pop{animation:pop .5s backwards}
-#msg{margin-top:12px;color:var(--lav);text-align:center;min-height:1.2em}
-.auth{margin:auto;padding:24px;width:100%}
-.auth h1{font-size:34px;color:var(--gold);margin-bottom:6px}
-@keyframes pop{from{transform:scale(.3) rotate(-8deg);opacity:0}}
-@keyframes glow{to{box-shadow:0 0 34px var(--gold)}}
+.card{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;border:2px solid #fff3;font-size:12px}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,#000c)}
+.card>*{position:relative;z-index:1}
+.card b{position:absolute;left:8px;top:6px;font-size:12px}
+.card i{position:absolute;right:8px;top:6px;font-style:normal;font-weight:900}
+.card em{position:absolute;inset:0;display:grid;place-items:center;font-size:42px;font-style:normal}
+.nm{padding:6px 8px;font-weight:900;font-size:14px;line-height:1.15}
+.nm small{display:block;font-weight:500;font-size:11px;color:#e9d9ff}
+.card.SR{border-color:var(--v2);box-shadow:0 0 12px #c084fc99}
+.card.SSR{border-color:var(--gold);box-shadow:0 0 16px #ffd36ecc}
+.card.off{filter:grayscale(1) brightness(.45)}
+.ten .nm small{display:none}.ten .nm{font-size:10px;padding:4px}.ten .card em{font-size:22px}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:900;background:var(--ln);margin-right:6px}
+.tag.SR{background:#7e22ce}.tag.SSR{background:var(--gold);color:#2a1d00}
+.pill{flex:0 0 auto;padding:7px 16px;border-radius:99px;border:1px solid var(--ln);background:none;color:var(--mu);font:700 14px 'Zen Maru Gothic',sans-serif}
+.pill.on{background:var(--v);color:#fff;border-color:var(--v)}
+.bar{height:10px;background:#000;border-radius:9px;margin:14px 0 6px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--v),var(--gold))}
+input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid var(--ln);background:#0b0618;color:var(--tx);font:500 16px 'Zen Maru Gothic',sans-serif}
+input[type=checkbox]{width:auto;margin:0}
+label{display:block;margin-top:10px;font-size:13px;color:var(--mu)}
+label.chk{display:flex;gap:8px;align-items:center}
+.li{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--ln)}
+.li b{flex:1}
+.li i{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-style:normal}
+.ov{position:fixed;inset:0;background:#07040ff5;display:flex;flex-direction:column;justify-content:center;padding:20px;z-index:9;overflow:hidden;text-align:center}
+.ov.m{background:#000a;justify-content:flex-end;padding:0;text-align:left}
+.sheet{max-width:520px;width:100%;margin:auto auto 0;max-height:90%;overflow:auto;background:#120a26;border:1px solid var(--ln);border-radius:22px 22px 0 0;padding:16px}
+.ban{height:170px;margin:-16px -16px 12px;display:grid;place-items:center;font-size:70px}
+.ring{width:200px;height:200px;margin:auto;border:4px dashed var(--c);border-radius:50%;display:grid;place-items:center;animation:spin 2.2s ease-in}
+.orb{width:70px;height:70px;border-radius:50%;background:var(--c);box-shadow:0 0 60px 20px var(--c);animation:burst 2.2s ease-in forwards}
+.rv{width:66%;margin:auto;animation:flip .7s}
+.rv .card{font-size:14px}.rv .nm{font-size:20px}.rv .card em{font-size:90px}
+.rv .card.SSR{animation:glow 1.2s infinite alternate}
+.nt{margin-top:16px;font-weight:900;font-size:20px;color:var(--gold)}
+.skip{position:absolute;right:16px;top:16px;background:var(--ln);color:#fff;border:0;border-radius:99px;padding:8px 16px;font:700 14px 'Zen Maru Gothic',sans-serif}
+#msg{margin-top:10px;text-align:center;color:var(--v2);min-height:1.2em}
+@keyframes spin{to{transform:rotate(540deg)}}
+@keyframes burst{75%{transform:scale(1.5)}to{transform:scale(32);opacity:0}}
+@keyframes flip{from{transform:rotateY(90deg) scale(.5);opacity:0}}
+@keyframes glow{to{box-shadow:0 0 34px 6px var(--gold)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
-// STEP 2 OF THE README: paste your two Supabase values between the quotes.
-const SUPABASE_URL='https://rymgoqtncbjvtbjofgzp.supabase.co';
-const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5bWdvcXRuY2JqdnRiam9mZ3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMTM4MzAsImV4cCI6MjEwNjU4OTgzMH0.8_KHtFNbvTIS6AQoMEXg4xhINmyf8_yTwfxqluhm3BM';
+// Paste your two Supabase values between the quotes (same ones as before).
+const SUPABASE_URL='PASTE_PROJECT_URL_HERE';
+const SUPABASE_KEY='PASTE_ANON_KEY_HERE';
 
-if(!SUPABASE_URL.startsWith('https')){
-  document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';
-  throw new Error('Supabase keys missing');
-}
+if(!SUPABASE_URL.startsWith('https')){document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';throw new Error('Supabase keys missing')}
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=s=>document.querySelector(s), app=$('#app');
-const S={tab:'summon',cards:[],inv:{},p:null};
+const GIF='https://media1.tenor.com/m/8fKXg5VL2tEAAAAC/purple-aesthetic.gif';
+const RK={R:0,SR:1,SSR:2},COST={R:100,SR:500,SSR:2000},GLOW=['#7dd3fc','#c084fc','#ffd36e'];
+const $=s=>document.querySelector(s),app=$('#app'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const S={tab:'home',f:'All',cards:[],inv:{},players:[],p:null};
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
-
-const cardHTML=(c,n)=>`<div class="card ${c.rarity}" style="--h:${c.hue}"><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}<div class="art">${c.emoji}</div><div><div class="nm">${c.name}</div><small>${c.title}</small></div></div>`;
+const art=(i,h)=>i?`url('${i}') center/cover`:`linear-gradient(160deg,hsl(${h} 70% 42%),hsl(${(h+60)%360} 65% 14%))`;
+const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div><h1>Starfall Gacha</h1><p class="mu">${t}</p></div></div>`;
+const cardHTML=(c,n=0,off=0,tap=1)=>`<div class="card ${c.rarity}${off?' off':''}" style="background:${art(c.image,c.hue)}" ${tap?`onclick="detail(${c.id})"`:''}><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}${c.image?'':`<em>${c.emoji}</em>`}<div class="nm">${c.name}<small>${c.title}</small></div></div>`;
+const feat=()=>S.cards.filter(c=>c.featured).sort((a,b)=>RK[b.rarity]-RK[a.rarity]);
+const featRow=()=>feat().length?`<div class="scroll">${feat().map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">No featured heroes yet.</p>';
+const modal=h=>{closeM();const m=document.createElement('div');m.className='ov m';m.id='modal';m.innerHTML=`<div class="sheet">${h}<button class="btn alt" onclick="closeM()">Close</button></div>`;m.onclick=e=>e.target==m&&closeM();document.body.append(m)};
+const closeM=()=>{const m=$('#modal');if(m)m.remove()};
+const tab=k=>{S.tab=k;draw()};
 
 const views={
-  summon:()=>`<div class="box"><h2>Starfall Festival</h2>
-    <div class="rates"><span>SSR 3%</span><span>SR 25%</span><span>R 72%</span></div>
-    <div class="bar"><span style="width:${S.p.pity*2}%"></span></div>
-    <small>Your next SSR is guaranteed at 50 summons (${S.p.pity}/50)</small></div>
+  home:()=>`${hero('Welcome back, '+S.name)}
+    <div class="row"><div class="stat"><b>${Object.keys(S.inv).length}/${S.cards.length}</b>Heroes</div><div class="stat"><b>${S.p.pity}/50</b>Pity</div></div>
+    <h3>Featured heroes</h3>${featRow()}
+    <button class="btn" onclick="tab('summon')">Go to Summon</button>
+    <div class="box"><h3>Daily bonus</h3><p class="mu">Claim 800 gems every 20 hours.</p><button class="btn alt" onclick="daily()">Claim bonus</button><p id="msg"></p></div>
+    <button class="btn ghost" onclick="logout()">Log out</button>`,
+  summon:()=>{const t=feat()[0],b=t&&(t.banner||t.image);return `<div class="fb" style="background:${art(b,t?t.hue:270)}">${t&&!b?`<em>${t.emoji}</em>`:''}<div><span class="tag SSR">Rate-up</span><h2>Starfall Festival</h2><p class="mu">SR and SSR summons have at least a 50% chance to be a featured hero.</p></div></div>
+    ${featRow()}<div class="row"><span class="chip">SSR 3%</span><span class="chip">SR 25%</span><span class="chip">R 72%</span></div>
+    <div class="bar"><span style="width:${S.p.pity*2}%"></span></div><small class="mu">A guaranteed SSR arrives at 50 summons (${S.p.pity}/50)</small>
     <button class="btn" onclick="pull(1)">Summon 1 for 160 gems</button>
-    <button class="btn gold" onclick="pull(10)">Summon 10 for 1,600 gems</button><p id="msg"></p>`,
-  cards:()=>`<p style="margin-bottom:12px">${Object.keys(S.inv).length} of ${S.cards.length} heroes collected</p>
-    <div class="grid">${S.cards.map(c=>S.inv[c.id]?cardHTML(c,S.inv[c.id]):'<div class="card lock">?</div>').join('')}</div>`,
-  daily:()=>`<div class="box"><h2>Daily bonus</h2><p>Claim 800 gems every 20 hours.</p>
-    <button class="btn gold" onclick="daily()">Claim 800 gems</button></div><p id="msg"></p>
-    <button class="btn ghost" onclick="logout()">Log out</button>`
+    <button class="btn gold" onclick="pull(10)">Summon 10 for 1,600 gems</button><p id="msg"></p>`},
+  cards:()=>`<div class="row">${['All','SSR','SR','R'].map(r=>`<button class="pill ${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
+    <p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} heroes collected. Tap a hero to see details.</p>
+    <div class="grid" style="margin-top:12px">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
+  admin:()=>`<div class="box"><h3>Give rewards</h3><select id="pl" onchange="S.sel=this.value">${S.players.map(p=>`<option value="${p.id}" ${p.id==S.sel?'selected':''}>${p.email||p.id.slice(0,8)} (${p.gems} gems, ${p.coins} coins)</option>`).join('')}</select>
+    <div class="row"><input id="ag" type="number" placeholder="Gems"><input id="ac" type="number" placeholder="Coins"></div>
+    <button class="btn" onclick="give()">Give rewards</button><p class="mu" style="margin-top:8px">Use negative numbers to take away.</p><p id="msg"></p></div>
+    <div class="box"><h3>Cards</h3><button class="btn" onclick="cardForm()">Add new card</button>
+    ${S.cards.map(c=>`<div class="li" onclick="cardForm(${c.id})"><i style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</i><b>${c.name}</b><span class="tag ${c.rarity}">${c.rarity}</span></div>`).join('')}</div>`
 };
 
 function draw(){
-  const tabs=[['summon','✨ Summon'],['cards','🃏 Heroes'],['daily','🎁 Daily']];
-  app.innerHTML=`<header><span>✦ Starfall</span><span>💎 ${S.p.gems.toLocaleString()}</span></header>
+  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes']];
+  if(S.p.is_admin)T.push(['admin','🛠️','Admin']);
+  app.innerHTML=`<header><b>✦ Starfall</b><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
-    <nav>${tabs.map(([k,l])=>`<button class="${k==S.tab?'on':''}" onclick="S.tab='${k}';draw()">${l}</button>`).join('')}</nav>`;
+    <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" onclick="tab('${k}')"><span>${i}</span>${l}</button>`).join('')}</nav>`;
 }
 
 function authScreen(m=''){
-  app.innerHTML=`<div class="auth"><h1>✦ Starfall Gacha</h1><p>Summon heroes and collect them all.</p>
+  app.innerHTML=`<main>${hero('Summon heroes and collect them all.')}
     <input id="em" type="email" placeholder="Email" autocomplete="email">
     <input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">
-    <button class="btn" onclick="go(1)">Log in</button>
-    <button class="btn ghost" onclick="go(0)">Create account</button><p id="msg">${m}</p></div>`;
+    <button class="btn" onclick="authGo(1)">Log in</button><button class="btn ghost" onclick="authGo(0)">Create account</button><p id="msg">${m}</p></main>`;
 }
-
-async function go(login){
+async function authGo(l){
   const c={email:$('#em').value.trim(),password:$('#pw').value};
-  const{error}=await(login?sb.auth.signInWithPassword(c):sb.auth.signUp(c));
+  const{error}=await(l?sb.auth.signInWithPassword(c):sb.auth.signUp(c));
   error?say(error.message):load();
 }
 
 async function load(){
   const{data:{session}}=await sb.auth.getSession();
-  if(!session) return authScreen();
-  const[p,c,i]=await Promise.all([
-    sb.from('profiles').select().single(),
-    sb.from('cards').select().order('id'),
-    sb.from('inventory').select()]);
-  if(p.error||c.error||i.error) return authScreen((p.error||c.error||i.error).message);
-  S.p=p.data;S.cards=c.data;
+  if(!session)return authScreen();
+  const u=session.user.id;
+  const[p,c,i]=await Promise.all([sb.from('profiles').select().eq('id',u).single(),sb.from('cards').select().order('id'),sb.from('inventory').select().eq('user_id',u)]);
+  const e=p.error||c.error||i.error;if(e)return authScreen(e.message);
+  S.p=p.data;S.cards=c.data;S.name=session.user.email.split('@')[0];
   S.inv=Object.fromEntries(i.data.map(x=>[x.card_id,x.qty]));
+  if(S.p.is_admin)S.players=(await sb.from('profiles').select('id,email,gems,coins').order('email')).data||[];
   draw();
 }
 
+function detail(id){
+  const c=S.cards.find(x=>x.id==id),n=S.inv[id]||0,b=c.banner||c.image;
+  modal(`<div class="ban" style="background:${art(b,c.hue)}">${b?'':c.emoji}</div>
+    <span class="tag ${c.rarity}">${c.rarity}</span><span class="tag">${c.element||''}</span><h2>${c.name}</h2><p class="mu">${c.title}</p>
+    <p style="margin-top:10px">${c.descr||'Nothing is known about this hero yet.'}</p>
+    ${n?`<p class="mu" style="margin-top:10px">You own ×${n}</p>`:`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}`);
+}
+async function redeem(id){
+  const{error}=await sb.rpc('redeem_card',{cid:id});
+  if(error)return alert(error.message);
+  closeM();await load();detail(id);
+}
+
 async function pull(n){
-  const{data,error}=await sb.rpc('pull_cards',{n});
-  if(error) return say(error.message);
+  if(S.busy)return;S.busy=1;
+  const{data,error}=await sb.rpc('pull_cards',{n});S.busy=0;
+  if(error)return say(error.message);
+  const seen={...S.inv};data.forEach(c=>{c.isNew=!seen[c.id];seen[c.id]=1});
   const ov=document.createElement('div');ov.className='ov';
-  ov.innerHTML=`<div class="grid ${n==1?'one':'ten'}">${data.map((c,i)=>`<div class="pop" style="animation-delay:${i*.18}s">${cardHTML(c)}</div>`).join('')}</div><p>Tap to continue</p>`;
-  ov.onclick=()=>{ov.remove();load()};
-  document.body.append(ov);
+  ov.style.setProperty('--c',GLOW[Math.max(...data.map(c=>RK[c.rarity]))]);
+  ov.innerHTML='<div class="ring"><div class="orb"></div></div>';document.body.append(ov);
+  let i=-1,ready=0;
+  const show=()=>{const c=data[i];
+    ov.innerHTML=`<div class="rv">${cardHTML(c,0,0,0)}<div class="nt">${c.isNew?'NEW!':'Duplicate. Coins added.'}</div></div><p class="mu" style="margin-top:20px">Tap to continue</p>${n>1?'<button class="skip">Skip</button>':''}`;
+    const s=ov.querySelector('.skip');if(s)s.onclick=()=>{i=data.length-1}};
+  const sum=()=>{ov.innerHTML=`<div class="grid ten">${data.map(c=>cardHTML(c,0,0,0)).join('')}</div><p class="mu" style="margin-top:20px">Tap to close</p>`};
+  const next=()=>{i++;if(i<data.length)show();else if(n>1&&i==data.length)sum();else{ov.remove();load()}};
+  ov.onclick=()=>ready&&next();
+  await sleep(2200);ready=1;next();
 }
 
 async function daily(){
@@ -135,8 +202,50 @@ async function daily(){
   await load();
   say(error?error.message:data?`+${data} gems claimed!`:'Already claimed. Come back later.');
 }
-
 async function logout(){await sb.auth.signOut();load()}
+
+// ---- Admin tools (the database only allows these for the admin account) ----
+async function give(){
+  const id=$('#pl').value,p=S.players.find(x=>x.id==id);S.sel=id;
+  const g=+$('#ag').value||0,c=+$('#ac').value||0;
+  const{error}=await sb.from('profiles').update({gems:p.gems+g,coins:p.coins+c}).eq('id',id);
+  if(error)return say(error.message);
+  await load();say('Done!');
+}
+function cardForm(id){
+  const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false};
+  const f=(k,l,t='text')=>`<label>${l}<input id="f_${k}" type="${t}" value="${c[k]??''}"></label>`;
+  const up=k=>`<input type="file" accept="image/*" onchange="upl(this,'${k}')">`;
+  modal(`<h2>${id?'Edit':'New'} card</h2>${f('name','Name')}${f('title','Title')}
+    <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
+    ${f('element','Element')}${f('emoji','Emoji (shown when there is no image)')}${f('hue','Color hue (0 to 360)','number')}
+    <label>Description<textarea id="f_descr" rows="3">${c.descr||''}</textarea></label>
+    ${f('image','Card image URL')}${up('image')}${f('banner','Banner image URL (wide)')}${up('banner')}
+    <label class="chk"><input id="f_featured" type="checkbox" ${c.featured?'checked':''}> Featured on the summon banner</label>
+    <button class="btn" onclick="saveCard(${id||0})">Save card</button>${id?`<button class="btn danger" onclick="delCard(${id})">Delete card</button>`:''}`);
+}
+async function upl(el,k){
+  const f=el.files[0];if(!f)return;
+  const p=Date.now()+'-'+f.name.replace(/[^\w.]/g,'_');
+  const{error}=await sb.storage.from('cards').upload(p,f);
+  if(error)return alert(error.message);
+  $('#f_'+k).value=sb.storage.from('cards').getPublicUrl(p).data.publicUrl;
+  alert('Image uploaded. Now press Save card.');
+}
+async function saveCard(id){
+  const g=k=>$('#f_'+k).value.trim();
+  const row={name:g('name'),title:g('title'),rarity:g('rarity'),element:g('element'),emoji:g('emoji'),hue:+g('hue')||0,descr:g('descr'),image:g('image')||null,banner:g('banner')||null,featured:$('#f_featured').checked};
+  if(id)row.id=id;
+  const{error}=await sb.from('cards').upsert(row);
+  if(error)return alert(error.message);
+  closeM();load();
+}
+async function delCard(id){
+  if(!confirm('Delete this card for every player?'))return;
+  const{error}=await sb.from('cards').delete().eq('id',id);
+  if(error)return alert(error.message);
+  closeM();load();
+}
 load();
 </script>
 </body>
