@@ -203,6 +203,29 @@ h3{font-size:16px;margin:12px 0 4px}
 .rv{width:min(60%,34vh)}.rv .nm{font-size:16px}.rv .card em{font-size:84px}
 .nt{font-size:18px;margin-top:12px}
 .skip{padding:6px 14px;font-size:13px}
+/* v6: title lockup, profile, income, favourite picker */
+.hero{overflow:hidden}
+.hero .ttl{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 12px 14px;gap:12px;background:radial-gradient(70% 55% at 50% 58%,#04010c80,transparent)}
+.lock{position:relative;display:block}
+.hero h1{margin:0;padding-left:.12em;font-size:clamp(34px,11.5vw,52px);font-weight:900;letter-spacing:.12em;line-height:1;color:transparent;-webkit-text-stroke:0;text-shadow:none;background:linear-gradient(100deg,#fff 0,#c9b8ff 28%,#7dd3fc 46%,#fff 56%,#d8b4fe 78%,#fff 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 12px #8b6cffcc) drop-shadow(0 2px 0 #1b0a52);animation:shine 5s linear infinite,hglow 3s ease-in-out infinite alternate}
+.hero .sub{margin:0;display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.06em;color:var(--lc)}
+.hero .sub::before,.hero .sub::after{content:"";width:20px;height:1px;background:linear-gradient(90deg,transparent,#c9b8ff)}
+.hero .sub::after{transform:scaleX(-1)}
+.orbit{position:absolute;left:50%;top:50%;width:112%;aspect-ratio:1;border:1px solid #ffffff38;border-radius:50%;transform:translate(-50%,-50%) rotate(-12deg) scaleY(.3);pointer-events:none}
+.orbit i{position:absolute;inset:0;animation:rot 9s linear infinite}
+.orbit i::after{content:"";position:absolute;left:50%;top:-5px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#fff;box-shadow:0 0 12px 4px #9d7bff}
+.sk{position:absolute;font-style:normal;color:#fff;text-shadow:0 0 8px #b9a4ff;animation:tw 2.6s ease-in-out infinite;pointer-events:none}
+.sk.a{left:-12px;top:-8px;font-size:16px}.sk.b{right:-10px;top:0;font-size:11px;animation-delay:.9s}.sk.c{right:24%;bottom:-14px;font-size:13px;animation-delay:1.7s}
+.hero .ttl::after{content:"";position:absolute;left:0;top:0;width:90px;height:2px;border-radius:2px;background:linear-gradient(270deg,transparent,#fff);opacity:0;animation:comet 7s 2s infinite}
+@keyframes shine{to{background-position:100% 0}}
+@keyframes hglow{to{filter:drop-shadow(0 0 22px #a78bfa) drop-shadow(0 2px 0 #1b0a52)}}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.2) rotate(45deg)}}
+@keyframes comet{0%{transform:translate(340px,10px) rotate(-25deg);opacity:0}5%{opacity:1}20%{transform:translate(-90px,170px) rotate(-25deg);opacity:0}100%{opacity:0}}
+.pbn{margin:-56px -14px 0;height:170px;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.pid{position:relative;display:flex;align-items:flex-end;gap:12px;margin:-34px 0 10px}
+.av.big{width:68px;height:68px;font-size:28px;border:3px solid var(--bk);flex:none;box-shadow:0 0 18px #7c5cff80}
+.pk{position:relative}.pk:not(.on){opacity:.55}.pk.on .card{border-color:#fff}
+.pk.on::after{content:"✓";position:absolute;right:6px;top:6px;width:20px;height:20px;border-radius:50%;background:var(--mg);display:grid;place-items:center;font-size:12px;font-weight:800;z-index:3}
 </style>
 </head>
 <body>
@@ -221,7 +244,7 @@ const $=s=>document.querySelector(s),app=$('#app'),sleep=ms=>new Promise(r=>setT
 const S={tab:'home',f:'All',cards:[],inv:{},players:[],p:null};
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
 const art=(i,h)=>(i?`url('${i}') center top/cover,`:'')+`linear-gradient(160deg,hsl(${h} 80% 52%),hsl(${(h+55)%360} 70% 16%))`;
-const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div><h1>STARFALL</h1><p>${t}</p></div></div>`;
+const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div class="ttl"><span class="lock"><span class="orbit"><i></i></span><h1>STARFALL</h1><i class="sk a">✦</i><i class="sk b">✦</i><i class="sk c">✦</i></span><p class="sub">${t}</p></div></div>`;
 const cardHTML=(c,n=0,off=0,tap=1)=>`<div class="card ${c.rarity}${off?' off':''}" style="background:${art(c.image,c.hue)}" ${tap?`onclick="detail(${c.id})"`:''}><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}${c.image?'':`<em>${c.emoji}</em>`}<div class="nm">${c.name}<small>${c.title}</small></div></div>`;
 const feat=()=>S.cards.filter(c=>c.featured).sort((a,b)=>RK[b.rarity]-RK[a.rarity]);
 const featRow=()=>feat().length?`<div class="scroll">${feat().map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">No featured heroes yet.</p>';
@@ -238,8 +261,9 @@ const views={
     <h3 style="margin-top:4px">Featured heroes</h3>${featRow()}
     <button class="btn" onclick="tab('summon')">Summon now</button>
     <div class="row" style="margin-top:16px"><div class="stat"><b>${Object.keys(S.inv).length}/${S.cards.length}</b>Collected</div><div class="stat"><b>${S.p.pity}/50</b>Pity</div></div>
+    <div id="inc">${incHTML()}</div>
     <div class="box dly"><div><b>Daily bonus</b><div id="cd">${cd()}</div></div><button class="btn sm" onclick="daily()">Claim 800 💎</button></div><p id="msg"></p>
-    <div class="row"><button class="btn ghost" onclick="mute()">Sound: ${snd()?'on':'off'}</button><button class="btn ghost" onclick="logout()">Log out</button></div>`,
+    `,
   summon:()=>`<h2 class="t2"><small>Starfall Festival</small>Summon</h2>
     <p class="mu">SR and SSR summons have at least a 50% chance to be a featured hero.</p>${featRow()}
     <div class="row"><span class="chip">SSR 3%</span><span class="chip">SR 25%</span><span class="chip">R 72%</span></div>
@@ -248,6 +272,14 @@ const views={
   cards:()=>`<h2 class="t2"><small>Your</small>Heroes</h2><p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
     <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
     <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
+  me:()=>{const p=S.p,fv=(p.favs||[]).map(id=>S.cards.find(c=>c.id==id)).filter(Boolean),n=Object.keys(S.inv).length,ssr=S.cards.filter(c=>S.inv[c.id]&&c.rarity=='SSR').length;
+    return `<div class="pbn" style="background:${art(p.banner,270)}"></div>
+    <div class="pid">${avHTML(p,'av big')}<div><h2 style="margin:0">${esc(p.display_name||S.name)}</h2><small class="mu">@${esc(S.name)}</small></div></div>
+    <p>${p.bio?esc(p.bio):'<span class="mu">No bio yet. Tap Edit profile to add one.</span>'}</p>
+    <div class="row"><div class="stat"><b>${n}</b>Heroes</div><div class="stat"><b>${ssr}</b>SSR</div><div class="stat"><b>${S.cards.length?Math.round(n/S.cards.length*100):0}%</b>Complete</div></div>
+    <h3>Favourite heroes</h3>${fv.length?`<div class="scroll">${fv.map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">Pick up to 3 favourites in Edit profile.</p>'}
+    <button class="btn" onclick="profForm()">Edit profile</button>
+    <div class="row"><button class="btn ghost" onclick="mute()">Sound: ${snd()?'on':'off'}</button><button class="btn ghost" onclick="logout()">Log out</button></div>`},
   admin:()=>`<div class="box"><h3>Give rewards</h3><select id="pl" onchange="S.sel=this.value">${S.players.map(p=>`<option value="${p.id}" ${p.id==S.sel?'selected':''}>${p.email||p.id.slice(0,8)} (${p.gems} gems, ${p.coins} coins)</option>`).join('')}</select>
     <div class="row"><input id="ag" type="number" placeholder="Gems"><input id="ac" type="number" placeholder="Coins"></div>
     <button class="btn" onclick="give()">Give rewards</button><p class="mu" style="margin-top:8px">Use negative numbers to take away.</p><p id="msg"></p></div>
@@ -256,9 +288,9 @@ const views={
 };
 
 function draw(){
-  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes']];
+  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes'],['me','👤','Profile']];
   if(S.p.is_admin)T.push(['admin','🛠️','Admin']);
-  app.innerHTML=`<header><div class="av">${S.name[0].toUpperCase()}</div><div class="hi"><small>Welcome back</small><b>Hi, ${S.name}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
+  app.innerHTML=`<header><div onclick="tab('me')">${avHTML(S.p)}</div><div class="hi"><small>Welcome back</small><b>Hi, ${esc(S.p.display_name||S.name)}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
     <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" aria-label="${l}" onclick="tab('${k}')"><span>${i}</span><em>${l}</em></button>`).join('')}</nav>`;
 }
@@ -350,17 +382,44 @@ async function pull(n){
   setTimeout(go,[1700,2700,4400][best]);await wait;ready=1;next();
 }
 
-// ---- Starfield: twinkling stars and shooting stars behind everything ----
-(()=>{const c=$('#sky'),x=c.getContext('2d'),RM=matchMedia('(prefers-reduced-motion:reduce)').matches;let W,H,st=[],sh=[];
-  const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight;st=Array.from({length:Math.round(W*H/9000)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,p:Math.random()*6.3,s:.6+Math.random()*1.6}))};
+// ---- Starfield: slowly drifting, twinkling stars plus shooting stars ----
+(()=>{const c=$('#sky'),x=c.getContext('2d'),RM=matchMedia('(prefers-reduced-motion:reduce)').matches;let W,H,st=[],sh=[],T=0;
+  const rs=()=>{W=c.width=innerWidth;H=c.height=innerHeight;st=Array.from({length:Math.round(W*H/9000)},()=>{const r=Math.random()*1.4+.3;return{x:Math.random()*W,y:Math.random()*H,r,p:Math.random()*6.3,s:.6+Math.random()*1.6,vx:-(2+r*3),vy:3+r*4}})};
   addEventListener('resize',rs);rs();
-  const loop=t=>{x.clearRect(0,0,W,H);x.fillStyle='#fff';
-    for(const s of st){x.globalAlpha=.3+.7*Math.abs(Math.sin(t/1000*s.s+s.p));x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()}
+  const loop=t=>{const dt=Math.min(.05,(t-T)/1000||0);T=t;x.clearRect(0,0,W,H);x.fillStyle='#fff';
+    for(const s of st){if(!RM){s.x+=s.vx*dt;s.y+=s.vy*dt;if(s.y>H+3){s.y=-3;s.x=Math.random()*W}if(s.x<-3)s.x=W+3}
+      x.globalAlpha=.3+.7*Math.abs(Math.sin(t/1000*s.s+s.p));x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()}
     if(!RM&&Math.random()<.008)sh.push({x:Math.random()*W+W/3,y:-20,v:6+Math.random()*5});
     x.lineWidth=2;x.globalAlpha=1;
     for(const m of sh){m.x-=m.v*.7;m.y+=m.v;const g=x.createLinearGradient(m.x,m.y,m.x+m.v*6.3,m.y-m.v*9);g.addColorStop(0,'#fff');g.addColorStop(1,'#fff0');x.strokeStyle=g;x.beginPath();x.moveTo(m.x,m.y);x.lineTo(m.x+m.v*6.3,m.y-m.v*9);x.stroke()}
     sh=sh.filter(m=>m.y<H+60);if(!RM)requestAnimationFrame(loop)};
   requestAnimationFrame(loop)})();
+
+// ---- Helpers, income and profile ----
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const avHTML=(p,c='av')=>`<div class="${c}"${p.avatar?` style="background:url('${p.avatar}') center/cover"`:''}>${p.avatar?'':esc(((p.display_name||S.name)[0]||'?').toUpperCase())}</div>`;
+const INC={R:[1,1],SR:[3,2],SSR:[8,5]};
+const rate=()=>S.cards.filter(c=>S.inv[c.id]).reduce((a,c)=>[a[0]+INC[c.rarity][0],a[1]+INC[c.rarity][1]],[0,0]);
+const hrs=()=>Math.min(12,(Date.now()-new Date(S.p.last_collect).getTime())/36e5);
+const incHTML=()=>{const r=rate(),h=hrs(),f=Math.min(1,h/12);
+  return `<div class="box"><b>Stardust income</b><p class="mu" style="font-size:13px;margin-top:2px">${r[0]+r[1]?`Your heroes earn ${r[0]} 💎 and ${r[1]} 🪙 per hour while you are away.`:'Summon heroes and they will start earning for you.'}</p><div class="bar"><span style="width:${f*100}%"></span></div><small class="mu">${f>=1?'Storage full. Collect now!':'Stores up to 12 hours'}</small><button class="btn" onclick="collect()">Collect ${Math.floor(r[0]*h)} 💎 ${Math.floor(r[1]*h)} 🪙</button></div>`};
+setInterval(()=>{const e=$('#inc');if(e&&S.p)e.innerHTML=incHTML()},10000);
+async function collect(){const{data,error}=await sb.rpc('collect_income');await load();say(error?error.message:`Collected ${data.gems} gems and ${data.coins} coins!`)}
+function profForm(){
+  const p=S.p,own=S.cards.filter(c=>S.inv[c.id]);
+  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(p[k],270)}"><input type="file" accept="image/*" hidden onchange="upl(this,'${k}',1)"><span>📷 ${p[k]?'Change image':'Choose from gallery'}</span></label><input id="f_${k}" type="hidden" value="${esc(p[k]||'')}">`;
+  modal(`<h2>Edit profile</h2><label>Display name<input id="f_name" maxlength="20" value="${esc(p.display_name||'')}" placeholder="${esc(S.name)}"></label>
+    <label>Bio<textarea id="f_bio" rows="2" maxlength="120">${esc(p.bio||'')}</textarea></label>
+    ${pic('avatar','Profile picture')}${pic('banner','Profile banner')}
+    <label>Favourite heroes (pick up to 3)</label><div class="grid" id="fav">${own.map(c=>`<div class="pk ${(p.favs||[]).includes(c.id)?'on':''}" data-id="${c.id}" onclick="pickFav(this)">${cardHTML(c,0,0,0)}</div>`).join('')||'<p class="mu">Summon some heroes first.</p>'}</div>
+    <button class="btn" onclick="saveProf()">Save profile</button>`);
+}
+function pickFav(el){if(!el.classList.contains('on')&&document.querySelectorAll('#fav .on').length>=3)return alert('You can pick up to 3 favourites.');el.classList.toggle('on')}
+async function saveProf(){
+  const g=k=>$('#f_'+k).value.trim(),fv=[...document.querySelectorAll('#fav .on')].map(e=>+e.dataset.id);
+  const{error}=await sb.rpc('save_profile',{nm:g('name'),av:g('avatar'),bn:g('banner'),bi:g('bio'),fv});
+  if(error)return alert(error.message);closeM();load();
+}
 
 // Header gets a dark background once you scroll
 const _draw=draw;draw=function(){_draw();const m=$('main'),h=$('header');if(m&&h)m.onscroll=()=>h.classList.toggle('sc',m.scrollTop>20)};
@@ -392,14 +451,14 @@ function cardForm(id){
     <label class="chk"><input id="f_featured" type="checkbox" ${c.featured?'checked':''}> Featured on the summon banner</label>
     <button class="btn" onclick="saveCard(${id||0})">Save card</button>${id?`<button class="btn danger" onclick="delCard(${id})">Delete card</button>`:''}`);
 }
-const shrink=f=>f.type=='image/gif'?Promise.resolve(f):new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,1000/Math.max(i.width,i.height)),k=document.createElement('canvas');k.width=i.width*s;k.height=i.height*s;k.getContext('2d').drawImage(i,0,0,k.width,k.height);k.toBlob(b=>r(b||f),'image/webp',.9)};i.onerror=()=>r(f);i.src=URL.createObjectURL(f)});
-async function upl(el,k){
+const shrink=(f,m=1000)=>f.type=='image/gif'?Promise.resolve(f):new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,m/Math.max(i.width,i.height)),k=document.createElement('canvas');k.width=i.width*s;k.height=i.height*s;k.getContext('2d').drawImage(i,0,0,k.width,k.height);k.toBlob(b=>r(b||f),'image/webp',.9)};i.onerror=()=>r(f);i.src=URL.createObjectURL(f)});
+async function upl(el,k,pr){
   const f=el.files[0];if(!f)return;
   const sp=el.nextElementSibling;sp.textContent='⏳ Uploading...';
-  const b=await shrink(f),p=Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
-  const{error}=await sb.storage.from('cards').upload(p,b,{contentType:b.type});
+  const b=await shrink(f,pr?700:1000),bk=pr?'avatars':'cards',p=(pr?S.p.id+'/':'')+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
+  const{error}=await sb.storage.from(bk).upload(p,b,{contentType:b.type});
   if(error){sp.textContent='📷 Choose from gallery';return alert(error.message)}
-  const u=sb.storage.from('cards').getPublicUrl(p).data.publicUrl;
+  const u=sb.storage.from(bk).getPublicUrl(p).data.publicUrl;
   $('#f_'+k).value=u;$('#p_'+k).style.background=art(u,270);sp.textContent='✅ Uploaded. Tap to change';
 }
 async function saveCard(id){
