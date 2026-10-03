@@ -5,83 +5,98 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07040f">
 <title>Starfall Gacha</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bk:#07040f;--pn:#150c2b;--ln:#35205f;--v:#8b5cf6;--v2:#c084fc;--tx:#f5ecff;--mu:#a995d6;--gold:#ffd36e}
+:root{--bk:#06020e;--gl:#ffffff12;--bd:#ffffff1f;--v:#7c3aed;--mg:#e11d8f;--lc:#e4d3ff;--mu:#a592cf;--gold:#ffd36e}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bk)}
-body{color:var(--tx);font-family:'Zen Maru Gothic',system-ui,sans-serif}
-#app{display:flex;flex-direction:column;height:100%;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top);background:radial-gradient(90% 45% at 50% 0,#33157a,var(--bk))}
-header{display:flex;gap:8px;align-items:center;padding:12px 16px}
-header b{flex:1;font-size:20px;font-weight:900;color:var(--v2)}
-.chip{background:var(--pn);border:1px solid var(--ln);border-radius:99px;padding:6px 12px;font-weight:700;font-size:14px;text-align:center}
-main{flex:1;overflow:auto;padding:0 16px 24px}
-nav{display:flex;background:#0b0618;border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;padding:9px 0;background:none;border:0;color:var(--mu);font:700 12px 'Zen Maru Gothic',sans-serif}
-nav span{display:block;font-size:21px}
-nav .on{color:var(--v2)}
-h2,h3{font-weight:900;margin:14px 0 6px}
+body{color:#fff;font-family:'Outfit',system-ui,sans-serif}
+#app{position:relative;display:flex;flex-direction:column;height:100%;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top);overflow:hidden;background:radial-gradient(75% 38% at 10% 0,#6d1fd1b0,transparent),radial-gradient(60% 32% at 100% 30%,#e11d8f45,transparent),var(--bk)}
+header{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--v),var(--mg))}
+.hi{flex:1;min-width:0;line-height:1.15}.hi small{display:block;font-size:12px;color:var(--mu)}
+.hi b{display:block;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip{background:var(--gl);border:1px solid var(--bd);border-radius:99px;padding:6px 11px;font-weight:600;font-size:13px;text-align:center;backdrop-filter:blur(10px)}
+main{flex:1;overflow:auto;padding:0 16px 120px}
+nav{position:absolute;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));display:flex;justify-content:space-around;padding:7px;border-radius:99px;background:#14072eb8;border:1px solid var(--bd);backdrop-filter:blur(18px)}
+nav button{display:flex;align-items:center;gap:6px;padding:10px 14px;border:0;border-radius:99px;background:none;color:var(--mu);font:600 14px Outfit,sans-serif}
+nav span{font-size:20px}nav em{display:none;font-style:normal}
+nav .on{background:linear-gradient(135deg,var(--v),var(--mg));color:#fff}nav .on em{display:inline}
+h2{font-weight:800}h3{font-size:18px;font-weight:700;margin:18px 0 6px}
+.t2{margin:14px 0 4px;font-size:38px;line-height:1}.t2 small{display:block;font-size:17px;font-weight:400;color:var(--mu);margin-bottom:2px}
 .mu{color:var(--mu)}
-.box,.stat{background:var(--pn);border:1px solid var(--ln);border-radius:18px;padding:16px;margin:14px 0}
-.row{display:flex;gap:8px;margin:10px 0}.row>*{flex:1}
-.stat{text-align:center;margin:0;font-size:13px;color:var(--mu)}.stat b{display:block;font-size:22px;color:var(--tx)}
-.btn{display:block;width:100%;padding:15px;margin:10px 0 0;border:0;border-radius:15px;background:linear-gradient(135deg,var(--v),#c026d3);color:#fff;font:900 17px 'Zen Maru Gothic',sans-serif}
-.btn.gold{background:linear-gradient(135deg,#ffd36e,#f59e0b);color:#2a1d00}
-.btn.alt{background:var(--ln)}
-.btn.ghost{background:none;border:2px solid var(--ln);color:var(--mu)}
-.btn.danger{background:#7f1d1d}
+.box,.stat{background:var(--gl);border:1px solid var(--bd);border-radius:22px;padding:16px;margin:14px 0;backdrop-filter:blur(12px)}
+.row{display:flex;gap:10px;margin:10px 0}.row>*{flex:1}
+.stat{margin:0;text-align:center;font-size:13px;color:var(--mu)}.stat b{display:block;font-size:24px;color:#fff}
+.btn{display:block;width:100%;padding:15px;margin:10px 0 0;border:0;border-radius:18px;background:linear-gradient(135deg,var(--v),var(--mg));color:#fff;font:700 16px Outfit,sans-serif;box-shadow:0 8px 24px #e11d8f40}
+.btn.gl{background:var(--gl);border:1px solid var(--bd);box-shadow:none}
+.btn.gold{background:linear-gradient(135deg,#ffd36e,#f59e0b);color:#2a1d00;box-shadow:0 8px 24px #f59e0b40}
+.btn.alt{background:#ffffff1a;box-shadow:none}
+.btn.ghost{background:none;border:1px solid var(--bd);color:var(--mu);box-shadow:none}
+.btn.danger{background:#7f1d1d;box-shadow:none}
+.btn.sm{width:auto;padding:12px 18px;margin:0;font-size:15px}
+.btn small{display:block;font-weight:400;font-size:12px;opacity:.85}
 .btn:active{transform:scale(.97)}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--v2)}
-.hero{position:relative;height:200px;border-radius:20px;overflow:hidden;margin:4px 0 14px;background:linear-gradient(135deg,#4c1d95,#0b0618)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--lc)}
+.hero{position:relative;height:230px;border-radius:28px;overflow:hidden;margin:4px 0 16px;background:linear-gradient(135deg,#4c1d95,#0b0618);border:1px solid var(--bd)}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.hero div{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;background:linear-gradient(transparent 25%,#07040fe8)}
-.hero h1{font-size:30px;font-weight:900}
-.fb{position:relative;height:210px;border-radius:20px;overflow:hidden;display:flex;align-items:flex-end;border:1px solid var(--ln)}
-.fb em{position:absolute;right:20px;top:16px;font-size:80px;font-style:normal}
-.fb div{padding:16px;width:100%;background:linear-gradient(transparent,#07040fee)}
-.fb h2{margin:6px 0 2px}.fb p{font-size:13px}
-.scroll{display:flex;gap:10px;overflow-x:auto;padding:12px 0}
-.scroll .card{width:108px;flex:none}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.hero div{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;background:linear-gradient(transparent 20%,#06020ee6)}
+.hero h1{font-size:clamp(34px,11.5vw,60px);font-weight:900;letter-spacing:.08em;line-height:.95;color:transparent;-webkit-text-stroke:2px #fff;text-shadow:0 0 28px #e11d8f}
+.hero p{margin-top:8px;color:var(--lc)}
+.scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:8px 16px 14px}
+.scroll .card{flex:none;width:72%;scroll-snap-align:center}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .grid.ten{grid-template-columns:repeat(5,1fr);gap:6px}
-.card{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;border:2px solid #fff3;font-size:12px}
-.card::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,#000c)}
+.card{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;border:2px solid #ffffff30}
 .card>*{position:relative;z-index:1}
-.card b{position:absolute;left:8px;top:6px;font-size:12px}
-.card i{position:absolute;right:8px;top:6px;font-style:normal;font-weight:900}
-.card em{position:absolute;inset:0;display:grid;place-items:center;font-size:42px;font-style:normal}
-.nm{padding:6px 8px;font-weight:900;font-size:14px;line-height:1.15}
-.nm small{display:block;font-weight:500;font-size:11px;color:#e9d9ff}
-.card.SR{border-color:var(--v2);box-shadow:0 0 12px #c084fc99}
-.card.SSR{border-color:var(--gold);box-shadow:0 0 16px #ffd36ecc}
-.card.off{filter:grayscale(1) brightness(.45)}
-.ten .nm small{display:none}.ten .nm{font-size:10px;padding:4px}.ten .card em{font-size:22px}
-.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:900;background:var(--ln);margin-right:6px}
-.tag.SR{background:#7e22ce}.tag.SSR{background:var(--gold);color:#2a1d00}
-.pill{flex:0 0 auto;padding:7px 16px;border-radius:99px;border:1px solid var(--ln);background:none;color:var(--mu);font:700 14px 'Zen Maru Gothic',sans-serif}
-.pill.on{background:var(--v);color:#fff;border-color:var(--v)}
-.bar{height:10px;background:#000;border-radius:9px;margin:14px 0 6px;overflow:hidden}
-.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--v),var(--gold))}
-input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid var(--ln);background:#0b0618;color:var(--tx);font:500 16px 'Zen Maru Gothic',sans-serif}
+.card b{position:absolute;left:12px;top:10px;font-size:13px;font-weight:800;text-shadow:0 1px 6px #000}
+.card i{position:absolute;right:12px;top:10px;font-style:normal;font-weight:800}
+.card em{position:absolute;inset:0;display:grid;place-items:center;font-size:76px;font-style:normal;filter:drop-shadow(0 8px 20px #0008)}
+.nm{margin:8px;padding:9px 12px;border-radius:16px;background:#0a041a73;border:1px solid var(--bd);backdrop-filter:blur(10px);font-weight:800;font-size:15px;line-height:1.15}
+.nm small{display:block;font-weight:400;font-size:12px;color:var(--lc)}
+.card.SR,.pic.SR{border-color:#c084fc;box-shadow:0 0 18px #c084fc80}
+.card.SSR,.pic.SSR{border-color:var(--gold);box-shadow:0 0 24px #ffd36eaa}
+.card.off{filter:grayscale(1) brightness(.4)}
+.ten .card{border-radius:10px}.ten .nm{margin:3px;padding:3px 5px;font-size:10px}.ten .nm small{display:none}
+.ten .card em{font-size:26px}.ten .card b,.ten .card i{font-size:10px;left:5px;top:4px}
+.tag{display:inline-block;padding:3px 12px;border-radius:99px;font-size:12px;font-weight:700;background:var(--gl);border:1px solid var(--bd);margin-right:6px}
+.tag.SR{background:#7e22ce;border-color:#c084fc}.tag.SSR{background:var(--gold);color:#2a1d00;border-color:var(--gold)}
+.tabs{display:flex;gap:18px;margin:12px 0}
+.tabs button{background:none;border:0;color:var(--mu);font:600 15px Outfit,sans-serif;padding:4px 0}
+.tabs .on{color:#fff}.tabs .on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mg);margin-right:7px;vertical-align:middle}
+.bar{height:8px;background:#ffffff1a;border-radius:9px;margin:12px 0 6px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--v),var(--mg))}
+.dly{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tb{display:inline-block;min-width:62px;padding:8px 10px;margin:8px 8px 0 0;text-align:center;border-radius:14px;background:linear-gradient(135deg,var(--v),var(--mg));font-size:28px;font-weight:800}
+.tb small{font-size:14px;font-weight:400}
+input,select,textarea{width:100%;padding:13px;margin-top:6px;border-radius:14px;border:1px solid var(--bd);background:#ffffff0d;color:#fff;font:400 16px Outfit,sans-serif}
+select option{background:#14072e}
 input[type=checkbox]{width:auto;margin:0}
-label{display:block;margin-top:10px;font-size:13px;color:var(--mu)}
-label.chk{display:flex;gap:8px;align-items:center}
-.li{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--ln)}
-.li b{flex:1}
-.li i{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-style:normal}
-.ov{position:fixed;inset:0;background:#07040ff5;display:flex;flex-direction:column;justify-content:center;padding:20px;z-index:9;overflow:hidden;text-align:center}
+label{display:block;margin-top:12px;font-size:13px;color:var(--mu)}label.chk{display:flex;gap:8px;align-items:center}
+.up{display:grid;place-items:center;height:130px;border-radius:18px;border:2px dashed var(--bd);color:#fff;font-weight:700;text-shadow:0 1px 8px #000;cursor:pointer;font-size:15px}
+details summary{margin-top:8px;font-size:13px;color:var(--mu)}
+.li{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--bd)}.li b{flex:1}
+.li i{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-style:normal}
+.ov{position:fixed;inset:0;background:#06020ef5;display:flex;flex-direction:column;justify-content:center;padding:20px;z-index:9;overflow:hidden;text-align:center}
 .ov.m{background:#000a;justify-content:flex-end;padding:0;text-align:left}
-.sheet{max-width:520px;width:100%;margin:auto auto 0;max-height:90%;overflow:auto;background:#120a26;border:1px solid var(--ln);border-radius:22px 22px 0 0;padding:16px}
-.ban{height:170px;margin:-16px -16px 12px;display:grid;place-items:center;font-size:70px}
+.sheet{width:100%;max-width:520px;margin:auto auto 0;max-height:92%;overflow:auto;background:#12082a;border:1px solid var(--bd);border-radius:28px 28px 0 0;padding:18px}
+.ov.d{justify-content:flex-start;padding:0;overflow:auto;text-align:left}
+.dt{position:relative;width:100%;max-width:520px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 20px 40px}
+.back{width:42px;height:42px;border-radius:14px;border:1px solid var(--bd);background:var(--gl);color:#fff;font-size:24px}
+.wm{position:absolute;left:0;right:0;top:calc(112px + env(safe-area-inset-top));z-index:2;text-align:center;text-transform:uppercase;font-size:clamp(60px,22vw,110px);font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:2px #ffffff80;white-space:nowrap;overflow:hidden;pointer-events:none}
+.stage{display:flex;align-items:center;gap:6px;margin:18px 0 8px}
+.pic{flex:1;aspect-ratio:3/4;border-radius:28px;display:grid;place-items:center;font-size:110px;border:2px solid #ffffff30;box-shadow:0 20px 50px #0009}
+.ar{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--bd);background:var(--gl);color:#fff;font-size:22px}
+.bn{height:110px;border-radius:20px;margin:14px 0;display:flex;align-items:flex-end;padding:14px;font-weight:700;font-size:18px;border:1px solid var(--bd);text-shadow:0 1px 8px #000}
 .ring{width:200px;height:200px;margin:auto;border:4px dashed var(--c);border-radius:50%;display:grid;place-items:center;animation:spin 2.2s ease-in}
 .orb{width:70px;height:70px;border-radius:50%;background:var(--c);box-shadow:0 0 60px 20px var(--c);animation:burst 2.2s ease-in forwards}
-.rv{width:66%;margin:auto;animation:flip .7s}
-.rv .card{font-size:14px}.rv .nm{font-size:20px}.rv .card em{font-size:90px}
+.rv{width:68%;margin:auto;animation:flip .7s}
+.rv .nm{font-size:20px}.rv .card em{font-size:110px}
 .rv .card.SSR{animation:glow 1.2s infinite alternate}
-.nt{margin-top:16px;font-weight:900;font-size:20px;color:var(--gold)}
-.skip{position:absolute;right:16px;top:16px;background:var(--ln);color:#fff;border:0;border-radius:99px;padding:8px 16px;font:700 14px 'Zen Maru Gothic',sans-serif}
-#msg{margin-top:10px;text-align:center;color:var(--v2);min-height:1.2em}
+.nt{margin-top:16px;font-weight:800;font-size:22px;color:var(--gold)}
+.skip{position:absolute;right:16px;top:16px;background:var(--gl);border:1px solid var(--bd);color:#fff;border-radius:99px;padding:8px 18px;font:600 14px Outfit,sans-serif}
+#msg{margin-top:10px;text-align:center;color:var(--lc);min-height:1.2em}
 @keyframes spin{to{transform:rotate(540deg)}}
 @keyframes burst{75%{transform:scale(1.5)}to{transform:scale(32);opacity:0}}
 @keyframes flip{from{transform:rotateY(90deg) scale(.5);opacity:0}}
@@ -93,8 +108,8 @@ label.chk{display:flex;gap:8px;align-items:center}
 <div id="app"></div>
 <script>
 // Paste your two Supabase values between the quotes (same ones as before).
-const SUPABASE_URL='https://rymgoqtncbjvtbjofgzp.supabase.co';
-const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5bWdvcXRuY2JqdnRiam9mZ3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMTM4MzAsImV4cCI6MjEwNjU4OTgzMH0.8_KHtFNbvTIS6AQoMEXg4xhINmyf8_yTwfxqluhm3BM';
+const SUPABASE_URL='PASTE_PROJECT_URL_HERE';
+const SUPABASE_KEY='PASTE_ANON_KEY_HERE';
 
 if(!SUPABASE_URL.startsWith('https')){document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';throw new Error('Supabase keys missing')}
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -103,30 +118,34 @@ const RK={R:0,SR:1,SSR:2},COST={R:100,SR:500,SSR:2000},GLOW=['#7dd3fc','#c084fc'
 const $=s=>document.querySelector(s),app=$('#app'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const S={tab:'home',f:'All',cards:[],inv:{},players:[],p:null};
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
-const art=(i,h)=>i?`url('${i}') center/cover`:`linear-gradient(160deg,hsl(${h} 70% 42%),hsl(${(h+60)%360} 65% 14%))`;
-const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div><h1>Starfall Gacha</h1><p class="mu">${t}</p></div></div>`;
+const art=(i,h)=>(i?`url('${i}') center top/cover,`:'')+`linear-gradient(160deg,hsl(${h} 80% 52%),hsl(${(h+55)%360} 70% 16%))`;
+const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div><h1>STARFALL</h1><p>${t}</p></div></div>`;
 const cardHTML=(c,n=0,off=0,tap=1)=>`<div class="card ${c.rarity}${off?' off':''}" style="background:${art(c.image,c.hue)}" ${tap?`onclick="detail(${c.id})"`:''}><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}${c.image?'':`<em>${c.emoji}</em>`}<div class="nm">${c.name}<small>${c.title}</small></div></div>`;
 const feat=()=>S.cards.filter(c=>c.featured).sort((a,b)=>RK[b.rarity]-RK[a.rarity]);
 const featRow=()=>feat().length?`<div class="scroll">${feat().map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">No featured heroes yet.</p>';
 const modal=h=>{closeM();const m=document.createElement('div');m.className='ov m';m.id='modal';m.innerHTML=`<div class="sheet">${h}<button class="btn alt" onclick="closeM()">Close</button></div>`;m.onclick=e=>e.target==m&&closeM();document.body.append(m)};
 const closeM=()=>{const m=$('#modal');if(m)m.remove()};
 const tab=k=>{S.tab=k;draw()};
+const z2=n=>String(n).padStart(2,'0');
+const nextIn=()=>S.p.last_daily?Math.max(0,new Date(S.p.last_daily).getTime()+72e6-Date.now()):0;
+const cd=()=>{const t=nextIn();return t?`<span class="tb">${z2(Math.floor(t/36e5))}<small>h</small></span><span class="tb">${z2(Math.floor(t%36e5/6e4))}<small>m</small></span>`:'<p class="mu" style="margin-top:6px">Ready to claim!</p>'};
+setInterval(()=>{const e=$('#cd');if(e&&S.p)e.innerHTML=cd()},30000);
 
 const views={
-  home:()=>`${hero('Welcome back, '+S.name)}
-    <div class="row"><div class="stat"><b>${Object.keys(S.inv).length}/${S.cards.length}</b>Heroes</div><div class="stat"><b>${S.p.pity}/50</b>Pity</div></div>
-    <h3>Featured heroes</h3>${featRow()}
-    <button class="btn" onclick="tab('summon')">Go to Summon</button>
-    <div class="box"><h3>Daily bonus</h3><p class="mu">Claim 800 gems every 20 hours.</p><button class="btn alt" onclick="daily()">Claim bonus</button><p id="msg"></p></div>
+  home:()=>`${hero('Summon heroes and collect them all.')}
+    <h3 style="margin-top:4px">Featured heroes</h3>${featRow()}
+    <button class="btn" onclick="tab('summon')">Summon now</button>
+    <div class="row" style="margin-top:16px"><div class="stat"><b>${Object.keys(S.inv).length}/${S.cards.length}</b>Collected</div><div class="stat"><b>${S.p.pity}/50</b>Pity</div></div>
+    <div class="box dly"><div><b>Daily bonus</b><div id="cd">${cd()}</div></div><button class="btn sm" onclick="daily()">Claim 800 💎</button></div><p id="msg"></p>
     <button class="btn ghost" onclick="logout()">Log out</button>`,
-  summon:()=>{const t=feat()[0],b=t&&(t.banner||t.image);return `<div class="fb" style="background:${art(b,t?t.hue:270)}">${t&&!b?`<em>${t.emoji}</em>`:''}<div><span class="tag SSR">Rate-up</span><h2>Starfall Festival</h2><p class="mu">SR and SSR summons have at least a 50% chance to be a featured hero.</p></div></div>
-    ${featRow()}<div class="row"><span class="chip">SSR 3%</span><span class="chip">SR 25%</span><span class="chip">R 72%</span></div>
+  summon:()=>`<h2 class="t2"><small>Starfall Festival</small>Summon</h2>
+    <p class="mu">SR and SSR summons have at least a 50% chance to be a featured hero.</p>${featRow()}
+    <div class="row"><span class="chip">SSR 3%</span><span class="chip">SR 25%</span><span class="chip">R 72%</span></div>
     <div class="bar"><span style="width:${S.p.pity*2}%"></span></div><small class="mu">A guaranteed SSR arrives at 50 summons (${S.p.pity}/50)</small>
-    <button class="btn" onclick="pull(1)">Summon 1 for 160 gems</button>
-    <button class="btn gold" onclick="pull(10)">Summon 10 for 1,600 gems</button><p id="msg"></p>`},
-  cards:()=>`<div class="row">${['All','SSR','SR','R'].map(r=>`<button class="pill ${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
-    <p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} heroes collected. Tap a hero to see details.</p>
-    <div class="grid" style="margin-top:12px">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
+    <div class="row"><button class="btn gl" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`,
+  cards:()=>`<h2 class="t2"><small>Your</small>Heroes</h2><p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
+    <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
+    <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
   admin:()=>`<div class="box"><h3>Give rewards</h3><select id="pl" onchange="S.sel=this.value">${S.players.map(p=>`<option value="${p.id}" ${p.id==S.sel?'selected':''}>${p.email||p.id.slice(0,8)} (${p.gems} gems, ${p.coins} coins)</option>`).join('')}</select>
     <div class="row"><input id="ag" type="number" placeholder="Gems"><input id="ac" type="number" placeholder="Coins"></div>
     <button class="btn" onclick="give()">Give rewards</button><p class="mu" style="margin-top:8px">Use negative numbers to take away.</p><p id="msg"></p></div>
@@ -137,9 +156,9 @@ const views={
 function draw(){
   const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes']];
   if(S.p.is_admin)T.push(['admin','🛠️','Admin']);
-  app.innerHTML=`<header><b>✦ Starfall</b><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
+  app.innerHTML=`<header><div class="av">${S.name[0].toUpperCase()}</div><div class="hi"><small>Welcome back</small><b>Hi, ${S.name}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
-    <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" onclick="tab('${k}')"><span>${i}</span>${l}</button>`).join('')}</nav>`;
+    <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" aria-label="${l}" onclick="tab('${k}')"><span>${i}</span><em>${l}</em></button>`).join('')}</nav>`;
 }
 
 function authScreen(m=''){
@@ -167,11 +186,17 @@ async function load(){
 }
 
 function detail(id){
-  const c=S.cards.find(x=>x.id==id),n=S.inv[id]||0,b=c.banner||c.image;
-  modal(`<div class="ban" style="background:${art(b,c.hue)}">${b?'':c.emoji}</div>
-    <span class="tag ${c.rarity}">${c.rarity}</span><span class="tag">${c.element||''}</span><h2>${c.name}</h2><p class="mu">${c.title}</p>
-    <p style="margin-top:10px">${c.descr||'Nothing is known about this hero yet.'}</p>
-    ${n?`<p class="mu" style="margin-top:10px">You own ×${n}</p>`:`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}`);
+  const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0;
+  closeM();const m=document.createElement('div');m.className='ov d';m.id='modal';
+  m.style.background=`radial-gradient(90% 50% at 50% 28%,hsl(${c.hue} 85% 38%),transparent),#06020e`;
+  m.innerHTML=`<div class="dt"><button class="back" aria-label="Back" onclick="closeM()">‹</button><div class="wm">${c.name}</div>
+    <div class="stage"><button class="ar" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><div class="pic ${c.rarity}" style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</div><button class="ar" aria-label="Next hero" onclick="detail(${N.id})">›</button></div>
+    <h2 style="font-size:34px;margin-top:14px">${c.name}</h2><p class="mu">${c.title}</p>
+    <div style="margin:12px 0"><span class="tag ${c.rarity}">${c.rarity}</span><span class="tag">${c.element||'Unknown'}</span><span class="tag">${n?'Owned ×'+n:'Not owned'}</span></div>
+    <p>${c.descr||'Nothing is known about this hero yet.'}</p>
+    <div class="bn" style="background:${art(c.banner||c.image,c.hue)}">${c.title}</div>
+    ${n?'':`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}</div>`;
+  document.body.append(m);
 }
 async function redeem(id){
   const{error}=await sb.rpc('redeem_card',{cid:id});
@@ -215,22 +240,24 @@ async function give(){
 function cardForm(id){
   const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false};
   const f=(k,l,t='text')=>`<label>${l}<input id="f_${k}" type="${t}" value="${c[k]??''}"></label>`;
-  const up=k=>`<input type="file" accept="image/*" onchange="upl(this,'${k}')">`;
+  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(c[k],c.hue)}"><input type="file" accept="image/*" hidden onchange="upl(this,'${k}')"><span>📷 ${c[k]?'Change image':'Choose from gallery'}</span></label><details><summary>Or paste an image link</summary>${f(k,'Image link')}</details>`;
   modal(`<h2>${id?'Edit':'New'} card</h2>${f('name','Name')}${f('title','Title')}
     <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
     ${f('element','Element')}${f('emoji','Emoji (shown when there is no image)')}${f('hue','Color hue (0 to 360)','number')}
     <label>Description<textarea id="f_descr" rows="3">${c.descr||''}</textarea></label>
-    ${f('image','Card image URL')}${up('image')}${f('banner','Banner image URL (wide)')}${up('banner')}
+    ${pic('image','Card art')}${pic('banner','Wide banner')}
     <label class="chk"><input id="f_featured" type="checkbox" ${c.featured?'checked':''}> Featured on the summon banner</label>
     <button class="btn" onclick="saveCard(${id||0})">Save card</button>${id?`<button class="btn danger" onclick="delCard(${id})">Delete card</button>`:''}`);
 }
+const shrink=f=>f.type=='image/gif'?Promise.resolve(f):new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,1000/Math.max(i.width,i.height)),k=document.createElement('canvas');k.width=i.width*s;k.height=i.height*s;k.getContext('2d').drawImage(i,0,0,k.width,k.height);k.toBlob(b=>r(b||f),'image/webp',.9)};i.onerror=()=>r(f);i.src=URL.createObjectURL(f)});
 async function upl(el,k){
   const f=el.files[0];if(!f)return;
-  const p=Date.now()+'-'+f.name.replace(/[^\w.]/g,'_');
-  const{error}=await sb.storage.from('cards').upload(p,f);
-  if(error)return alert(error.message);
-  $('#f_'+k).value=sb.storage.from('cards').getPublicUrl(p).data.publicUrl;
-  alert('Image uploaded. Now press Save card.');
+  const sp=el.nextElementSibling;sp.textContent='⏳ Uploading...';
+  const b=await shrink(f),p=Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
+  const{error}=await sb.storage.from('cards').upload(p,b,{contentType:b.type});
+  if(error){sp.textContent='📷 Choose from gallery';return alert(error.message)}
+  const u=sb.storage.from('cards').getPublicUrl(p).data.publicUrl;
+  $('#f_'+k).value=u;$('#p_'+k).style.background=art(u,270);sp.textContent='✅ Uploaded. Tap to change';
 }
 async function saveCard(id){
   const g=k=>$('#f_'+k).value.trim();
