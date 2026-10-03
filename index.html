@@ -108,8 +108,8 @@ details summary{margin-top:8px;font-size:13px;color:var(--mu)}
 <div id="app"></div>
 <script>
 // Paste your two Supabase values between the quotes (same ones as before).
-const SUPABASE_URL='PASTE_PROJECT_URL_HERE';
-const SUPABASE_KEY='PASTE_ANON_KEY_HERE';
+const SUPABASE_URL='https://rymgoqtncbjvtbjofgzp.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5bWdvcXRuY2JqdnRiam9mZ3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEwMTM4MzAsImV4cCI6MjEwNjU4OTgzMH0.8_KHtFNbvTIS6AQoMEXg4xhINmyf8_yTwfxqluhm3BM';
 
 if(!SUPABASE_URL.startsWith('https')){document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';throw new Error('Supabase keys missing')}
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
