@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15103d">
+<title>Starfall Gacha</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--night:#15103d;--dusk:#241a5e;--lav:#cdbfff;--gold:#ffd36e;--rose:#ff6b9d}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:radial-gradient(120% 60% at 50% 0,#3a2a9a,var(--night) 70%) fixed;color:#fff;font-family:'Zen Maru Gothic',system-ui,sans-serif}
+#app{display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top)}
+header{display:flex;justify-content:space-between;padding:14px 20px;font-weight:900;font-size:20px}
+main{flex:1;overflow:auto;padding:4px 20px 20px}
+nav{display:flex;background:var(--dusk);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;padding:14px 0;background:none;border:0;color:var(--lav);font:700 15px 'Zen Maru Gothic',sans-serif;opacity:.65}
+nav .on{opacity:1;color:var(--gold)}
+h1,h2{font-weight:900}
+.box{background:var(--dusk);border-radius:20px;padding:20px;margin-bottom:16px}
+.btn{display:block;width:100%;padding:16px;margin-top:12px;border:0;border-radius:16px;background:var(--rose);color:#fff;font:900 17px 'Zen Maru Gothic',sans-serif}
+.btn.gold{background:var(--gold);color:#3a2a00}
+.btn.ghost{background:none;border:2px solid var(--lav);color:var(--lav)}
+.btn:active{transform:scale(.97)}
+input{width:100%;padding:14px;margin-top:12px;border-radius:14px;border:2px solid #4a3caa;background:var(--night);color:#fff;font:500 16px 'Zen Maru Gothic',sans-serif}
+.bar{height:10px;background:var(--night);border-radius:9px;margin:14px 0 8px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--gold)}
+.rates{display:flex;gap:8px;margin-top:12px}
+.rates span{flex:1;text-align:center;padding:6px;border-radius:10px;background:var(--night);font-weight:700;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid.ten{grid-template-columns:repeat(5,1fr);gap:6px}
+.grid.one{grid-template-columns:1fr;width:62%;margin:auto}
+.card{position:relative;aspect-ratio:3/4;border-radius:14px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;text-align:center;border:2px solid #fff4;background:linear-gradient(160deg,hsl(var(--h) 70% 48%),hsl(calc(var(--h) + 50) 60% 20%));font-size:12px;line-height:1.2}
+.card b{text-align:left;font-size:12px}
+.card .art{font-size:34px}
+.card .nm{font-weight:900;font-size:14px}
+.card small{opacity:.9;font-size:11px}
+.card i{position:absolute;right:6px;top:6px;font-style:normal;font-weight:900}
+.ten .card small{display:none}
+.ten .card .art{font-size:22px}
+.ten .card .nm{font-size:11px}
+.SR{border-color:#c77dff;box-shadow:0 0 12px #c77dffaa}
+.SSR{border-color:var(--gold);box-shadow:0 0 22px var(--gold);animation:glow 1.4s infinite alternate}
+.lock{background:var(--dusk);border:2px dashed #4a3caa;align-items:center;justify-content:center;font-size:28px;color:#6a5cc8}
+.ov{position:fixed;inset:0;background:#0a0720ee;display:flex;flex-direction:column;justify-content:center;padding:20px;z-index:9;text-align:center}
+.ov p{margin-top:24px;color:var(--lav)}
+.pop{animation:pop .5s backwards}
+#msg{margin-top:12px;color:var(--lav);text-align:center;min-height:1.2em}
+.auth{margin:auto;padding:24px;width:100%}
+.auth h1{font-size:34px;color:var(--gold);margin-bottom:6px}
+@keyframes pop{from{transform:scale(.3) rotate(-8deg);opacity:0}}
+@keyframes glow{to{box-shadow:0 0 34px var(--gold)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// STEP 2 OF THE README: paste your two Supabase values between the quotes.
+const SUPABASE_URL='PASTE_PROJECT_URL_HERE';
+const SUPABASE_KEY='PASTE_ANON_KEY_HERE';
+
+if(!SUPABASE_URL.startsWith('https')){
+  document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';
+  throw new Error('Supabase keys missing');
+}
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=s=>document.querySelector(s), app=$('#app');
+const S={tab:'summon',cards:[],inv:{},p:null};
+const say=t=>{const m=$('#msg');if(m)m.textContent=t};
+
+const cardHTML=(c,n)=>`<div class="card ${c.rarity}" style="--h:${c.hue}"><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}<div class="art">${c.emoji}</div><div><div class="nm">${c.name}</div><small>${c.title}</small></div></div>`;
+
+const views={
+  summon:()=>`<div class="box"><h2>Starfall Festival</h2>
+    <div class="rates"><span>SSR 3%</span><span>SR 25%</span><span>R 72%</span></div>
+    <div class="bar"><span style="width:${S.p.pity*2}%"></span></div>
+    <small>Your next SSR is guaranteed at 50 summons (${S.p.pity}/50)</small></div>
+    <button class="btn" onclick="pull(1)">Summon 1 for 160 gems</button>
+    <button class="btn gold" onclick="pull(10)">Summon 10 for 1,600 gems</button><p id="msg"></p>`,
+  cards:()=>`<p style="margin-bottom:12px">${Object.keys(S.inv).length} of ${S.cards.length} heroes collected</p>
+    <div class="grid">${S.cards.map(c=>S.inv[c.id]?cardHTML(c,S.inv[c.id]):'<div class="card lock">?</div>').join('')}</div>`,
+  daily:()=>`<div class="box"><h2>Daily bonus</h2><p>Claim 800 gems every 20 hours.</p>
+    <button class="btn gold" onclick="daily()">Claim 800 gems</button></div><p id="msg"></p>
+    <button class="btn ghost" onclick="logout()">Log out</button>`
+};
+
+function draw(){
+  const tabs=[['summon','✨ Summon'],['cards','🃏 Heroes'],['daily','🎁 Daily']];
+  app.innerHTML=`<header><span>✦ Starfall</span><span>💎 ${S.p.gems.toLocaleString()}</span></header>
+    <main>${views[S.tab]()}</main>
+    <nav>${tabs.map(([k,l])=>`<button class="${k==S.tab?'on':''}" onclick="S.tab='${k}';draw()">${l}</button>`).join('')}</nav>`;
+}
+
+function authScreen(m=''){
+  app.innerHTML=`<div class="auth"><h1>✦ Starfall Gacha</h1><p>Summon heroes and collect them all.</p>
+    <input id="em" type="email" placeholder="Email" autocomplete="email">
+    <input id="pw" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">
+    <button class="btn" onclick="go(1)">Log in</button>
+    <button class="btn ghost" onclick="go(0)">Create account</button><p id="msg">${m}</p></div>`;
+}
+
+async function go(login){
+  const c={email:$('#em').value.trim(),password:$('#pw').value};
+  const{error}=await(login?sb.auth.signInWithPassword(c):sb.auth.signUp(c));
+  error?say(error.message):load();
+}
+
+async function load(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(!session) return authScreen();
+  const[p,c,i]=await Promise.all([
+    sb.from('profiles').select().single(),
+    sb.from('cards').select().order('id'),
+    sb.from('inventory').select()]);
+  if(p.error||c.error||i.error) return authScreen((p.error||c.error||i.error).message);
+  S.p=p.data;S.cards=c.data;
+  S.inv=Object.fromEntries(i.data.map(x=>[x.card_id,x.qty]));
+  draw();
+}
+
+async function pull(n){
+  const{data,error}=await sb.rpc('pull_cards',{n});
+  if(error) return say(error.message);
+  const ov=document.createElement('div');ov.className='ov';
+  ov.innerHTML=`<div class="grid ${n==1?'one':'ten'}">${data.map((c,i)=>`<div class="pop" style="animation-delay:${i*.18}s">${cardHTML(c)}</div>`).join('')}</div><p>Tap to continue</p>`;
+  ov.onclick=()=>{ov.remove();load()};
+  document.body.append(ov);
+}
+
+async function daily(){
+  const{data,error}=await sb.rpc('claim_daily');
+  await load();
+  say(error?error.message:data?`+${data} gems claimed!`:'Already claimed. Come back later.');
+}
+
+async function logout(){await sb.auth.signOut();load()}
+load();
+</script>
+</body>
+</html>
