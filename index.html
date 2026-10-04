@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--bk:#06020e;--gl:#ffffff12;--bd:#ffffff1f;--v:#7c3aed;--mg:#e11d8f;--lc:#e4d3ff;--mu:#a592cf;--gold:#ffd36e}
+:root{--bk:#06020e;--gl:#ffffff12;--bd:#ffffff1f;--v:#7c3aed;--mg:#e11d8f;--lc:#e4d3ff;--mu:#a592cf;--gold:#f1e6ff}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bk)}
 body{color:#fff;font-family:'Outfit',system-ui,sans-serif}
@@ -31,7 +31,7 @@ h2{font-weight:800}h3{font-size:18px;font-weight:700;margin:18px 0 6px}
 .stat{margin:0;text-align:center;font-size:13px;color:var(--mu)}.stat b{display:block;font-size:24px;color:#fff}
 .btn{display:block;width:100%;padding:15px;margin:10px 0 0;border:0;border-radius:18px;background:linear-gradient(135deg,var(--v),var(--mg));color:#fff;font:700 16px Outfit,sans-serif;box-shadow:0 8px 24px #e11d8f40}
 .btn.gl{background:var(--gl);border:1px solid var(--bd);box-shadow:none}
-.btn.gold{background:linear-gradient(135deg,#ffd36e,#f59e0b);color:#2a1d00;box-shadow:0 8px 24px #f59e0b40}
+.btn.gold{background:linear-gradient(135deg,#f1e6ff,#c4a1ff);color:#1a0a3a;box-shadow:0 8px 24px #c4a1ff40}
 .btn.alt{background:#ffffff1a;box-shadow:none}
 .btn.ghost{background:none;border:1px solid var(--bd);color:var(--mu);box-shadow:none}
 .btn.danger{background:#7f1d1d;box-shadow:none}
@@ -56,12 +56,12 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .nm{margin:8px;padding:9px 12px;border-radius:16px;background:#0a041a73;border:1px solid var(--bd);backdrop-filter:blur(10px);font-weight:800;font-size:15px;line-height:1.15}
 .nm small{display:block;font-weight:400;font-size:12px;color:var(--lc)}
 .card.SR,.pic.SR{border-color:#c084fc;box-shadow:0 0 18px #c084fc80}
-.card.SSR,.pic.SSR{border-color:var(--gold);box-shadow:0 0 24px #ffd36eaa}
+.card.SSR,.pic.SSR{border-color:var(--gold);box-shadow:0 0 24px #f1e6ffaa}
 .card.off{filter:grayscale(1) brightness(.4)}
 .ten .card{border-radius:10px}.ten .nm{margin:3px;padding:3px 5px;font-size:10px}.ten .nm small{display:none}
 .ten .card em{font-size:26px}.ten .card b,.ten .card i{font-size:10px;left:5px;top:4px}
 .tag{display:inline-block;padding:3px 12px;border-radius:99px;font-size:12px;font-weight:700;background:var(--gl);border:1px solid var(--bd);margin-right:6px}
-.tag.SR{background:#7e22ce;border-color:#c084fc}.tag.SSR{background:var(--gold);color:#2a1d00;border-color:var(--gold)}
+.tag.SR{background:#7e22ce;border-color:#c084fc}.tag.SSR{background:var(--gold);color:#1a0a3a;border-color:var(--gold)}
 .tabs{display:flex;gap:18px;margin:12px 0}
 .tabs button{background:none;border:0;color:var(--mu);font:600 15px Outfit,sans-serif;padding:4px 0}
 .tabs .on{color:#fff}.tabs .on::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mg);margin-right:7px;vertical-align:middle}
@@ -126,7 +126,7 @@ main{padding:72px 16px 120px}
 nav{padding:5px}nav button{padding:9px 12px}
 .ov{background:radial-gradient(circle at 50% 42%,#1a0b4a,#04010c 70%)}
 .ov.t1{background:radial-gradient(circle at 50% 42%,#33106a,#04010c 70%)}
-.ov.t2{background:radial-gradient(circle at 50% 42%,#4a3400,#04010c 70%)}
+.ov.t2{background:radial-gradient(circle at 50% 42%,#4b3a9e,#04010c 70%)}
 .ov.m{background:#000a}.ov.d{background:#04010cf5}
 .ov p{position:relative;z-index:1}
 .fx{position:absolute;inset:0;overflow:hidden}
@@ -207,7 +207,7 @@ h3{font-size:16px;margin:12px 0 4px}
 .hero{overflow:hidden}
 .hero .ttl{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:50px 12px 14px;gap:12px;background:radial-gradient(70% 55% at 50% 58%,#04010c80,transparent)}
 .lock{position:relative;display:block}
-.hero h1{margin:0;padding-left:.12em;font-size:clamp(34px,11.5vw,52px);font-weight:900;letter-spacing:.12em;line-height:1;color:transparent;-webkit-text-stroke:0;text-shadow:none;background:linear-gradient(100deg,#fff 0,#c9b8ff 28%,#7dd3fc 46%,#fff 56%,#d8b4fe 78%,#fff 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 12px #8b6cffcc) drop-shadow(0 2px 0 #1b0a52);animation:shine 5s linear infinite,hglow 3s ease-in-out infinite alternate}
+.hero h1{margin:0;padding-left:.12em;font-size:clamp(34px,11.5vw,52px);font-weight:900;letter-spacing:.12em;line-height:1;color:transparent;-webkit-text-stroke:0;text-shadow:none;background:linear-gradient(100deg,#fff 0,#c9b8ff 28%,#a5b4fc 46%,#fff 56%,#d8b4fe 78%,#fff 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 12px #8b6cffcc) drop-shadow(0 2px 0 #1b0a52);animation:shine 5s linear infinite,hglow 3s ease-in-out infinite alternate}
 .hero .sub{margin:0;display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.06em;color:var(--lc)}
 .hero .sub::before,.hero .sub::after{content:"";width:20px;height:1px;background:linear-gradient(90deg,transparent,#c9b8ff)}
 .hero .sub::after{transform:scaleX(-1)}
@@ -238,27 +238,27 @@ h3{font-size:16px;margin:12px 0 4px}
 .fanc.fl{transform:translateX(-88px) rotate(-9deg) scale(.88)}
 .fanc.fr{transform:translateX(88px) rotate(9deg) scale(.88)}
 @keyframes bob{50%{transform:translateY(-8px)}}
-.rc0{color:#7dd3fc}.rc1{color:#d8b4fe}.rc2{color:var(--gold)}
+.rc0{color:#a5b4fc}.rc1{color:#d8b4fe}.rc2{color:var(--gold)}
 .pity{display:flex;align-items:center;gap:14px}
 .pr{flex:none;position:relative;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--mg) var(--p),#ffffff1a 0);display:grid;place-items:center}
 .pr::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#0d0620}
 .pr b{position:relative;font-size:18px}
 .btn.gold.sum{animation:pulseg 2.2s ease-in-out infinite}
-@keyframes pulseg{50%{box-shadow:0 0 30px #ffd36eaa}}
+@keyframes pulseg{50%{box-shadow:0 0 30px #f1e6ffaa}}
 .rwrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
 .stg{position:relative;display:flex;align-items:center;gap:6px;margin:10px 0 4px}
 .sk.d{left:12%;bottom:-10px;font-size:15px;animation-delay:.5s}.sk.e{right:30%;top:-12px;font-size:12px;animation-delay:1.2s}
 .stars{color:var(--gold);letter-spacing:3px;font-size:16px;margin-top:2px}
 .plate{margin:12px 0;padding:14px;border-radius:20px;background:var(--gl);border:1px solid var(--c)}
 .plate .tag{margin-bottom:6px}
-.d0 .pic{border-color:#7dd3fc88}
+.d0 .pic{border-color:#a5b4fc88}
 .d1 .pic{border:2px solid #c084fc;animation:glow2 2s ease-in-out infinite alternate}
 .d1 .nmx{background:linear-gradient(90deg,#fff,#d8b4fe);-webkit-background-clip:text;background-clip:text;color:transparent}
 .d1 .bn{border-color:#c084fc}
-.d2 .pic{position:relative;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 44px #ffd36e99}
+.d2 .pic{position:relative;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 44px #f1e6ff99}
 .d2 .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff66 50%,transparent 65%) 0 0/250% 100%;animation:holo 3.5s linear infinite}
-.d2 .nmx{background:linear-gradient(100deg,#fff2c4,#ffd36e 30%,#fff 50%,#ffb703 70%,#fff2c4) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
-.d2 .plate{box-shadow:0 0 30px #ffd36e33}.d2 .bn{border-color:var(--gold)}
+.d2 .nmx{background:linear-gradient(100deg,#ffffff,#f1e6ff 30%,#fff 50%,#c4a1ff 70%,#ffffff) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+.d2 .plate{box-shadow:0 0 30px #f1e6ff33}.d2 .bn{border-color:var(--gold)}
 @keyframes holo{from{background-position:150% 0}to{background-position:-150% 0}}
 .gm{display:flex;align-items:center;gap:12px;padding:12px;margin:10px 0;border-radius:18px;background:var(--gl);border:1px solid var(--bd)}
 .gm div{flex:1;line-height:1.25}.gm small{display:block;font-size:12px}.ge{font-size:30px}
@@ -269,9 +269,67 @@ h3{font-size:16px;margin:12px 0 4px}
 .hole{aspect-ratio:1;border-radius:20px;border:1px solid var(--bd);background:radial-gradient(#ffffff14,#00000066);font-size:44px;color:#fff}
 .mc{aspect-ratio:1;border-radius:14px;border:1px solid var(--bd);background:linear-gradient(135deg,var(--v),var(--mg));font-size:30px;color:#fff}
 .mc.ok{background:#16a34a55;border-color:#4ade80}
-.aura{width:150px;height:150px;margin:28px auto;border-radius:50%;display:grid;place-items:center;font-size:64px;background:radial-gradient(circle,#fff,#7dd3fc 40%,#5b3df5 70%,transparent 72%);box-shadow:0 0 50px #7dd3fc;transition:transform .08s}
+.aura{width:150px;height:150px;margin:28px auto;border-radius:50%;display:grid;place-items:center;font-size:64px;background:radial-gradient(circle,#fff,#a5b4fc 40%,#5b3df5 70%,transparent 72%);box-shadow:0 0 50px #a5b4fc;transition:transform .08s}
 #tp{padding:26px;font-size:24px}
 .res .rw{font-size:28px;font-weight:800;margin:14px 0}
+/* v8: summon title and rays fix, arcade, picker buttons (purple, black and white only) */
+.stage{overflow:visible;margin-bottom:4px}
+.rbg{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 30%,#000 70%,transparent)}
+.rbg .rays{top:62%}
+.sttl{position:relative;z-index:1;text-align:center;padding-top:6px;margin-bottom:6px}
+.fest{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:99px;font-size:12.5px;font-weight:600;letter-spacing:.08em;color:var(--lc);border:1px solid #ffffff2e;background:linear-gradient(90deg,transparent,#ffffff17,transparent)}
+.fest i{font-style:normal;color:#fff;text-shadow:0 0 8px #a78bfa}
+.sttl h2{margin:6px 0 0;padding-left:.1em;font-size:clamp(38px,13vw,54px);font-weight:900;letter-spacing:.1em;line-height:1;color:transparent;background:linear-gradient(100deg,#fff 0,#e9d5ff 30%,#a78bfa 48%,#fff 60%,#d8b4fe 80%,#fff 100%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 0 14px #8b6cffcc);animation:shine 5s linear infinite}
+.flare{position:relative;display:block;height:2px;width:72%;margin:8px auto 0;background:linear-gradient(90deg,transparent,#c9b8ff,#fff,#c9b8ff,transparent);box-shadow:0 0 14px #a78bfa}
+.flare::after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font-size:15px;color:#fff;text-shadow:0 0 10px #a78bfa}
+.gtiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.gt{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;min-height:176px;padding:14px 12px;text-align:left;border-radius:22px;border:1px solid var(--bd);color:#fff;font-family:inherit;background:linear-gradient(160deg,var(--g1),var(--g2))}
+.gt::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 0,#ffffff33,transparent 55%);pointer-events:none}
+.gt i{font-size:42px;font-style:normal;animation:float 3s ease-in-out infinite;filter:drop-shadow(0 6px 14px #0008)}
+.gt b{font-size:16px;font-weight:800}.gt small{font-size:11.5px;line-height:1.3;color:#e4d3ffcc}
+.gs{margin-top:auto;align-self:flex-start;padding:4px 12px;border-radius:99px;background:#ffffff26;font-size:12px;font-weight:700}
+.gt em{position:absolute;right:10px;top:10px;font-size:11px;font-style:normal;opacity:.85}
+.gt.cool{filter:saturate(.3) brightness(.65)}
+.gt-ki{--g1:#6d28d9;--g2:#1e1b4b}.gt-shadow{--g1:#312e81;--g2:#0b0618}.gt-match{--g1:#9333ea;--g2:#2e1065}.gt-quiz{--g1:#7c3aed;--g2:#1e1b4b}
+@keyframes float{50%{transform:translateY(-6px)}}
+.ov.g{background:radial-gradient(circle at 50% 0,#3b1a8a,transparent 60%),#04010ce8;--c:#e9d5ff;text-align:center}
+.gbar{display:flex;align-items:center;gap:10px;width:100%}
+.gbar b{flex:1;text-align:left;font-size:18px}
+.gscore{min-width:48px;padding:6px 14px;border-radius:99px;background:var(--gl);border:1px solid var(--bd);font-weight:800;font-size:18px}
+.gscore.bump{animation:bump .25s}
+@keyframes bump{50%{transform:scale(1.3);background:#fff;color:#1a0a3a}}
+.gtime{width:100%;height:8px;margin:12px 0 4px;border-radius:9px;background:#ffffff1a;overflow:hidden}
+.gtime span{display:block;height:100%;width:0;border-radius:9px;background:linear-gradient(90deg,#a78bfa,#fff);transition:width 1s linear}
+#ga{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;counter-reset:q}
+.bx{position:absolute;width:0;height:0;pointer-events:none;z-index:12}
+.pt{position:absolute;left:0;top:0;transform:translate(-50%,-50%);font-weight:800;font-size:20px;white-space:nowrap;color:#fff;text-shadow:0 0 10px var(--c);animation:rise .8s ease-out forwards}
+@keyframes rise{to{transform:translate(-50%,-90px);opacity:0}}
+.aura{position:relative;width:150px;height:150px;margin:34px auto;border-radius:50%;display:grid;place-items:center;font-size:62px;background:radial-gradient(circle,#fff 0,#e9d5ff 28%,#8b5cf6 58%,#3b1a8a 72%,transparent 74%);box-shadow:0 0 60px #8b5cf6;transition:transform .08s}
+.aura::before,.aura::after{content:"";position:absolute;inset:-18px;border-radius:50%;border:2px dashed #ffffff55;animation:rot 6s linear infinite}
+.aura::after{inset:-34px;border-color:#a78bfa66;animation-direction:reverse}
+.lvl{font-weight:800;font-size:18px;margin:8px 0}
+.btn.big{padding:24px;font-size:22px}
+.hole{position:relative;aspect-ratio:1;border-radius:50%;overflow:hidden;border:2px solid #ffffff26;background:radial-gradient(circle at 50% 60%,#000,#1b0a3a 70%);box-shadow:inset 0 -8px 18px #a78bfa44;font-size:44px;color:#fff}
+.pp{display:block;animation:popin .22s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popin{from{transform:translateY(60%) scale(.3)}}
+.mc{position:relative;aspect-ratio:1;border-radius:16px;border:1px solid var(--bd);background:linear-gradient(135deg,var(--v),var(--mg));font-size:30px;color:transparent}
+.mc::before{content:"✦";position:absolute;inset:0;display:grid;place-items:center;color:#ffffff99;font-size:20px}
+.mc.fl,.mc.ok{background:var(--gl);color:#fff;animation:flipin .25s}
+.mc.fl::before,.mc.ok::before{display:none}
+.mc.ok{border-color:#fff;box-shadow:0 0 18px #a78bfa;animation:flipin .25s,pulse2 1.6s ease-in-out .3s infinite}
+.mc.no{animation:wob .3s}
+@keyframes flipin{from{transform:rotateY(90deg)}}
+@keyframes wob{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pulse2{50%{box-shadow:0 0 28px #fff}}
+.dots{display:flex;gap:8px;justify-content:center}.dots i{width:10px;height:10px;border-radius:50%;background:#ffffff26}
+.dots .on{background:#fff}.dots .cur{background:var(--mg);box-shadow:0 0 10px var(--mg)}
+.qq{margin:14px 0;font-size:18px;line-height:1.3}
+.qb{position:relative;display:block;width:100%;margin:8px 0;padding:14px 14px 14px 54px;text-align:left;border-radius:16px;border:1px solid var(--bd);background:var(--gl);color:#fff;font:600 15px Outfit,sans-serif;counter-increment:q}
+.qb::before{content:counter(q,upper-alpha);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--v),var(--mg));font-size:13px;font-weight:800}
+.qb.good{background:#fff;color:#1a0a3a;border-color:#fff}
+.qb.bad{background:#3b0a4a;border-color:#a855f7;animation:wob .3s}
+.res .stars{font-size:38px;letter-spacing:6px}
+.res h2{margin:8px 0}.res .rw{font-size:30px;font-weight:800;margin:14px 0}
 </style>
 </head>
 <body>
@@ -285,11 +343,12 @@ const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 if(!SUPABASE_URL.startsWith('https')){document.body.innerHTML='<p style="padding:30px;font-size:18px">Open index.html and paste your Supabase URL and key at the top of the script.</p>';throw new Error('Supabase keys missing')}
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const GIF='https://media1.tenor.com/m/8fKXg5VL2tEAAAAC/purple-aesthetic.gif';
-const RK={R:0,SR:1,SSR:2},COST={R:100,SR:500,SSR:2000},GLOW=['#7dd3fc','#c084fc','#ffd36e'];
+const RK={R:0,SR:1,SSR:2},COST={R:100,SR:500,SSR:2000},GLOW=['#a5b4fc','#c084fc','#f1e6ff'];
 const $=s=>document.querySelector(s),app=$('#app'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const S={tab:'home',f:'All',cards:[],inv:{},players:[],p:null};
 const say=t=>{const m=$('#msg');if(m)m.textContent=t};
-const art=(i,h)=>(i?`url('${i}') center top/cover,`:'')+`linear-gradient(160deg,hsl(${h} 80% 52%),hsl(${(h+55)%360} 70% 16%))`;
+const ph=h=>235+(+h%80);
+const art=(i,h)=>(i?`url('${i}') center top/cover,`:'')+`linear-gradient(160deg,hsl(${ph(h)} 75% 50%),hsl(${ph(h)+25} 65% 15%))`;
 const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()"><div class="ttl"><span class="lock"><span class="orbit"><i></i></span><h1>STARFALL</h1><i class="sk a">✦</i><i class="sk b">✦</i><i class="sk c">✦</i></span><p class="sub">${t}</p></div></div>`;
 const cardHTML=(c,n=0,off=0,tap=1)=>`<div class="card ${c.rarity}${off?' off':''}" style="background:${art(c.image,c.hue)}" ${tap?`onclick="detail(${c.id})"`:''}><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}${c.image?'':`<em>${c.emoji}</em>`}<div class="nm">${c.name}<small>${c.title}</small></div></div>`;
 const feat=()=>S.cards.filter(c=>c.featured).sort((a,b)=>RK[b.rarity]-RK[a.rarity]);
@@ -311,13 +370,12 @@ const views={
     <div class="box dly"><div><b>Daily bonus</b><div id="cd">${cd()}</div></div><button class="btn sm" onclick="daily()">Claim 800 💎</button></div><p id="msg"></p>
     `,
   summon:()=>{const f=feat(),pos=[['fl',f[1]],['fr',f[2]],['fc',f[0]]].filter(x=>x[1]);
-    return `<h2 class="t2" style="text-align:center"><small>Starfall Festival</small>Summon</h2>
-    <div class="stage" style="--c:${f[0]&&f[0].rarity=='SSR'?'#ffd36e':'#c084fc'}"><div class="rays"></div><div class="altar"></div><div class="fan">${pos.map(([k,c])=>`<div class="fanc ${k}">${cardHTML(c)}</div>`).join('')||'<p class="mu">No featured heroes yet.</p>'}</div></div>
+    return `<div class="stage" style="--c:${f[0]&&f[0].rarity=='SSR'?'#f1e6ff':'#c084fc'}"><div class="rbg"><div class="rays"></div></div>${ttl('Starfall Festival','SUMMON')}<div class="altar"></div><div class="fan">${pos.map(([k,c])=>`<div class="fanc ${k}">${cardHTML(c)}</div>`).join('')||'<p class="mu">No featured heroes yet.</p>'}</div></div>
     <p class="mu" style="text-align:center;font-size:13px;margin-top:6px">Rate-up! SR and SSR summons have at least a 50% chance to be a featured hero.</p>
     <div class="row"><span class="chip rc0">R 72%</span><span class="chip rc1">SR 25%</span><span class="chip rc2">SSR 3%</span></div>
     <div class="box pity"><div class="pr" style="--p:${S.p.pity*2}%"><b>${S.p.pity}</b></div><div><b>Pity counter</b><p class="mu" style="font-size:13px">${50-S.p.pity} summons until a guaranteed SSR.</p></div></div>
     <div class="row"><button class="btn gl sum" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold sum" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`},
-  cards:()=>`<h2 class="t2"><small>Your</small>Heroes</h2><p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
+  cards:()=>`${ttl('Your collection','HEROES')}<p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
     <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
     <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
   me:()=>{const p=S.p,fv=(p.favs||[]).map(id=>S.cards.find(c=>c.id==id)).filter(Boolean),n=Object.keys(S.inv).length,ssr=S.cards.filter(c=>S.inv[c.id]&&c.rarity=='SSR').length;
@@ -328,8 +386,7 @@ const views={
     <h3>Favourite heroes</h3>${fv.length?`<div class="scroll">${fv.map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">Pick up to 3 favourites in Edit profile.</p>'}
     <button class="btn" onclick="profForm()">Edit profile</button>
     <div class="row"><button class="btn ghost" onclick="mute()">Sound: ${snd()?'on':'off'}</button><button class="btn ghost" onclick="logout()">Log out</button></div>`},
-  games:()=>`<h2 class="t2"><small>Earn rewards</small>Games</h2><p class="mu">Play anime-inspired minigames for gems and coins. Each game recharges for 10 minutes.</p>
-    ${Object.entries(G).map(([k,g])=>{const w=cdLeft(k);return `<div class="gm" onclick="startGame('${k}')"><span class="ge">${g.e}</span><div><b>${g.n}</b><small class="mu">${g.d}</small></div><span class="chip">${w?'⏳ '+Math.ceil(w/6e4)+'m':'Play'}</span></div>`}).join('')}<p class="mu" style="font-size:12px">Rewards: up to 30 💎 and 60 🪙 per play.</p>`,
+  games:()=>`${ttl('Earn rewards','ARCADE')}<div class="gtiles">${Object.entries(G).map(([k,g])=>{const w=cdLeft(k),b=+localStorage.getItem('best_'+k)||0;return `<button class="gt gt-${k}${w?' cool':''}" onclick="startGame('${k}')"><i>${g.e}</i><b>${g.n}</b><small>${g.d}</small><span class="gs">${w?'⏳ '+Math.ceil(w/6e4)+' min':'Play now'}</span>${b?`<em>Best ${b}</em>`:''}</button>`}).join('')}</div><p class="mu" style="font-size:12.5px;text-align:center">Each game pays up to 30 💎 and 60 🪙 and recharges for 10 minutes.</p>`,
   admin:()=>`<div class="box"><h3>Give rewards</h3><select id="pl" onchange="S.sel=this.value">${S.players.map(p=>`<option value="${p.id}" ${p.id==S.sel?'selected':''}>${p.email||p.id.slice(0,8)} (${p.gems} gems, ${p.coins} coins)</option>`).join('')}</select>
     <div class="row"><input id="ag" type="number" placeholder="Gems"><input id="ac" type="number" placeholder="Coins"></div>
     <button class="btn" onclick="give()">Give rewards</button><p class="mu" style="margin-top:8px">Use negative numbers to take away.</p><p id="msg"></p></div>
@@ -372,7 +429,7 @@ async function load(){
 function detail(id){
   const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0,t=RK[c.rarity];
   closeM();const m=document.createElement('div');m.className='ov d d'+t;m.id='modal';m.style.setProperty('--c',GLOW[t]);
-  m.style.background=`radial-gradient(90% 50% at 50% 28%,hsl(${c.hue} 85% ${[30,36,40][t]}%),transparent),#06020e`;
+  m.style.background=`radial-gradient(90% 50% at 50% 28%,hsl(${ph(c.hue)} 85% ${[30,36,40][t]}%),transparent),#06020e`;
   m.innerHTML=`<div class="dt">${t==2?'<div class="rwrap"><div class="rays"></div></div>':''}<button class="back" aria-label="Back" onclick="closeM()">‹</button><div class="wm">${esc(c.name)}</div>
     <div class="stg"><button class="ar" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><div class="pic ${c.rarity}" style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</div><button class="ar" aria-label="Next hero" onclick="detail(${N.id})">›</button>${t?'<i class="sk a">✦</i><i class="sk b">✦</i><i class="sk c">✦</i>':''}${t>1?'<i class="sk d">✦</i><i class="sk e">✦</i>':''}</div>
     <h2 class="nmx">${esc(c.name)}</h2><div class="stars">${'★'.repeat(3+t)}${'☆'.repeat(2-t)}</div><p class="mu">${esc(c.title)}</p>
@@ -456,7 +513,7 @@ setInterval(()=>{const e=$('#inc');if(e&&S.p)e.innerHTML=incHTML()},10000);
 async function collect(){const{data,error}=await sb.rpc('collect_income');await load();say(error?error.message:`Collected ${data.gems} gems and ${data.coins} coins!`)}
 function profForm(){
   const p=S.p,own=S.cards.filter(c=>S.inv[c.id]);
-  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(p[k],270)}"><input type="file" accept="image/*" onchange="upl(this,'${k}',1).catch(e=>alert('Upload failed: '+e.message))"><span>📷 ${p[k]?'Change image':'Choose from gallery'}</span></label><input id="f_${k}" type="hidden" value="${esc(p[k]||'')}">`;
+  const pic=(k,l)=>picker(k,l,p[k],270,1);
   modal(`<h2>Edit profile</h2><label>Display name<input id="f_name" maxlength="20" value="${esc(p.display_name||'')}" placeholder="${esc(S.name)}"></label>
     <label>Bio<textarea id="f_bio" rows="2" maxlength="120">${esc(p.bio||'')}</textarea></label>
     ${pic('avatar','Profile picture')}${pic('banner','Profile banner')}
@@ -470,15 +527,28 @@ async function saveProf(){
   if(error)return alert(error.message);closeM();load();
 }
 
-// ---- Minigames (original, anime-inspired) ----
+// ---- Shared bits: titles and image picker ----
+const ttl=(s,m)=>`<div class="sttl"><span class="fest"><i>✦</i>${s}<i>✦</i></span><h2>${m}</h2><span class="flare"></span></div>`;
+const picker=(k,l,url,hue,pr)=>`<label>${l}</label><div class="up" id="p_${k}" style="background:${art(url,hue)}"><input type="file" accept="image/*" onchange="upl(this,'${k}',${pr})"><span>📷 ${url?'Change image':'Choose from gallery'}</span></div><div class="row"><button type="button" class="btn ghost sm" onclick="fileAny('${k}',${pr})">📁 Browse files</button><button type="button" class="btn ghost sm" onclick="linkImg('${k}')">🔗 Paste link</button></div><input id="f_${k}" type="hidden" value="${esc(url||'')}">`;
+function fileAny(k,pr){const i=document.createElement('input');i.type='file';i.accept='*/*';i.style.cssText='position:fixed;left:-99px;opacity:0';document.body.append(i);i.onchange=()=>upl(i,k,pr).finally(()=>i.remove());i.click()}
+function linkImg(k){const u=prompt('Paste an image link (https://...)');if(u&&u.trim()){$('#f_'+k).value=u.trim();$('#p_'+k).style.background=art(u.trim(),270);const s=$('#p_'+k+' span');if(s)s.textContent='✅ Link added. Press Save.'}}
+
+// ---- Arcade: anime-inspired minigames ----
 const CD=6e5;let TM=[];
 const cdLeft=k=>Math.max(0,CD-(Date.now()-new Date((S.p.plays||{})[k]||0).getTime()));
-const hud=t=>{const e=$('#gh');if(e)e.textContent=t};
 const ga=h=>{const e=$('#ga');if(e)e.innerHTML=h};
+const hud=t=>{const e=$('#gh');if(e)e.textContent=t};
+const scr=n=>{const e=$('#gs');if(e){e.textContent=n;e.classList.remove('bump');void e.offsetWidth;e.classList.add('bump')}};
+const bar=f=>{const e=$('#gt');if(e)e.style.width=Math.max(0,f*100)+'%'};
 const tm=(f,ms,iv)=>{const i=(iv?setInterval:setTimeout)(f,ms);TM.push(i);return i};
 const stopG=()=>{TM.forEach(clearInterval);TM=[]};
 const closeG=()=>{stopG();const o=$('#game');if(o)o.remove()};
 const shuf=a=>[...a].sort(()=>Math.random()-.5);
+const blip=f=>tone(f,0,.08,'triangle',.09);
+const mid=()=>[innerWidth/2,innerHeight*.45],ev=e=>[e.clientX,e.clientY];
+const shk=()=>{const o=$('#game');if(o){o.classList.remove('shake');void o.offsetWidth;o.classList.add('shake')}};
+const gflash=()=>{const o=$('#game');if(!o)return;const f=document.createElement('div');f.className='flash';f.style.animation='fl .5s ease-out';o.append(f);setTimeout(()=>f.remove(),600)};
+const fxAt=(x,y,n=10,txt)=>{const o=$('#game');if(!o)return;const b=document.createElement('span');b.className='bx';b.style.left=x+'px';b.style.top=y+'px';b.innerHTML=Array.from({length:n},()=>`<i class="sp" style="--a:${Math.random()*360}deg;--d:${30+Math.random()*80}px"></i>`).join('')+(txt?`<b class="pt">${txt}</b>`:'');o.append(b);setTimeout(()=>b.remove(),1100)};
 const Q=[['Which anime follows the Straw Hat Pirates?','One Piece','Bleach','Fairy Tail'],
 ['What is Naruto Uzumaki\'s dream?','To become Hokage','To become Pirate King','To become a Soul Reaper'],
 ['In Attack on Titan, what protects humanity from the Titans?','Giant walls','Magic barriers','Mecha suits'],
@@ -491,38 +561,55 @@ const Q=[['Which anime follows the Straw Hat Pirates?','One Piece','Bleach','Fai
 ['In My Hero Academia, what is a superpower called?','Quirk','Stand','Nen'],
 ['Which anime features Gon and Killua?','Hunter x Hunter','Yu Yu Hakusho','Fairy Tail']];
 const G={
- ki:{n:'Ki Charge',e:'⚡',d:'Tap as fast as you can for 8 seconds to power up!',run(k){let t=8,s=0;
-   ga('<div class="aura" id="au">⚡</div><button class="btn" id="tp">Tap!</button>');hud('Time 8s, power 0');
-   $('#tp').onpointerdown=()=>{s++;$('#au').style.transform=`scale(${1+Math.min(s,70)/60})`;hud(`Time ${t}s, power ${s}`)};
-   tm(()=>{t--;hud(`Time ${t}s, power ${s}`);if(t<=0)fin(k,s)},1000,1)}},
- shadow:{n:'Shadow Strike',e:'🥷',d:'Tap the ninjas, avoid the cats. 30 seconds.',run(k){let t=30,s=0;
-   ga(`<div class="gg">${'<button class="hole"></button>'.repeat(9)}</div>`);hud('Time 30s, score 0');
-   const hs=[...document.querySelectorAll('.hole')],set=(h,v,ms)=>{clearTimeout(h._t);h.textContent=v;h._t=tm(()=>{h.textContent='';h.k=''},ms)};
-   hs.forEach(h=>h.onpointerdown=()=>{if(!h.k)return;s+=h.k=='g'?1:-1;set(h,h.k=='g'?'💥':'💢',250);h.k='';hud(`Time ${t}s, score ${s}`)});
-   tm(()=>{const h=hs[Math.random()*9|0];if(h.k)return;h.k=Math.random()<.25?'b':'g';set(h,h.k=='g'?'🥷':'🐱',750)},550,1);
-   tm(()=>{t--;hud(`Time ${t}s, score ${s}`);if(t<=0)fin(k,Math.max(0,s))},1000,1)}},
- match:{n:'Spirit Match',e:'🔮',d:'Match all 6 hero pairs in as few moves as you can.',run(k){
-   const em=shuf(S.cards.map(c=>c.emoji)).slice(0,6),deck=shuf([...em,...em]);let open=[],mv=0,ok=0,lock=0;
-   ga(`<div class="gg m">${deck.map((e,i)=>`<button class="mc" data-i="${i}"></button>`).join('')}</div>`);hud('Moves 0');
-   document.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(lock||b.textContent)return;b.textContent=deck[b.dataset.i];open.push(b);
-     if(open.length<2)return;const[x,y]=open;open=[];mv++;hud('Moves '+mv);
-     if(x.textContent==y.textContent){x.classList.add('ok');y.classList.add('ok');if(++ok==6)tm(()=>fin(k,Math.max(10,100-(mv-6)*6)),600)}
-     else{lock=1;tm(()=>{x.textContent=y.textContent='';lock=0},700)}})}},
- quiz:{n:'Otaku Quiz',e:'📚',d:'Answer 5 questions about famous anime.',run(k){const qs=shuf(Q).slice(0,5);let i=0,s=0;
-   const ask=()=>{const[q,a,...w]=qs[i];hud(`Question ${i+1} of 5, score ${s}`);
-     ga(`<h3 style="margin:16px 0">${q}</h3>${shuf([a,...w]).map(o=>`<button class="btn alt qb">${o}</button>`).join('')}`);
-     const bs=[...document.querySelectorAll('.qb')];
-     bs.forEach(b=>b.onclick=()=>{const ok=b.textContent==a;if(ok)s++;bs.forEach(x=>{x.onclick=null;if(x.textContent==a)x.style.background='#16a34a'});if(!ok)b.style.background='#b91c1c';tm(()=>++i<5?ask():fin(k,s),900)})};ask()}}
+ ki:{n:'Ki Charge',e:'⚡',mx:70,d:'Tap as fast as you can for 8 seconds to power up!',run(k){let t=8,s=0,lv=1;
+   ga('<div class="aura" id="au"><span>⚡</span></div><p class="lvl" id="lv">Power Level 1</p><button class="btn big" id="tp">Tap!</button>');bar(1);
+   $('#tp').onpointerdown=e=>{s++;scr(s);const[x,y]=ev(e);fxAt(x,y,6);blip(300+s*9);
+     $('#au').style.transform=`scale(${1+Math.min(s,70)/90})`;const l=Math.min(5,1+(s/14|0));
+     if(l>lv){lv=l;$('#lv').textContent='Power Level '+l;shk();play('card1')}};
+   tm(()=>{t--;bar(t/8);if(t<=0){gflash();fin(k,s)}},1000,1)}},
+ shadow:{n:'Shadow Strike',e:'🥷',mx:35,d:'Tap the ninjas, avoid the cats. 30 seconds.',run(k){let t=30,s=0,cb=0;
+   ga(`<div class="gg">${'<button class="hole"></button>'.repeat(9)}</div><p class="lvl" id="cb">&nbsp;</p>`);bar(1);
+   const hs=[...document.querySelectorAll('.hole')],set=(h,v,ms)=>{clearTimeout(h._t);h.innerHTML=`<span class="pp">${v}</span>`;h._t=tm(()=>{h.innerHTML='';h.k=''},ms)};
+   hs.forEach(h=>h.onpointerdown=e=>{if(!h.k)return;const g=h.k=='g',[x,y]=ev(e);h.k='';
+     if(g){s++;cb++;blip(400+cb*40);fxAt(x,y,8,cb>2?'x'+cb:'+1')}else{s--;cb=0;tone(120,0,.25,'sine',.25,60);shk();fxAt(x,y,6,'-1')}
+     scr(Math.max(0,s));$('#cb').innerHTML=cb>1?'Combo x'+cb:'&nbsp;';set(h,g?'💨':'💢',260)});
+   const spawn=()=>{const h=hs[Math.random()*9|0];if(!h.k){h.k=Math.random()<.25?'b':'g';set(h,h.k=='g'?'🥷':'🐱',Math.max(480,850-(30-t)*12))}tm(spawn,Math.max(300,620-(30-t)*10))};spawn();
+   tm(()=>{t--;bar(t/30);if(t<=0)fin(k,Math.max(0,s))},1000,1)}},
+ match:{n:'Spirit Match',e:'🔮',mx:100,d:'Memorize, then match all 6 hero pairs in as few moves as you can.',run(k){
+   const em=shuf(S.cards.map(c=>c.emoji)).slice(0,6),deck=shuf([...em,...em]);let open=[],mv=0,ok=0,lock=1;
+   ga(`<div class="gg m">${deck.map((e,i)=>`<button class="mc fl">${e}</button>`).join('')}</div>`);hud('Memorize the cards...');bar(1);
+   const bs=[...document.querySelectorAll('.mc')],info=()=>hud(`Moves ${mv}, pairs ${ok} of 6`);
+   tm(()=>{bs.forEach(b=>b.classList.remove('fl'));lock=0;info()},1600);
+   bs.forEach(b=>b.onclick=()=>{if(lock||b.classList.contains('fl')||b.classList.contains('ok'))return;b.classList.add('fl');blip(500+open.length*120);open.push(b);
+     if(open.length<2)return;const[x,y]=open;open=[];mv++;
+     if(x.textContent==y.textContent){ok++;[x,y].forEach(z=>z.classList.add('ok'));info();play('card0');const r=y.getBoundingClientRect();fxAt(r.x+r.width/2,r.y+r.height/2,12);
+       if(ok==6)tm(()=>{play('card2');fxAt(...mid(),36);fin(k,Math.max(10,100-(mv-6)*6))},700)}
+     else{info();lock=1;tm(()=>{[x,y].forEach(z=>{z.classList.remove('fl');z.classList.add('no')});tm(()=>{[x,y].forEach(z=>z.classList.remove('no'));lock=0},300)},650)}})}},
+ quiz:{n:'Otaku Quiz',e:'📚',mx:5,d:'Answer 5 questions about famous anime. 10 seconds each!',run(k){const qs=shuf(Q).slice(0,5);let i=0,s=0,t;
+   const ask=()=>{const[q,a,...w]=qs[i];t=10;hud(`Question ${i+1} of 5`);bar(1);
+     ga(`<div class="dots">${qs.map((_,j)=>`<i class="${j<i?'on':j==i?'cur':''}"></i>`).join('')}</div><h3 class="qq">${q}</h3>${shuf([a,...w]).map(o=>`<button class="qb">${o}</button>`).join('')}`);
+     const bs=[...document.querySelectorAll('.qb')];let done=0,iv;
+     const end=b=>{if(done)return;done=1;clearInterval(iv);const ok=b&&b.textContent==a;
+       if(ok){s++;scr(s);play('card0')}else{tone(140,0,.3,'sine',.25,70);shk()}
+       bs.forEach(x=>{x.onclick=null;if(x.textContent==a)x.classList.add('good')});if(b&&!ok)b.classList.add('bad');
+       if(ok){const r=b.getBoundingClientRect();fxAt(r.x+r.width/2,r.y+r.height/2,12,'+1')}
+       tm(()=>++i<5?ask():fin(k,s),1000)};
+     bs.forEach(b=>b.onclick=()=>end(b));
+     iv=tm(()=>{t--;bar(t/10);if(t<=0)end(null)},1000,1)};ask()}}
 };
 function startGame(k){
   if(cdLeft(k))return;closeG();const g=G[k],o=document.createElement('div');o.className='ov g';o.id='game';
-  o.innerHTML=`<button class="back" onclick="closeG()">‹</button><h2>${g.e} ${g.n}</h2><p class="mu" id="gh">${g.d}</p><div id="ga"><button class="btn" id="go">Start</button></div>`;
-  document.body.append(o);$('#go').onclick=()=>g.run(k);
+  o.innerHTML=`<div class="gbar"><button class="back" onclick="closeG()">‹</button><b>${g.e} ${g.n}</b><span class="gscore" id="gs">0</span></div><div class="gtime"><span id="gt"></span></div><p class="mu" id="gh">${g.d}</p><div id="ga"><button class="btn big" id="go">Start</button></div>`;
+  document.body.append(o);$('#go').onclick=()=>{tone(440,0,.1,'triangle',.1);g.run(k)};
 }
 async function fin(k,sc){
-  stopG();ga('<p class="mu">Collecting rewards...</p>');
+  stopG();const g=G[k];ga('<p class="mu">Collecting rewards...</p>');
   const{data,error}=await sb.rpc('play_reward',{g:k,sc:Math.round(sc)});
-  ga(error?`<p>${esc(error.message)}</p><button class="btn" onclick="closeG()">Close</button>`:`<div class="res"><h2>Score ${sc}</h2><p class="rw">+${data.gems} 💎 +${data.coins} 🪙</p><button class="btn" onclick="closeG();load()">Collect</button></div>`);
+  if(error)return ga(`<p>${esc(error.message)}</p><button class="btn" onclick="closeG()">Close</button>`);
+  const r=sc/g.mx,st=r>=.8?3:r>=.5?2:r>=.2?1:0,prev=+localStorage.getItem('best_'+k)||0;if(sc>prev)localStorage.setItem('best_'+k,sc);
+  ga(`<div class="res"><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><h2>${['Keep training!','Nice work!','Great run!','Legendary!'][st]}</h2><p class="mu">Score ${sc}. ${sc>prev?'New best!':'Best '+prev}</p><p class="rw">+<span id="c1">0</span> 💎 +<span id="c2">0</span> 🪙</p><button class="btn" onclick="closeG();load()">Collect</button></div>`);
+  play(st>1?'card2':'card1');if(st)fxAt(...mid(),30);
+  let n=0;const iv=setInterval(()=>{n++;const a=$('#c1'),b=$('#c2');if(a)a.textContent=Math.round(data.gems*n/20);if(b)b.textContent=Math.round(data.coins*n/20);if(n>=20)clearInterval(iv)},40);
 }
 
 // Header gets a dark background once you scroll
@@ -546,7 +633,7 @@ async function give(){
 function cardForm(id){
   const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false};
   const f=(k,l,t='text')=>`<label>${l}<input id="f_${k}" type="${t}" value="${c[k]??''}"></label>`;
-  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(c[k],c.hue)}"><input type="file" accept="image/*" onchange="upl(this,'${k}').catch(e=>alert('Upload failed: '+e.message))"><span>📷 ${c[k]?'Change image':'Choose from gallery'}</span></label><details><summary>Or paste an image link</summary>${f(k,'Image link')}</details>`;
+  const pic=(k,l)=>picker(k,l,c[k],c.hue,0);
   modal(`<h2>${id?'Edit':'New'} card</h2>${f('name','Name')}${f('title','Title')}
     <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
     ${f('element','Element')}${f('emoji','Emoji (shown when there is no image)')}${f('hue','Color hue (0 to 360)','number')}
@@ -558,12 +645,17 @@ function cardForm(id){
 const shrink=(f,m=1000)=>f.type=='image/gif'?Promise.resolve(f):new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,m/Math.max(i.width,i.height)),k=document.createElement('canvas');k.width=i.width*s;k.height=i.height*s;k.getContext('2d').drawImage(i,0,0,k.width,k.height);k.toBlob(b=>r(b||f),'image/webp',.9)};i.onerror=()=>r(f);i.src=URL.createObjectURL(f)});
 async function upl(el,k,pr){
   const f=el.files[0];if(!f)return;
-  const sp=el.nextElementSibling;sp.textContent='⏳ Uploading...';
-  const b=await shrink(f,pr?700:1000),bk=pr?'avatars':'cards',p=(pr?S.p.id+'/':'')+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
-  const{error}=await sb.storage.from(bk).upload(p,b,{contentType:b.type});
-  if(error){sp.textContent='📷 Choose from gallery';return alert(error.message)}
-  const u=sb.storage.from(bk).getPublicUrl(p).data.publicUrl;
-  $('#f_'+k).value=u;$('#p_'+k).style.background=art(u,270);sp.textContent='✅ Uploaded. Tap to change';
+  const sp=$('#p_'+k+' span'),say2=t=>{if(sp)sp.textContent=t};
+  try{
+    if(!f.type.startsWith('image/'))throw new Error('Please choose an image file.');
+    say2('⏳ Uploading...');
+    const b=await shrink(f,pr?700:1000),bk=pr?'avatars':'cards',p=(pr?S.p.id+'/':'')+Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
+    const{error}=await sb.storage.from(bk).upload(p,b,{contentType:b.type});
+    if(error)throw error;
+    const u=sb.storage.from(bk).getPublicUrl(p).data.publicUrl;
+    $('#f_'+k).value=u;$('#p_'+k).style.background=art(u,270);say2('✅ Uploaded. Tap to change');
+  }catch(e){say2('📷 Choose from gallery');alert('Upload failed: '+e.message)}
+  el.value='';
 }
 async function saveCard(id){
   const g=k=>$('#f_'+k).value.trim();
