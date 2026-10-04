@@ -226,6 +226,52 @@ h3{font-size:16px;margin:12px 0 4px}
 .av.big{width:68px;height:68px;font-size:28px;border:3px solid var(--bk);flex:none;box-shadow:0 0 18px #7c5cff80}
 .pk{position:relative}.pk:not(.on){opacity:.55}.pk.on .card{border-color:#fff}
 .pk.on::after{content:"✓";position:absolute;right:6px;top:6px;width:20px;height:20px;border-radius:50%;background:var(--mg);display:grid;place-items:center;font-size:12px;font-weight:800;z-index:3}
+/* v7: picker fix, summon stage, rarity profiles, minigames */
+.up{position:relative;overflow:hidden}
+.up input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;margin:0;padding:0;z-index:2}
+.up span{position:relative;z-index:1}
+.stage{display:block;position:relative;overflow:hidden;margin:0 -14px;padding:8px 14px 0}
+.altar{position:absolute;left:50%;bottom:6px;width:300px;height:70px;margin-left:-150px;border-radius:50%;border:2px solid var(--c);box-shadow:0 0 28px var(--c),inset 0 0 26px var(--c);opacity:.55}
+.fan{position:relative;height:250px}
+.fanc{position:absolute;left:50%;bottom:14px;width:124px;margin-left:-62px;transform-origin:50% 100%}
+.fanc.fc{width:148px;margin-left:-74px;z-index:2;animation:bob 4s ease-in-out infinite}
+.fanc.fl{transform:translateX(-88px) rotate(-9deg) scale(.88)}
+.fanc.fr{transform:translateX(88px) rotate(9deg) scale(.88)}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.rc0{color:#7dd3fc}.rc1{color:#d8b4fe}.rc2{color:var(--gold)}
+.pity{display:flex;align-items:center;gap:14px}
+.pr{flex:none;position:relative;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--mg) var(--p),#ffffff1a 0);display:grid;place-items:center}
+.pr::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#0d0620}
+.pr b{position:relative;font-size:18px}
+.btn.gold.sum{animation:pulseg 2.2s ease-in-out infinite}
+@keyframes pulseg{50%{box-shadow:0 0 30px #ffd36eaa}}
+.rwrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.stg{position:relative;display:flex;align-items:center;gap:6px;margin:10px 0 4px}
+.sk.d{left:12%;bottom:-10px;font-size:15px;animation-delay:.5s}.sk.e{right:30%;top:-12px;font-size:12px;animation-delay:1.2s}
+.stars{color:var(--gold);letter-spacing:3px;font-size:16px;margin-top:2px}
+.plate{margin:12px 0;padding:14px;border-radius:20px;background:var(--gl);border:1px solid var(--c)}
+.plate .tag{margin-bottom:6px}
+.d0 .pic{border-color:#7dd3fc88}
+.d1 .pic{border:2px solid #c084fc;animation:glow2 2s ease-in-out infinite alternate}
+.d1 .nmx{background:linear-gradient(90deg,#fff,#d8b4fe);-webkit-background-clip:text;background-clip:text;color:transparent}
+.d1 .bn{border-color:#c084fc}
+.d2 .pic{position:relative;overflow:hidden;border:3px solid var(--gold);box-shadow:0 0 44px #ffd36e99}
+.d2 .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff66 50%,transparent 65%) 0 0/250% 100%;animation:holo 3.5s linear infinite}
+.d2 .nmx{background:linear-gradient(100deg,#fff2c4,#ffd36e 30%,#fff 50%,#ffb703 70%,#fff2c4) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite}
+.d2 .plate{box-shadow:0 0 30px #ffd36e33}.d2 .bn{border-color:var(--gold)}
+@keyframes holo{from{background-position:150% 0}to{background-position:-150% 0}}
+.gm{display:flex;align-items:center;gap:12px;padding:12px;margin:10px 0;border-radius:18px;background:var(--gl);border:1px solid var(--bd)}
+.gm div{flex:1;line-height:1.25}.gm small{display:block;font-size:12px}.ge{font-size:30px}
+.ov.g{justify-content:flex-start;padding:calc(14px + env(safe-area-inset-top)) 16px 16px}
+.ov.g .back{align-self:flex-start}
+.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.gg.m{grid-template-columns:repeat(4,1fr)}
+.hole,.mc,#tp{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+.hole{aspect-ratio:1;border-radius:20px;border:1px solid var(--bd);background:radial-gradient(#ffffff14,#00000066);font-size:44px;color:#fff}
+.mc{aspect-ratio:1;border-radius:14px;border:1px solid var(--bd);background:linear-gradient(135deg,var(--v),var(--mg));font-size:30px;color:#fff}
+.mc.ok{background:#16a34a55;border-color:#4ade80}
+.aura{width:150px;height:150px;margin:28px auto;border-radius:50%;display:grid;place-items:center;font-size:64px;background:radial-gradient(circle,#fff,#7dd3fc 40%,#5b3df5 70%,transparent 72%);box-shadow:0 0 50px #7dd3fc;transition:transform .08s}
+#tp{padding:26px;font-size:24px}
+.res .rw{font-size:28px;font-weight:800;margin:14px 0}
 </style>
 </head>
 <body>
@@ -264,11 +310,13 @@ const views={
     <div id="inc">${incHTML()}</div>
     <div class="box dly"><div><b>Daily bonus</b><div id="cd">${cd()}</div></div><button class="btn sm" onclick="daily()">Claim 800 💎</button></div><p id="msg"></p>
     `,
-  summon:()=>`<h2 class="t2"><small>Starfall Festival</small>Summon</h2>
-    <p class="mu">SR and SSR summons have at least a 50% chance to be a featured hero.</p>${featRow()}
-    <div class="row"><span class="chip">SSR 3%</span><span class="chip">SR 25%</span><span class="chip">R 72%</span></div>
-    <div class="bar"><span style="width:${S.p.pity*2}%"></span></div><small class="mu">A guaranteed SSR arrives at 50 summons (${S.p.pity}/50)</small>
-    <div class="row"><button class="btn gl" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`,
+  summon:()=>{const f=feat(),pos=[['fl',f[1]],['fr',f[2]],['fc',f[0]]].filter(x=>x[1]);
+    return `<h2 class="t2" style="text-align:center"><small>Starfall Festival</small>Summon</h2>
+    <div class="stage" style="--c:${f[0]&&f[0].rarity=='SSR'?'#ffd36e':'#c084fc'}"><div class="rays"></div><div class="altar"></div><div class="fan">${pos.map(([k,c])=>`<div class="fanc ${k}">${cardHTML(c)}</div>`).join('')||'<p class="mu">No featured heroes yet.</p>'}</div></div>
+    <p class="mu" style="text-align:center;font-size:13px;margin-top:6px">Rate-up! SR and SSR summons have at least a 50% chance to be a featured hero.</p>
+    <div class="row"><span class="chip rc0">R 72%</span><span class="chip rc1">SR 25%</span><span class="chip rc2">SSR 3%</span></div>
+    <div class="box pity"><div class="pr" style="--p:${S.p.pity*2}%"><b>${S.p.pity}</b></div><div><b>Pity counter</b><p class="mu" style="font-size:13px">${50-S.p.pity} summons until a guaranteed SSR.</p></div></div>
+    <div class="row"><button class="btn gl sum" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold sum" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`},
   cards:()=>`<h2 class="t2"><small>Your</small>Heroes</h2><p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
     <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
     <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
@@ -280,6 +328,8 @@ const views={
     <h3>Favourite heroes</h3>${fv.length?`<div class="scroll">${fv.map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">Pick up to 3 favourites in Edit profile.</p>'}
     <button class="btn" onclick="profForm()">Edit profile</button>
     <div class="row"><button class="btn ghost" onclick="mute()">Sound: ${snd()?'on':'off'}</button><button class="btn ghost" onclick="logout()">Log out</button></div>`},
+  games:()=>`<h2 class="t2"><small>Earn rewards</small>Games</h2><p class="mu">Play anime-inspired minigames for gems and coins. Each game recharges for 10 minutes.</p>
+    ${Object.entries(G).map(([k,g])=>{const w=cdLeft(k);return `<div class="gm" onclick="startGame('${k}')"><span class="ge">${g.e}</span><div><b>${g.n}</b><small class="mu">${g.d}</small></div><span class="chip">${w?'⏳ '+Math.ceil(w/6e4)+'m':'Play'}</span></div>`}).join('')}<p class="mu" style="font-size:12px">Rewards: up to 30 💎 and 60 🪙 per play.</p>`,
   admin:()=>`<div class="box"><h3>Give rewards</h3><select id="pl" onchange="S.sel=this.value">${S.players.map(p=>`<option value="${p.id}" ${p.id==S.sel?'selected':''}>${p.email||p.id.slice(0,8)} (${p.gems} gems, ${p.coins} coins)</option>`).join('')}</select>
     <div class="row"><input id="ag" type="number" placeholder="Gems"><input id="ac" type="number" placeholder="Coins"></div>
     <button class="btn" onclick="give()">Give rewards</button><p class="mu" style="margin-top:8px">Use negative numbers to take away.</p><p id="msg"></p></div>
@@ -288,7 +338,7 @@ const views={
 };
 
 function draw(){
-  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes'],['me','👤','Profile']];
+  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes'],['games','🎮','Games'],['me','👤','Profile']];
   if(S.p.is_admin)T.push(['admin','🛠️','Admin']);
   app.innerHTML=`<header><div onclick="tab('me')">${avHTML(S.p)}</div><div class="hi"><small>Welcome back</small><b>Hi, ${esc(S.p.display_name||S.name)}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
@@ -320,15 +370,14 @@ async function load(){
 }
 
 function detail(id){
-  const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0;
-  closeM();const m=document.createElement('div');m.className='ov d';m.id='modal';
-  m.style.background=`radial-gradient(90% 50% at 50% 28%,hsl(${c.hue} 85% 38%),transparent),#06020e`;
-  m.innerHTML=`<div class="dt"><button class="back" aria-label="Back" onclick="closeM()">‹</button><div class="wm">${c.name}</div>
-    <div class="stage"><button class="ar" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><div class="pic ${c.rarity}" style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</div><button class="ar" aria-label="Next hero" onclick="detail(${N.id})">›</button></div>
-    <h2 style="font-size:34px;margin-top:14px">${c.name}</h2><p class="mu">${c.title}</p>
-    <div style="margin:12px 0"><span class="tag ${c.rarity}">${c.rarity}</span><span class="tag">${c.element||'Unknown'}</span><span class="tag">${n?'Owned ×'+n:'Not owned'}</span></div>
-    <p>${c.descr||'Nothing is known about this hero yet.'}</p>
-    <div class="bn" style="background:${art(c.banner||c.image,c.hue)}">${c.title}</div>
+  const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0,t=RK[c.rarity];
+  closeM();const m=document.createElement('div');m.className='ov d d'+t;m.id='modal';m.style.setProperty('--c',GLOW[t]);
+  m.style.background=`radial-gradient(90% 50% at 50% 28%,hsl(${c.hue} 85% ${[30,36,40][t]}%),transparent),#06020e`;
+  m.innerHTML=`<div class="dt">${t==2?'<div class="rwrap"><div class="rays"></div></div>':''}<button class="back" aria-label="Back" onclick="closeM()">‹</button><div class="wm">${esc(c.name)}</div>
+    <div class="stg"><button class="ar" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><div class="pic ${c.rarity}" style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</div><button class="ar" aria-label="Next hero" onclick="detail(${N.id})">›</button>${t?'<i class="sk a">✦</i><i class="sk b">✦</i><i class="sk c">✦</i>':''}${t>1?'<i class="sk d">✦</i><i class="sk e">✦</i>':''}</div>
+    <h2 class="nmx">${esc(c.name)}</h2><div class="stars">${'★'.repeat(3+t)}${'☆'.repeat(2-t)}</div><p class="mu">${esc(c.title)}</p>
+    <div class="plate"><div style="margin-bottom:8px"><span class="tag ${c.rarity}">${c.rarity} ${['Rare','Epic','Legendary'][t]}</span><span class="tag">${esc(c.element||'Unknown')}</span><span class="tag">${n?'Owned ×'+n:'Not owned'}</span><span class="tag">+${INC[c.rarity][0]} 💎 +${INC[c.rarity][1]} 🪙 per hour</span></div><p>${esc(c.descr||'Nothing is known about this hero yet.')}</p></div>
+    <div class="bn" style="background:${art(c.banner||c.image,c.hue)}">${esc(c.title)}</div>
     ${n?'':`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}</div>`;
   document.body.append(m);
 }
@@ -407,7 +456,7 @@ setInterval(()=>{const e=$('#inc');if(e&&S.p)e.innerHTML=incHTML()},10000);
 async function collect(){const{data,error}=await sb.rpc('collect_income');await load();say(error?error.message:`Collected ${data.gems} gems and ${data.coins} coins!`)}
 function profForm(){
   const p=S.p,own=S.cards.filter(c=>S.inv[c.id]);
-  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(p[k],270)}"><input type="file" accept="image/*" hidden onchange="upl(this,'${k}',1)"><span>📷 ${p[k]?'Change image':'Choose from gallery'}</span></label><input id="f_${k}" type="hidden" value="${esc(p[k]||'')}">`;
+  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(p[k],270)}"><input type="file" accept="image/*" onchange="upl(this,'${k}',1).catch(e=>alert('Upload failed: '+e.message))"><span>📷 ${p[k]?'Change image':'Choose from gallery'}</span></label><input id="f_${k}" type="hidden" value="${esc(p[k]||'')}">`;
   modal(`<h2>Edit profile</h2><label>Display name<input id="f_name" maxlength="20" value="${esc(p.display_name||'')}" placeholder="${esc(S.name)}"></label>
     <label>Bio<textarea id="f_bio" rows="2" maxlength="120">${esc(p.bio||'')}</textarea></label>
     ${pic('avatar','Profile picture')}${pic('banner','Profile banner')}
@@ -419,6 +468,61 @@ async function saveProf(){
   const g=k=>$('#f_'+k).value.trim(),fv=[...document.querySelectorAll('#fav .on')].map(e=>+e.dataset.id);
   const{error}=await sb.rpc('save_profile',{nm:g('name'),av:g('avatar'),bn:g('banner'),bi:g('bio'),fv});
   if(error)return alert(error.message);closeM();load();
+}
+
+// ---- Minigames (original, anime-inspired) ----
+const CD=6e5;let TM=[];
+const cdLeft=k=>Math.max(0,CD-(Date.now()-new Date((S.p.plays||{})[k]||0).getTime()));
+const hud=t=>{const e=$('#gh');if(e)e.textContent=t};
+const ga=h=>{const e=$('#ga');if(e)e.innerHTML=h};
+const tm=(f,ms,iv)=>{const i=(iv?setInterval:setTimeout)(f,ms);TM.push(i);return i};
+const stopG=()=>{TM.forEach(clearInterval);TM=[]};
+const closeG=()=>{stopG();const o=$('#game');if(o)o.remove()};
+const shuf=a=>[...a].sort(()=>Math.random()-.5);
+const Q=[['Which anime follows the Straw Hat Pirates?','One Piece','Bleach','Fairy Tail'],
+['What is Naruto Uzumaki\'s dream?','To become Hokage','To become Pirate King','To become a Soul Reaper'],
+['In Attack on Titan, what protects humanity from the Titans?','Giant walls','Magic barriers','Mecha suits'],
+['Which anime stars Tanjiro Kamado?','Demon Slayer','Jujutsu Kaisen','Black Clover'],
+['What do you collect in Dragon Ball to summon Shenron?','Dragon Balls','Chaos Emeralds','Infinity Stones'],
+['In Death Note, which shinigami drops the notebook into the human world?','Ryuk','Rem','L'],
+['Which film is about a girl working in a bathhouse for spirits?','Spirited Away','Princess Mononoke','Howl\'s Moving Castle'],
+['What is the main law of alchemy in Fullmetal Alchemist?','Equivalent Exchange','Rule of Three','Conservation of Mana'],
+['What is Ash Ketchum\'s first Pokémon partner?','Pikachu','Charmander','Togepi'],
+['In My Hero Academia, what is a superpower called?','Quirk','Stand','Nen'],
+['Which anime features Gon and Killua?','Hunter x Hunter','Yu Yu Hakusho','Fairy Tail']];
+const G={
+ ki:{n:'Ki Charge',e:'⚡',d:'Tap as fast as you can for 8 seconds to power up!',run(k){let t=8,s=0;
+   ga('<div class="aura" id="au">⚡</div><button class="btn" id="tp">Tap!</button>');hud('Time 8s, power 0');
+   $('#tp').onpointerdown=()=>{s++;$('#au').style.transform=`scale(${1+Math.min(s,70)/60})`;hud(`Time ${t}s, power ${s}`)};
+   tm(()=>{t--;hud(`Time ${t}s, power ${s}`);if(t<=0)fin(k,s)},1000,1)}},
+ shadow:{n:'Shadow Strike',e:'🥷',d:'Tap the ninjas, avoid the cats. 30 seconds.',run(k){let t=30,s=0;
+   ga(`<div class="gg">${'<button class="hole"></button>'.repeat(9)}</div>`);hud('Time 30s, score 0');
+   const hs=[...document.querySelectorAll('.hole')],set=(h,v,ms)=>{clearTimeout(h._t);h.textContent=v;h._t=tm(()=>{h.textContent='';h.k=''},ms)};
+   hs.forEach(h=>h.onpointerdown=()=>{if(!h.k)return;s+=h.k=='g'?1:-1;set(h,h.k=='g'?'💥':'💢',250);h.k='';hud(`Time ${t}s, score ${s}`)});
+   tm(()=>{const h=hs[Math.random()*9|0];if(h.k)return;h.k=Math.random()<.25?'b':'g';set(h,h.k=='g'?'🥷':'🐱',750)},550,1);
+   tm(()=>{t--;hud(`Time ${t}s, score ${s}`);if(t<=0)fin(k,Math.max(0,s))},1000,1)}},
+ match:{n:'Spirit Match',e:'🔮',d:'Match all 6 hero pairs in as few moves as you can.',run(k){
+   const em=shuf(S.cards.map(c=>c.emoji)).slice(0,6),deck=shuf([...em,...em]);let open=[],mv=0,ok=0,lock=0;
+   ga(`<div class="gg m">${deck.map((e,i)=>`<button class="mc" data-i="${i}"></button>`).join('')}</div>`);hud('Moves 0');
+   document.querySelectorAll('.mc').forEach(b=>b.onclick=()=>{if(lock||b.textContent)return;b.textContent=deck[b.dataset.i];open.push(b);
+     if(open.length<2)return;const[x,y]=open;open=[];mv++;hud('Moves '+mv);
+     if(x.textContent==y.textContent){x.classList.add('ok');y.classList.add('ok');if(++ok==6)tm(()=>fin(k,Math.max(10,100-(mv-6)*6)),600)}
+     else{lock=1;tm(()=>{x.textContent=y.textContent='';lock=0},700)}})}},
+ quiz:{n:'Otaku Quiz',e:'📚',d:'Answer 5 questions about famous anime.',run(k){const qs=shuf(Q).slice(0,5);let i=0,s=0;
+   const ask=()=>{const[q,a,...w]=qs[i];hud(`Question ${i+1} of 5, score ${s}`);
+     ga(`<h3 style="margin:16px 0">${q}</h3>${shuf([a,...w]).map(o=>`<button class="btn alt qb">${o}</button>`).join('')}`);
+     const bs=[...document.querySelectorAll('.qb')];
+     bs.forEach(b=>b.onclick=()=>{const ok=b.textContent==a;if(ok)s++;bs.forEach(x=>{x.onclick=null;if(x.textContent==a)x.style.background='#16a34a'});if(!ok)b.style.background='#b91c1c';tm(()=>++i<5?ask():fin(k,s),900)})};ask()}}
+};
+function startGame(k){
+  if(cdLeft(k))return;closeG();const g=G[k],o=document.createElement('div');o.className='ov g';o.id='game';
+  o.innerHTML=`<button class="back" onclick="closeG()">‹</button><h2>${g.e} ${g.n}</h2><p class="mu" id="gh">${g.d}</p><div id="ga"><button class="btn" id="go">Start</button></div>`;
+  document.body.append(o);$('#go').onclick=()=>g.run(k);
+}
+async function fin(k,sc){
+  stopG();ga('<p class="mu">Collecting rewards...</p>');
+  const{data,error}=await sb.rpc('play_reward',{g:k,sc:Math.round(sc)});
+  ga(error?`<p>${esc(error.message)}</p><button class="btn" onclick="closeG()">Close</button>`:`<div class="res"><h2>Score ${sc}</h2><p class="rw">+${data.gems} 💎 +${data.coins} 🪙</p><button class="btn" onclick="closeG();load()">Collect</button></div>`);
 }
 
 // Header gets a dark background once you scroll
@@ -442,7 +546,7 @@ async function give(){
 function cardForm(id){
   const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false};
   const f=(k,l,t='text')=>`<label>${l}<input id="f_${k}" type="${t}" value="${c[k]??''}"></label>`;
-  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(c[k],c.hue)}"><input type="file" accept="image/*" hidden onchange="upl(this,'${k}')"><span>📷 ${c[k]?'Change image':'Choose from gallery'}</span></label><details><summary>Or paste an image link</summary>${f(k,'Image link')}</details>`;
+  const pic=(k,l)=>`<label>${l}</label><label class="up" id="p_${k}" style="background:${art(c[k],c.hue)}"><input type="file" accept="image/*" onchange="upl(this,'${k}').catch(e=>alert('Upload failed: '+e.message))"><span>📷 ${c[k]?'Change image':'Choose from gallery'}</span></label><details><summary>Or paste an image link</summary>${f(k,'Image link')}</details>`;
   modal(`<h2>${id?'Edit':'New'} card</h2>${f('name','Name')}${f('title','Title')}
     <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
     ${f('element','Element')}${f('emoji','Emoji (shown when there is no image)')}${f('hue','Color hue (0 to 360)','number')}
