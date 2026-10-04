@@ -429,6 +429,19 @@ h3{font-size:16px;margin:12px 0 4px}
 .gth{position:relative;width:76px;height:76px;border-radius:14px;border:1px solid var(--bd)}
 .gth button{position:absolute;right:4px;top:4px;width:22px;height:22px;border-radius:50%;border:0;background:#000c;color:#fff;font-size:12px}
 .gup{height:64px}
+/* v11: straight cutscene card, basic abilities and ultimate */
+.cutin{transform:translateX(-130%)}
+@keyframes cut{0%{transform:translateX(-130%);opacity:1}16%{transform:translateX(0)}90%{transform:translateX(0);opacity:1}100%{transform:translateX(0);opacity:0}}
+.ctabs{gap:4px}.ctabs button{font-size:12px}
+.sh{margin:16px 0 8px;font-size:15px;font-weight:800}
+.sk3{display:flex;gap:12px;align-items:flex-start;margin:8px 0;padding:12px;border-radius:18px;background:var(--gl);border:1px solid var(--bd)}
+.sk3>i{flex:none;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-style:normal;font-size:22px;background:linear-gradient(135deg,var(--v),var(--mg))}
+.sk3 b{margin-right:8px}.sk3 p{margin:4px 0 0;font-size:13.5px;color:var(--lc)}
+.abil.ult{padding:16px}
+.ah .qs{display:block;margin-top:2px;font-size:13px;font-style:italic;color:var(--lc)}
+.ah .qs::before{content:"“"}.ah .qs::after{content:"”"}
+.skr{margin:12px 0;padding:12px;border-radius:16px;background:#ffffff08;border:1px solid var(--bd)}
+.skr b{font-size:14px}
 </style>
 </head>
 <body>
@@ -452,7 +465,7 @@ const hero=t=>`<div class="hero"><img src="${GIF}" alt="" onerror="this.remove()
 const cardHTML=(c,n=0,off=0,tap=1)=>`<div class="card ${c.rarity}${off?' off':''}" style="background:${art(c.image,c.hue)}" ${tap?`onclick="detail(${c.id})"`:''}><b>${c.rarity}</b>${n>1?`<i>×${n}</i>`:''}${c.image?'':`<em>${c.emoji}</em>`}<div class="nm">${c.name}<small>${c.title}</small></div></div>`;
 const feat=()=>S.cards.filter(c=>c.featured).sort((a,b)=>RK[b.rarity]-RK[a.rarity]);
 const featRow=()=>feat().length?`<div class="scroll">${feat().map(c=>cardHTML(c)).join('')}</div>`:'<p class="mu">No featured heroes yet.</p>';
-const modal=(h,x)=>{closeM();const m=document.createElement('div');m.className='ov m';m.id='modal';m.innerHTML=`<div class="sheet">${h}${x?'':'<button class="btn alt" onclick="closeM()">Close</button>'}</div>`;m.onclick=e=>e.target==m&&closeM();document.body.append(m)};
+const modal=(h,x)=>{closeM();const m=document.createElement('div');m.className='ov m';m.id='modal';m.innerHTML=`<div class="sheet">${h}${x?'':'<button class="btn alt" onclick="closeM()">Close</button>'}</div>`;m.onclick=e=>{if(e.target==m)closeM()};document.body.append(m)};
 const closeM=()=>{const m=$('#modal');if(m)m.remove()};
 const tab=k=>{S.tab=k;draw()};
 const z2=n=>String(n).padStart(2,'0');
@@ -563,13 +576,13 @@ function detail(id){
     <button class="back" aria-label="Back" onclick="closeM()">‹</button>
     ${n?`<button class="heart ${isF?'on':''}" aria-label="Favourite" onclick="fav(${id})">${isF?'♥':'♡'}</button>`:''}
     <button class="ar l" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><button class="ar r" aria-label="Next hero" onclick="detail(${N.id})">›</button>
-    <div class="ctabs">${[['ov','Profile'],['di','Dossier'],['st','Story'],['ga','Gallery']].map(([k,l],j)=>`<button class="${j?'':'on'}" onclick="ctab(this,'${k}')">${l}</button>`).join('')}</div>
+    <div class="ctabs">${[['ov','Profile'],['sk','Skills'],['di','Dossier'],['st','Story'],['ga','Gallery']].map(([k,l],j)=>`<button class="${j?'':'on'}" onclick="ctab(this,'${k}')">${l}</button>`).join('')}</div>
     <section id="c-ov">${c.quote?`<blockquote class="qt">${esc(c.quote)}</blockquote>`:''}
       <div class="st3"><div><small>Element</small><b>${esc(c.element||'Unknown')}</b></div><div><small>Rarity</small><b>${rn}</b></div><div><small>Owned</small><b>${n?'×'+n:'Not yet'}</b></div></div>
       <div class="awk"><div><b>Awakening</b><small class="mu">${n?(lv>=5?'Max awakening reached':'Summon another copy to awaken (+20% income)'):'Own this hero to start awakening'}</small></div><div class="pips">${[1,2,3,4,5].map(j=>`<i class="${j<=lv?'on':''}">◆</i>`).join('')}</div></div>
       <div class="plate"><small class="mu">About</small><p>${esc(c.descr||'Nothing is known about this hero yet.')}</p><div class="inc">Earns +${inc[0]} 💎 and +${inc[1]} 🪙 per hour${lv?` (awakening +${lv*20}%)`:''}</div></div>
-      ${a?`<div class="abil" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ability')}</b><small class="mu">Hero ability</small></div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${id})">▶ Play cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:''}
       ${n?'':`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}</section>
+    <section id="c-sk" hidden>${skillsHTML(c,can)}</section>
     <section id="c-di" hidden>${dossier(c,n).map(g=>`<div class="dg"><h4>${esc(g.h)}</h4>${g.r.map(([k,v])=>`<p>${k?`<b>${esc(k)}</b>`:''}<span>${esc(v)}</span></p>`).join('')}</div>`).join('')}</section>
     <section id="c-st" hidden><div class="story"><div class="vlab">LIFE STORY</div><div>${(c.lore||c.descr||'No story has been written yet.').split(/\n+/).map(p=>`<p>${esc(p)}</p>`).join('')}</div></div></section>
     <section id="c-ga" hidden>${imgs.length?`<div class="ggrid">${imgs.map(u=>`<div class="gi" style="background:url('${esc(u)}') center/cover" onclick="zoom('${esc(u)}')"></div>`).join('')}</div>`:'<p class="mu">No images yet. Add some in the admin card editor.</p>'}</section>
@@ -780,7 +793,7 @@ function playScene(a,c){
 }
 const pickColor=(b,x)=>{$('#a_color').value=x;document.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s==b))};
 const readAb=()=>{const g=k=>$('#a_'+k).value.trim(),n=g('name');if(!n)return null;return{name:n,desc:g('desc'),fx:g('fx'),color:g('color'),text:g('text'),sub:g('sub'),cutin:$('#f_cutin').value.trim(),shake:$('#a_shake').checked,flash:$('#a_flash').checked,bars:$('#a_bars').checked,sound:g('sound')}};
-function previewScene(){const a=readAb();if(!a)return alert('Type an ability name first.');playScene(a,{image:$('#f_image').value.trim(),emoji:$('#f_emoji').value||'✦'})}
+function previewScene(){const a=readAb();if(!a)return alert('Type an ultimate name first.');playScene(a,{image:$('#f_image').value.trim(),emoji:$('#f_emoji').value||'✦'})}
 function playAbility(id){const c=S.cards.find(x=>x.id==id);if(c&&c.ability)playScene(c.ability,c)}
 
 // ---- Floating admin button: drag it anywhere, tap to open or close the admin page ----
@@ -797,6 +810,14 @@ function setFab(){
   }
   f.textContent=S.tab=='admin'?'✕':'🛠️';
 }
+
+// ---- Basic abilities, ultimate display, editor helpers ----
+const skillsHTML=(c,can)=>{const a=c.ability,sk=c.skills||[];
+  if(!sk.length&&!a)return '<p class="mu">This hero has no abilities yet.</p>';
+  return (sk.length?`<h3 class="sh">Basic abilities</h3>${sk.map(s=>`<div class="sk3"><i>${esc(s.icon||'✦')}</i><div><b>${esc(s.name)}</b><span class="tag">${esc(s.type||'Active')}</span><p>${esc(s.desc||'')}</p></div></div>`).join('')}`:'')
+   +(a?`<h3 class="sh">Ultimate</h3><div class="abil ult" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ultimate')}</b>${a.sub?`<small class="qs">${esc(a.sub)}</small>`:''}</div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${c.id})">▶ Play ultimate cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:'')};
+const exAll=o=>document.querySelectorAll('.es').forEach(d=>d.open=!!o);
+const readSk=()=>[0,1,2].map(j=>({name:$('#s'+j+'_name').value.trim(),icon:$('#s'+j+'_icon').value.trim(),type:$('#s'+j+'_type').value,desc:$('#s'+j+'_desc').value.trim()})).filter(s=>s.name);
 
 // Header gets a dark background once you scroll
 const _draw=draw;draw=function(){_draw();const m=$('main'),h=$('header');if(m&&h)m.onscroll=()=>h.classList.toggle('sc',m.scrollTop>20);setFab()};
@@ -834,7 +855,7 @@ function cardForm(id){
   const T=(k,l,r)=>`<label>${l}<textarea id="f_${k}" rows="${r}">${esc(c[k]||'')}</textarea></label>`;
   const A=(k,l)=>`<label>${l}<input id="a_${k}" value="${esc(a[k]??'')}"></label>`;
   const opts=(o,v)=>Object.entries(o).map(([k,l])=>`<option value="${k}" ${k==v?'selected':''}>${l}</option>`).join('');
-  modal(`<h2>${id?'Edit card':'New card'}</h2>
+  modal(`<h2>${id?'Edit card':'New card'}</h2><div class="row"><button type="button" class="btn ghost sm" onclick="exAll(1)">Expand all</button><button type="button" class="btn ghost sm" onclick="exAll(0)">Collapse all</button></div>
     <details class="es" open><summary>Basics</summary>${f('name','Name')}${f('title','Title')}
       <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
       ${f('element','Element (Wind, Moon, Fire, Water, Star, Dark, Light, Sky, Metal, Earth)')}${f('emoji','Emoji (used when there is no art)')}${f('hue','Color shade (0 to 360)','number')}
@@ -848,11 +869,13 @@ function cardForm(id){
       ${f('kanji','Big background text (leave empty to use the name)')}${f('origin','Series or school (shown at the top)')}${f('quote','Quote')}
       ${T('lore','Life story',5)}${T('dossier','Dossier',6)}<p class="hint">Dossier: a line starting with # is a heading, every other line is Label: Value</p>
       <label>Gallery images</label><div class="gals" id="gal"></div><div class="up gup"><input type="file" accept="image/*" onchange="galAdd(this)"><span>＋ Add gallery image</span></div></details>
-    <details class="es" ${c.ability?'open':''}><summary>✦ Ability (optional)</summary><p class="hint">Type an ability name to give this card an ability. Leave the name empty for no ability.</p>
-      ${A('name','Ability name')}<label>Description<textarea id="a_desc" rows="2">${esc(a.desc||'')}</textarea></label>
+    <details class="es" ${(c.skills||[]).length?'open':''}><summary>Basic abilities (up to 3)</summary><p class="hint">Leave a name empty to skip that slot.</p>
+      ${[0,1,2].map(j=>{const s=(c.skills||[])[j]||{};return `<div class="skr"><b>Ability ${j+1}</b><div class="row"><input id="s${j}_icon" maxlength="4" placeholder="Icon" value="${esc(s.icon||'')}" style="max-width:80px"><input id="s${j}_name" placeholder="Name" value="${esc(s.name||'')}"></div><select id="s${j}_type">${['Active','Passive','Support'].map(t=>`<option ${t==(s.type||'Active')?'selected':''}>${t}</option>`).join('')}</select><textarea id="s${j}_desc" rows="2" placeholder="Description">${esc(s.desc||'')}</textarea></div>`}).join('')}</details>
+    <details class="es" ${c.ability?'open':''}><summary>✦ Ultimate (cutscene)</summary><p class="hint">Type an ultimate name to give this card an ultimate. Leave the name empty for none.</p>
+      ${A('name','Ultimate name (main title)')}${A('sub','Subtitle or quote')}<label>Description<textarea id="a_desc" rows="2">${esc(a.desc||'')}</textarea></label>
       <label>Cutscene effect<select id="a_fx">${opts(FXN,a.fx)}</select></label>
       <label>Cutscene color</label><div class="sws">${COLORS.map(x=>`<button type="button" class="sw ${x==cur?'on':''}" style="background:${x}" aria-label="${x}" onclick="pickColor(this,'${x}')"></button>`).join('')}</div><input id="a_color" type="hidden" value="${cur}">
-      ${A('text','Big title in the cutscene')}${A('sub','Small line under the title')}
+      ${A('text','Cutscene title (optional, defaults to the name)')}
       ${picker('cutin','Cut-in picture (optional, defaults to the card art)',a.cutin,c.hue,0)}
       <label>Sound<select id="a_sound">${opts(SND,a.sound)}</select></label>
       <div class="tg"><label><input id="a_shake" type="checkbox" ${a.shake!==false?'checked':''}> Screen shake</label><label><input id="a_flash" type="checkbox" ${a.flash!==false?'checked':''}> Flash</label><label><input id="a_bars" type="checkbox" ${a.bars!==false?'checked':''}> Cinema bars</label></div>
@@ -878,7 +901,7 @@ async function upl(el,k,pr){
 async function saveCard(id){
   const g=k=>$('#f_'+k).value.trim();
   const row={name:g('name'),title:g('title'),rarity:g('rarity'),element:g('element'),emoji:g('emoji'),hue:+g('hue')||0,descr:g('descr'),image:g('image')||null,banner:g('banner')||null,featured:$('#f_featured').checked,
-    fit:g('fit'),kanji:g('kanji')||null,origin:g('origin')||null,quote:g('quote')||null,lore:g('lore')||null,dossier:g('dossier')||null,gallery:GAL,ability:readAb()};
+    fit:g('fit'),kanji:g('kanji')||null,origin:g('origin')||null,quote:g('quote')||null,lore:g('lore')||null,dossier:g('dossier')||null,gallery:GAL,skills:readSk(),ability:readAb()};
   if(id)row.id=id;
   const{error}=await sb.from('cards').upsert(row);
   if(error)return alert(error.message);
