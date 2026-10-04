@@ -442,6 +442,38 @@ h3{font-size:16px;margin:12px 0 4px}
 .ah .qs::before{content:"“"}.ah .qs::after{content:"”"}
 .skr{margin:12px 0;padding:12px;border-radius:16px;background:#ffffff08;border:1px solid var(--bd)}
 .skr b{font-size:14px}
+/* v12: campaign battles */
+.trow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 8px}
+.tcard .card{font-size:11px}
+.tcard.empty{aspect-ratio:3/4;border-radius:14px;border:2px dashed var(--bd);display:grid;place-items:center;font-size:28px;color:var(--mu)}
+.stg2{display:flex;align-items:center;gap:12px;width:100%;margin:8px 0;padding:12px;text-align:left;border-radius:18px;border:1px solid var(--bd);background:var(--gl);color:#fff;font-family:inherit}
+.stg2 div{flex:1}.stg2 small{display:block;font-size:12px;margin-top:2px}
+.stg2 .sn{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--v),var(--mg))}
+.stg2.cur{border-color:#fff;box-shadow:0 0 18px #a78bfa}
+.stg2.lock{opacity:.5}.stg2.lock .sn{background:#ffffff1a}
+.ov.b{padding-bottom:12px}
+.bfield{flex:1;display:flex;flex-direction:column;justify-content:space-between;width:100%;min-height:0;padding:8px 0}
+.erow,.prow{display:flex;gap:8px;justify-content:center}
+.en{position:relative;flex:1;max-width:120px;padding:10px 6px;border-radius:18px;background:var(--gl);border:2px solid var(--bd);text-align:center}
+.en.tg{border-color:#fff;box-shadow:0 0 16px #a78bfa}
+.en.dead,.hr.dead{opacity:.25;filter:grayscale(1)}
+.en .em{display:block;font-size:44px}
+.hb{height:8px;margin-top:6px;border-radius:6px;background:#ffffff1f;overflow:hidden}
+.hb span{display:block;height:100%;background:linear-gradient(90deg,#a78bfa,#fff);transition:width .3s}
+.en small{font-size:11px;color:var(--mu)}
+.hurt{animation:wob .3s}
+.hr{position:relative;flex:1;max-width:120px}
+.hr .card{font-size:10px}.hr .nm{margin:3px;padding:3px 6px;font-size:11px}.hr .nm small{display:none}
+.hr.act .card{border-color:#fff;box-shadow:0 0 18px #fff}
+.ug{height:6px;margin-top:4px;border-radius:6px;background:#ffffff1f;overflow:hidden}
+.ug span{display:block;height:100%;background:#c4a1ff;transition:width .3s}
+.log{min-height:40px;margin:8px 0;font-size:14px;color:var(--lc);text-align:center}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.ab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border-radius:16px;border:1px solid var(--bd);background:var(--gl);color:#fff;font-family:inherit}
+.ab i{font-style:normal;font-size:22px}.ab b{font-size:12px;line-height:1.1}.ab small{font-size:10px;color:var(--mu)}
+.ab.ult{background:linear-gradient(135deg,var(--v),var(--mg));border-color:#fff}
+.ab:disabled{opacity:.45}
+.bres{position:absolute;inset:0;z-index:15;display:grid;place-items:center;padding:20px;background:#04010ced}
 </style>
 </head>
 <body>
@@ -487,6 +519,12 @@ const views={
     <div class="row"><span class="chip rc0">R 72%</span><span class="chip rc1">SR 25%</span><span class="chip rc2">SSR 3%</span></div>
     <div class="box pity"><div class="pr" style="--p:${S.p.pity*2}%"><b>${S.p.pity}</b></div><div><b>Pity counter</b><p class="mu" style="font-size:13px">${50-S.p.pity} summons until a guaranteed SSR.</p></div></div>
     <div class="row"><button class="btn gl sum" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold sum" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`},
+  battle:()=>{const t=getTeam(),cl=S.p.stage||0;
+    return `${ttl('Campaign','BATTLE')}
+    <div class="box"><div class="dly"><h3 style="margin:0">Your team</h3><button class="btn sm" onclick="teamForm()">Edit team</button></div>
+      <div class="trow">${[0,1,2].map(i=>t[i]?`<div class="tcard">${cardHTML(t[i],0,0,0)}</div>`:'<div class="tcard empty">＋</div>').join('')}</div>
+      <p class="mu" style="font-size:12.5px">Basic abilities and ultimates you gave your heroes are used in battle. Extra copies awaken heroes for +10% stats each.</p></div>
+    <h3>Stages</h3>${STG.map((n,i)=>{const s=i+1,lock=s>cl+1,ne=stageEn(s).length;return `<button class="stg2${lock?' lock':''}${s==cl+1?' cur':''}" ${lock?'disabled':''} onclick="startBattle(${s})"><span class="sn">${s<=cl?'✓':lock?'🔒':s}</span><div><b>${n}${s%5==0?' (Boss)':''}</b><small class="mu">${EMO[i]} ${ne>1?ne+' enemies':'1 enemy'}. First clear: ${60+25*s} 💎 ${80+40*s} 🪙</small></div><span class="chip">${s<=cl?'Replay':lock?'Locked':'Fight'}</span></button>`}).join('')}`},
   cards:()=>`${ttl('Your collection','HEROES')}<p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
     <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
     <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
@@ -512,7 +550,7 @@ const views={
 };
 
 function draw(){
-  const T=[['home','🏠','Home'],['summon','✨','Summon'],['cards','🃏','Heroes'],['games','🎮','Games'],['me','👤','Profile']];
+  const T=[['home','🏠','Home'],['summon','✨','Summon'],['battle','⚔️','Battle'],['cards','🃏','Heroes'],['games','🎮','Games'],['me','👤','Profile']];
   app.innerHTML=`<header><div onclick="tab('me')">${avHTML(S.p)}</div><div class="hi"><small>Welcome back</small><b>Hi, ${esc(S.p.display_name||S.name)}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
     <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" aria-label="${l}" onclick="tab('${k}')"><span>${i}</span><em>${l}</em></button>`).join('')}</nav>`;
@@ -818,6 +856,70 @@ const skillsHTML=(c,can)=>{const a=c.ability,sk=c.skills||[];
    +(a?`<h3 class="sh">Ultimate</h3><div class="abil ult" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ultimate')}</b>${a.sub?`<small class="qs">${esc(a.sub)}</small>`:''}</div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${c.id})">▶ Play ultimate cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:'')};
 const exAll=o=>document.querySelectorAll('.es').forEach(d=>d.open=!!o);
 const readSk=()=>[0,1,2].map(j=>({name:$('#s'+j+'_name').value.trim(),icon:$('#s'+j+'_icon').value.trim(),type:$('#s'+j+'_type').value,desc:$('#s'+j+'_desc').value.trim()})).filter(s=>s.name);
+
+// ---- Campaign battles (turn based, uses basic abilities and ultimates) ----
+let B=null;
+const BASE={R:[120,24],SR:[170,34],SSR:[230,46]};
+const STG=['Starlit Meadow','Whispering Woods','Moonlit Ruins','Ember Caves','Tidal Gate','Cloud Bridge','Eclipse Hollow','Storm Peaks','Voidlight Spire','Starfall Summit'];
+const EMO=['👾','👹','🦇','🕷️','👻','🐺','🧟','🦂','🐲','😈'];
+const stageEn=n=>{const boss=n%5==0,cnt=boss?1:1+(n>=3)+(n>=6),hp=Math.round((90+36*n)*(boss?2.8:.9)),atk=Math.round((13+5*n)*(boss?1.4:1));return Array.from({length:cnt},()=>({e:boss?(n==5?'👹':'😈'):EMO[n-1],hp,mhp:hp,atk}))};
+const getTeam=()=>{let ids=[];try{ids=JSON.parse(localStorage.getItem('team')||'[]')}catch(e){}
+  let t=ids.map(id=>S.cards.find(c=>c.id==id)).filter(c=>c&&S.inv[c.id]);
+  if(!t.length)t=S.cards.filter(c=>S.inv[c.id]).sort((a,b)=>RK[b.rarity]-RK[a.rarity]||S.inv[b.id]-S.inv[a.id]);
+  return t.slice(0,3)};
+function teamForm(){
+  const own=S.cards.filter(c=>S.inv[c.id]),cur=getTeam().map(c=>c.id);
+  modal(`<h2>Choose your team</h2><p class="mu" style="font-size:13px">Pick up to 3 heroes.</p><div class="grid" id="tm">${own.map(c=>`<div class="pk${cur.includes(c.id)?' on':''}" data-id="${c.id}" onclick="pickTeam(this)">${cardHTML(c,0,0,0)}</div>`).join('')||'<p class="mu">Summon some heroes first.</p>'}</div><div class="sticky"><button class="btn" onclick="saveTeam()">Save team</button><button class="btn ghost" onclick="closeM()">Cancel</button></div>`,1);
+}
+const pickTeam=el=>{if(!el.classList.contains('on')&&document.querySelectorAll('#tm .on').length>=3)return alert('Your team can have up to 3 heroes.');el.classList.toggle('on')};
+function saveTeam(){localStorage.setItem('team',JSON.stringify([...document.querySelectorAll('#tm .on')].map(e=>+e.dataset.id)));closeM();draw()}
+const wait=ms=>new Promise(r=>tm(r,ms));
+const sceneEnd=()=>new Promise(r=>{const i=setInterval(()=>{if(!$('#scene')){clearInterval(i);r()}},150);TM.push(i)});
+const say2=t=>{const e=$('#lg');if(e)e.textContent=t};
+const ctr=sel=>{const e=document.querySelector(sel);if(!e)return[innerWidth/2,innerHeight/2];const r=e.getBoundingClientRect();return[r.x+r.width/2,r.y+r.height/3]};
+const hurt=(sel,d,heal)=>{fxAt(...ctr(sel),heal?5:8,(heal?'+':'-')+d);const n=$(sel);if(n&&!heal){n.classList.remove('hurt');void n.offsetWidth;n.classList.add('hurt')}tone(heal?660:180,0,.15,heal?'sine':'square',.1,heal?880:90)};
+const pcount=()=>B.team.filter(x=>x.hp>0).reduce((n,x)=>n+(x.c.skills||[]).filter(s=>s.type=='Passive').length,0);
+const acts=h=>{const a=[{k:'strike',n:'Strike',i:'⚔️'}];(h.c.skills||[]).slice(0,3).forEach((s,j)=>{if(s.type!='Passive')a.push({k:'skill',j,n:s.name,i:s.icon||'✦',t:s.type})});if(h.c.ability)a.push({k:'ult',n:h.c.ability.name,i:'✦',ult:1});return a};
+function bdraw(){
+  const h=B.team[B.i],t=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0);
+  $('#er').innerHTML=B.en.map((e,i)=>`<div class="en${e.hp<=0?' dead':''}${i==t?' tg':''}" id="e${i}" onclick="B.t=${i};bdraw()"><span class="em">${e.e}</span><div class="hb"><span style="width:${e.hp/e.mhp*100}%"></span></div><small>${e.hp}</small></div>`).join('');
+  $('#pr').innerHTML=B.team.map((x,i)=>`<div class="hr${x.hp<=0?' dead':''}${i==B.i?' act':''}" id="h${i}">${cardHTML(x.c,0,0,0)}<div class="hb"><span style="width:${x.hp/x.mhp*100}%"></span></div><div class="ug"><span style="width:${x.g}%"></span></div></div>`).join('');
+  $('#ac').innerHTML=h&&!B.over?acts(h).map(a=>`<button class="ab${a.ult?' ult':''}" ${a.ult&&h.g<100?'disabled':''} onclick="act('${a.k}',${a.j??0})"><i>${a.i}</i><b>${esc(a.n)}</b><small>${a.ult?(h.g<100?h.g+'%':'READY'):esc(a.t||'Basic')}</small></button>`).join(''):'';
+  $('#rd').textContent='Round '+B.round;
+}
+function startBattle(s){
+  const t=getTeam();if(!t.length)return alert('You need at least one hero. Summon some first!');
+  closeG();const o=document.createElement('div');o.className='ov g b';o.id='game';
+  o.innerHTML=`<div class="gbar"><button class="back" onclick="closeG()">‹</button><b>⚔️ ${STG[s-1]}</b><span class="gscore" id="rd">Round 1</span></div><div class="bfield"><div class="erow" id="er"></div><p class="log" id="lg">${esc(t[0].name)}'s turn. Tap an enemy to target it.</p><div class="prow" id="pr"></div></div><div class="acts" id="ac"></div>`;
+  document.body.append(o);
+  B={s,round:1,i:0,t:0,lock:0,over:0,team:t.map(c=>{const[hp,atk]=BASE[c.rarity],m=1+.1*awk(S.inv[c.id]);return{c,hp:Math.round(hp*m),mhp:Math.round(hp*m),atk:Math.round(atk*m),g:40}}),en:stageEn(s)};
+  bdraw();
+}
+async function act(k,j){
+  if(B.lock||B.over)return;B.lock=1;
+  const h=B.team[B.i],atk=h.atk*(1+.08*pcount()),rn=()=>.9+Math.random()*.2,ti=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0);
+  const dmgTo=(i,m)=>{const d=Math.round(atk*m*rn());B.en[i].hp=Math.max(0,B.en[i].hp-d);bdraw();hurt('#e'+i,d)};
+  if(k=='ult'){h.g=0;say2(`${h.c.name}: ${h.c.ability.name}!`);bdraw();playScene(h.c.ability,h.c);await sceneEnd();B.en.forEach((e,i)=>{if(e.hp>0)dmgTo(i,2.4)});shk();gflash()}
+  else if(k=='skill'&&h.c.skills[j].type=='Support'){const hl=Math.round(atk*.6);h.g=Math.min(100,h.g+25);B.team.forEach(x=>{if(x.hp>0)x.hp=Math.min(x.mhp,x.hp+hl)});bdraw();B.team.forEach((x,i)=>{if(x.hp>0)hurt('#h'+i,hl,1)});say2(`${h.c.name} uses ${h.c.skills[j].name}. The team heals ${hl}.`)}
+  else{h.g=Math.min(100,h.g+(k=='strike'?20:30));say2(k=='strike'?`${h.c.name} strikes!`:`${h.c.name} uses ${h.c.skills[j].name}!`);dmgTo(ti,k=='strike'?1:1.3+.2*j)}
+  await wait(800);
+  if(!B.en.some(e=>e.hp>0))return bend(1);
+  let n=B.i+1;while(n<B.team.length&&B.team[n].hp<=0)n++;
+  if(n<B.team.length)B.i=n;
+  else{say2('The enemies strike back!');await wait(500);
+    for(const e of B.en){if(e.hp<=0)continue;const al=B.team.map((x,q)=>q).filter(q=>B.team[q].hp>0);if(!al.length)break;
+      const q=al[Math.random()*al.length|0],d=Math.round(e.atk*rn());B.team[q].hp=Math.max(0,B.team[q].hp-d);B.team[q].g=Math.min(100,B.team[q].g+10);bdraw();hurt('#h'+q,d);await wait(650)}
+    if(!B.team.some(x=>x.hp>0))return bend(0);
+    B.round++;B.i=B.team.findIndex(x=>x.hp>0)}
+  B.lock=0;say2(`${B.team[B.i].c.name}'s turn.`);bdraw();
+}
+async function bend(win){
+  B.over=1;bdraw();const o=$('#game');if(!o)return;
+  if(!win){tone(200,0,.6,'sine',.3,60);o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><h2>Defeat</h2><p class="mu">Try a different team, use your ultimates, or awaken heroes with extra copies.</p><button class="btn" onclick="startBattle(${B.s})">Retry</button><button class="btn ghost" onclick="closeG()">Back</button></div></div>`);return}
+  const{data,error}=await sb.rpc('battle_win',{s:B.s}),st=B.team.filter(x=>x.hp>0).length;
+  play('card2');fxAt(...mid(),30);
+  o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><h2>Victory!</h2>${error?`<p class="mu">${esc(error.message)}</p>`:`<p class="rw">+${data.gems} 💎 +${data.coins} 🪙</p><p class="mu">${data.first?'First clear bonus!':'Replay reward'}</p>`}<button class="btn" onclick="closeG();load()">Collect</button></div></div>`);
+}
 
 // Header gets a dark background once you scroll
 const _draw=draw;draw=function(){_draw();const m=$('main'),h=$('header');if(m&&h)m.onscroll=()=>h.classList.toggle('sc',m.scrollTop>20);setFab()};
