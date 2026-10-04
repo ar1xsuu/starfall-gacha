@@ -374,6 +374,61 @@ h3{font-size:16px;margin:12px 0 4px}
 .tg{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0 6px}.tg label{display:flex;gap:6px;align-items:center;margin:0}
 #fab{position:fixed;z-index:8;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:24px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;background:linear-gradient(135deg,var(--v),var(--mg));border:2px solid #ffffff55;box-shadow:0 8px 24px #5b3df599,0 0 0 4px #ffffff14}
 #fab:active{transform:scale(.94)}
+/* v10: splash card pages with tabs, editor sections */
+.splash{position:relative;height:min(74vh,600px);margin:calc(-12px - env(safe-area-inset-top)) -16px 0;overflow:hidden;isolation:isolate;touch-action:pan-y;--rx:0;--ry:0;--hu:270}
+.splash::before{content:"";position:absolute;inset:12px;z-index:8;border:1px solid #ffffff2e;border-radius:26px;pointer-events:none}
+.sbg{position:absolute;inset:0;z-index:0;opacity:.55}
+.splash .rwrap{z-index:1}
+.strip{position:absolute;left:17%;right:17%;top:0;bottom:0;z-index:2;background:linear-gradient(180deg,hsl(var(--hu) 75% 42%),hsl(var(--hu) 65% 12%));transform:translateX(calc(var(--rx)*-6px));transition:transform .12s ease-out}
+.strip::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 115%,#ffffff14 0 2px,transparent 2px 10px)}
+.bgt{position:absolute;left:0;right:0;top:9%;z-index:3;text-align:center;font-weight:900;line-height:.95;white-space:nowrap;overflow:hidden;color:#ffffff14;-webkit-text-stroke:1px #ffffff30;pointer-events:none;transform:translate(calc(var(--rx)*-16px),calc(var(--ry)*-10px));transition:transform .12s ease-out}
+.sart{position:absolute;inset:0;z-index:4;transform:translate(calc(var(--rx)*10px),calc(var(--ry)*6px));transition:transform .12s ease-out}
+.sart img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
+.sart.fit img{object-fit:contain;object-position:50% 100%}
+.sart em{position:absolute;inset:0;display:grid;place-items:center;font-size:150px;font-style:normal;filter:drop-shadow(0 12px 30px #000a)}
+.splash .sk{z-index:6}
+.sfade{position:absolute;left:0;right:0;bottom:0;height:52%;z-index:5;background:linear-gradient(transparent,#06020e 90%);pointer-events:none}
+.org{position:absolute;left:0;right:0;top:calc(22px + env(safe-area-inset-top));z-index:6;text-align:center;font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#ffffffcc}
+.sinfo{position:absolute;left:0;right:0;bottom:18px;z-index:6;text-align:center}
+.nmx{background:linear-gradient(#fff 35%,#d8b4fe);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sinfo .nmx{font-size:clamp(40px,14vw,56px)!important;margin:0!important;line-height:1;filter:drop-shadow(0 4px 18px #000a)}
+.sstars{display:flex;justify-content:center;gap:8px;margin:8px 0 4px}
+.sstars i{font-style:normal;font-size:20px;color:#ffffff30}
+.sstars i.lit{color:#fff;text-shadow:0 0 10px #c4a1ff;animation:tw 2.6s ease-in-out infinite}
+.icos{display:flex;gap:10px;justify-content:center;margin-top:8px}
+.ico{min-width:42px;height:42px;padding:0 8px;border-radius:99px;display:grid;place-items:center;background:#0009;border:1px solid #ffffff55;font-size:17px;font-weight:800}
+.d1 .strip{box-shadow:0 0 50px #c084fc88}.d2 .strip{box-shadow:0 0 60px #f1e6ff88}
+.d2 .sart::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff40 50%,transparent 65%) 0 0/250% 100%;animation:holo 3.5s linear infinite;mix-blend-mode:screen;pointer-events:none}
+.heart{position:absolute;right:16px;top:calc(12px + env(safe-area-inset-top));z-index:5;width:42px;height:42px;border-radius:14px;border:1px solid var(--bd);background:var(--gl);color:#fff;font-size:22px}
+.heart.on{background:linear-gradient(135deg,var(--v),var(--mg));border-color:transparent}
+.ar.l,.ar.r{position:absolute;z-index:5;top:calc(min(74vh,600px)*.4)}.ar.l{left:10px}.ar.r{right:10px}
+.ctabs{position:sticky;top:0;z-index:6;display:flex;gap:6px;margin:4px -16px 14px;padding:8px 16px;background:linear-gradient(#06020e 60%,#06020e00)}
+.ctabs button{flex:1;padding:10px 0;border-radius:99px;border:1px solid var(--bd);background:var(--gl);color:var(--mu);font:700 13px Outfit,sans-serif}
+.ctabs .on{background:linear-gradient(135deg,var(--v),var(--mg));color:#fff;border-color:transparent}
+.qt{margin:4px 0 12px;padding:12px 16px;border-left:3px solid var(--c);font-size:17px;font-style:italic;line-height:1.35}
+.qt::before{content:"“"}.qt::after{content:"”"}
+.awk{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0;padding:12px 14px;border-radius:18px;background:var(--gl);border:1px solid var(--bd)}
+.awk small{display:block;font-size:12px;margin-top:2px}
+.pips{white-space:nowrap}.pips i{font-style:normal;font-size:18px;color:#ffffff2a}.pips i.on{color:#fff;text-shadow:0 0 10px #c4a1ff}
+.dg{position:relative;margin:16px 0;padding-left:14px;border-left:2px solid #ffffff33}
+.dg::before{content:"";position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.dg h4{margin:0 0 6px;font-size:15px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.dg p{margin:4px 0;font-size:14px;color:var(--lc)}.dg p::before{content:"> ";color:var(--mu)}
+.dg b{color:#fff;margin-right:6px}.dg b::after{content:" :"}
+.story{display:flex;gap:14px}.story p{margin:0 0 12px;line-height:1.55;font-size:14.5px;color:var(--lc)}
+.vlab{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;letter-spacing:.3em;font-size:12px;color:var(--mu);white-space:nowrap}
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gi{aspect-ratio:1;border-radius:18px;border:1px solid var(--bd)}
+.zm{max-width:100%;max-height:90vh;margin:auto;object-fit:contain;border-radius:18px}
+.es summary{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:16px;cursor:pointer;list-style:none}
+.es summary::-webkit-details-marker{display:none}
+.es summary::after{content:"＋";font-size:20px;color:var(--lc)}.es[open] summary::after{content:"－"}
+.es[open] summary{margin-bottom:6px}
+.sticky{display:flex;gap:8px;pointer-events:none}
+.sticky .btn{flex:1;margin:0;padding:12px 6px;font-size:14px;pointer-events:auto}
+.gals{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.gth{position:relative;width:76px;height:76px;border-radius:14px;border:1px solid var(--bd)}
+.gth button{position:absolute;right:4px;top:4px;width:22px;height:22px;border-radius:50%;border:0;background:#000c;color:#fff;font-size:12px}
+.gup{height:64px}
 </style>
 </head>
 <body>
@@ -474,19 +529,51 @@ async function load(){
   draw();
 }
 
+const EI={Wind:'🍃',Moon:'🌙',Earth:'🌿',Fire:'🔥',Water:'💧',Metal:'⚙️',Sky:'☁️',Light:'✨',Star:'⭐',Dark:'🌑'};
+const awk=n=>Math.min(5,Math.max(0,(n||0)-1));
+const SPK=[['12%','22%',14],['84%','18%',11],['70%','46%',16],['20%','54%',12],['90%','60%',10],['8%','38%',15]].map(([l,t,s],i)=>`<i class="sk" style="left:${l};top:${t};font-size:${s}px;animation-delay:${i*.4}s">✦</i>`);
+const dossier=(c,n)=>{const g=[];let cur=null;
+  (c.dossier||'').split('\n').forEach(l=>{l=l.trim();if(!l)return;if(l[0]=='#'){cur={h:l.replace(/^#+\s*/,''),r:[]};g.push(cur)}else{const i=l.indexOf(':');if(!cur){cur={h:'Information',r:[]};g.push(cur)}cur.r.push(i<0?['',l]:[l.slice(0,i).trim(),l.slice(i+1).trim()])}});
+  if(!g.length)g.push({h:'Biographical information',r:[['Name',c.name],['Title',c.title],['Element',c.element||'Unknown']]},{h:'Status',r:[['Rarity',['Rare','Epic','Legendary'][RK[c.rarity]]],['Owned',n?'Yes, x'+n:'Not yet'],['Income',`+${INC[c.rarity][0]} gems and +${INC[c.rarity][1]} coins per hour`]]});
+  return g};
+const ctab=(b,k)=>{document.querySelectorAll('.ctabs button').forEach(x=>x.classList.toggle('on',x==b));document.querySelectorAll('.dt section').forEach(s=>s.hidden=s.id!='c-'+k)};
+const tilt=(e,el)=>{const r=el.getBoundingClientRect();el.style.setProperty('--rx',((e.clientX-r.left)/r.width-.5).toFixed(2));el.style.setProperty('--ry',((e.clientY-r.top)/r.height-.5).toFixed(2))};
+const untilt=el=>{el.style.setProperty('--rx',0);el.style.setProperty('--ry',0)};
+function zoom(u){const o=document.createElement('div');o.className='ov';o.style.zIndex=11;o.innerHTML=`<img class="zm" src="${u}" alt="">`;o.onclick=()=>o.remove();document.body.append(o)}
+async function fav(id){
+  const f=(S.p.favs||[]).slice(),i=f.indexOf(id);
+  if(i>=0)f.splice(i,1);else{if(f.length>=3)return alert('You can have up to 3 favourites. Remove one first.');f.push(id)}
+  const{error}=await sb.rpc('save_profile',{nm:S.p.display_name||'',av:S.p.avatar||'',bn:S.p.banner||'',bi:S.p.bio||'',fv:f});
+  if(error)return alert(error.message);await load();detail(id);
+}
 function detail(id){
-  const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0,t=RK[c.rarity],a=c.ability,can=n||S.p.is_admin;
+  const L=S.cards,i=L.findIndex(x=>x.id==id),c=L[i],P=L[(i+L.length-1)%L.length],N=L[(i+1)%L.length],n=S.inv[id]||0,t=RK[c.rarity],a=c.ability,can=n||S.p.is_admin,lv=awk(n),isF=(S.p.favs||[]).includes(id);
+  const bt=c.kanji||c.name.toUpperCase(),fs=Math.min(40,Math.floor(127/Math.max(1,[...bt].length))),mult=1+.2*lv,inc=INC[c.rarity].map(x=>+(x*mult).toFixed(1));
+  const imgs=[...new Set([c.image,c.banner,...(c.gallery||[])].filter(Boolean))],rn=['Rare','Epic','Legendary'][t];
   closeM();const m=document.createElement('div');m.className='ov d d'+t;m.id='modal';m.style.setProperty('--c',GLOW[t]);
-  m.style.background=`radial-gradient(90% 45% at 50% 30%,hsl(${ph(c.hue)} 85% ${[28,34,38][t]}%),transparent),#06020e`;
-  m.innerHTML=`<div class="dt">${t==2?'<div class="rwrap"><div class="rays"></div></div>':''}
-    <div class="cbn" style="background:${art(c.banner||c.image,c.hue)}"><div class="wm">${esc(c.name)}</div></div>
+  m.style.background=`radial-gradient(90% 40% at 50% 20%,hsl(${ph(c.hue)} 85% ${[24,30,34][t]}%),transparent),#06020e`;
+  m.innerHTML=`<div class="dt">
+    <div class="splash" style="--hu:${ph(c.hue)}" onpointermove="tilt(event,this)" onpointerleave="untilt(this)">
+      <div class="sbg" style="background:${art(c.banner,c.hue)}"></div>${t==2?'<div class="rwrap"><div class="rays"></div></div>':''}
+      <div class="strip"></div><div class="bgt" style="font-size:${fs}vw">${esc(bt)}</div>
+      <div class="sart${c.fit=='contain'?' fit':''}">${c.image?`<img src="${esc(c.image)}" alt="">`:`<em>${esc(c.emoji)}</em>`}</div>
+      ${t?SPK.slice(0,t*3).join(''):''}<div class="sfade"></div><div class="org">${esc(c.origin||'Starfall Academy')}</div>
+      <div class="sinfo"><h2 class="nmx">${esc(c.name)}</h2><div class="sstars">${[0,1,2,3,4].map(j=>`<i class="${j<3+t?'lit':''}" style="animation-delay:${j*.25}s">✦</i>`).join('')}</div><div class="icos"><span class="ico">${EI[c.element]||'✦'}</span><span class="ico">${c.rarity}</span>${a?'<span class="ico">⚔️</span>':''}</div></div>
+    </div>
     <button class="back" aria-label="Back" onclick="closeM()">‹</button>
-    <div class="stg"><button class="ar" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><div class="pic ${c.rarity}" style="background:${art(c.image,c.hue)}">${c.image?'':c.emoji}</div><button class="ar" aria-label="Next hero" onclick="detail(${N.id})">›</button>${t?'<i class="sk a">✦</i><i class="sk b">✦</i><i class="sk c">✦</i>':''}${t>1?'<i class="sk d">✦</i><i class="sk e">✦</i>':''}</div>
-    <div class="nmrow"><div><h2 class="nmx">${esc(c.name)}</h2><p class="mu"><span class="tag ${c.rarity}">${c.rarity}</span>${esc(c.title)}</p></div><div class="stars">${'★'.repeat(3+t)}${'☆'.repeat(2-t)}</div></div>
-    <div class="st3"><div><small>Element</small><b>${esc(c.element||'Unknown')}</b></div><div><small>Rarity</small><b>${['Rare','Epic','Legendary'][t]}</b></div><div><small>Owned</small><b>${n?'×'+n:'Not yet'}</b></div></div>
-    <div class="plate"><small class="mu">About</small><p>${esc(c.descr||'Nothing is known about this hero yet.')}</p><div class="inc">Earns +${INC[c.rarity][0]} 💎 and +${INC[c.rarity][1]} 🪙 per hour</div></div>
-    ${a?`<div class="abil" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ability')}</b><small class="mu">Hero ability</small></div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${id})">▶ Play cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:''}
-    ${n?'':`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}</div>`;
+    ${n?`<button class="heart ${isF?'on':''}" aria-label="Favourite" onclick="fav(${id})">${isF?'♥':'♡'}</button>`:''}
+    <button class="ar l" aria-label="Previous hero" onclick="detail(${P.id})">‹</button><button class="ar r" aria-label="Next hero" onclick="detail(${N.id})">›</button>
+    <div class="ctabs">${[['ov','Profile'],['di','Dossier'],['st','Story'],['ga','Gallery']].map(([k,l],j)=>`<button class="${j?'':'on'}" onclick="ctab(this,'${k}')">${l}</button>`).join('')}</div>
+    <section id="c-ov">${c.quote?`<blockquote class="qt">${esc(c.quote)}</blockquote>`:''}
+      <div class="st3"><div><small>Element</small><b>${esc(c.element||'Unknown')}</b></div><div><small>Rarity</small><b>${rn}</b></div><div><small>Owned</small><b>${n?'×'+n:'Not yet'}</b></div></div>
+      <div class="awk"><div><b>Awakening</b><small class="mu">${n?(lv>=5?'Max awakening reached':'Summon another copy to awaken (+20% income)'):'Own this hero to start awakening'}</small></div><div class="pips">${[1,2,3,4,5].map(j=>`<i class="${j<=lv?'on':''}">◆</i>`).join('')}</div></div>
+      <div class="plate"><small class="mu">About</small><p>${esc(c.descr||'Nothing is known about this hero yet.')}</p><div class="inc">Earns +${inc[0]} 💎 and +${inc[1]} 🪙 per hour${lv?` (awakening +${lv*20}%)`:''}</div></div>
+      ${a?`<div class="abil" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ability')}</b><small class="mu">Hero ability</small></div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${id})">▶ Play cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:''}
+      ${n?'':`<button class="btn" onclick="redeem(${id})">Redeem for ${COST[c.rarity]} coins</button>`}</section>
+    <section id="c-di" hidden>${dossier(c,n).map(g=>`<div class="dg"><h4>${esc(g.h)}</h4>${g.r.map(([k,v])=>`<p>${k?`<b>${esc(k)}</b>`:''}<span>${esc(v)}</span></p>`).join('')}</div>`).join('')}</section>
+    <section id="c-st" hidden><div class="story"><div class="vlab">LIFE STORY</div><div>${(c.lore||c.descr||'No story has been written yet.').split(/\n+/).map(p=>`<p>${esc(p)}</p>`).join('')}</div></div></section>
+    <section id="c-ga" hidden>${imgs.length?`<div class="ggrid">${imgs.map(u=>`<div class="gi" style="background:url('${esc(u)}') center/cover" onclick="zoom('${esc(u)}')"></div>`).join('')}</div>`:'<p class="mu">No images yet. Add some in the admin card editor.</p>'}</section>
+  </div>`;
   document.body.append(m);
 }
 async function redeem(id){
@@ -556,7 +643,7 @@ async function pull(n){
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const avHTML=(p,c='av')=>`<div class="${c}"${p.avatar?` style="background:url('${p.avatar}') center/cover"`:''}>${p.avatar?'':esc(((p.display_name||S.name)[0]||'?').toUpperCase())}</div>`;
 const INC={R:[1,1],SR:[3,2],SSR:[8,5]};
-const rate=()=>S.cards.filter(c=>S.inv[c.id]).reduce((a,c)=>[a[0]+INC[c.rarity][0],a[1]+INC[c.rarity][1]],[0,0]);
+const rate=()=>S.cards.filter(c=>S.inv[c.id]).reduce((a,c)=>{const m=1+.2*awk(S.inv[c.id]);return[a[0]+INC[c.rarity][0]*m,a[1]+INC[c.rarity][1]*m]},[0,0]).map(x=>Math.round(x*10)/10);
 const hrs=()=>Math.min(12,(Date.now()-new Date(S.p.last_collect).getTime())/36e5);
 const incHTML=()=>{const r=rate(),h=hrs(),f=Math.min(1,h/12);
   return `<div class="box"><b>Stardust income</b><p class="mu" style="font-size:13px;margin-top:2px">${r[0]+r[1]?`Your heroes earn ${r[0]} 💎 and ${r[1]} 🪙 per hour while you are away.`:'Summon heroes and they will start earning for you.'}</p><div class="bar"><span style="width:${f*100}%"></span></div><small class="mu">${f>=1?'Storage full. Collect now!':'Stores up to 12 hours'}</small><button class="btn" onclick="collect()">Collect ${Math.floor(r[0]*h)} 💎 ${Math.floor(r[1]*h)} 🪙</button></div>`};
@@ -692,8 +779,8 @@ function playScene(a,c){
   const t=setTimeout(closeScene,4200);o.onclick=()=>{clearTimeout(t);closeScene()};
 }
 const pickColor=(b,x)=>{$('#a_color').value=x;document.querySelectorAll('.sw').forEach(s=>s.classList.toggle('on',s==b))};
-const readAb=()=>{if(!$('#f_ab').checked)return null;const g=k=>$('#a_'+k).value.trim();return{name:g('name')||'Ability',desc:g('desc'),fx:g('fx'),color:g('color'),text:g('text'),sub:g('sub'),cutin:$('#f_cutin').value.trim(),shake:$('#a_shake').checked,flash:$('#a_flash').checked,bars:$('#a_bars').checked,sound:g('sound')}};
-function previewScene(){const a=readAb();if(!a)return alert('Turn on "This card has an ability" first.');playScene(a,{image:$('#f_image').value.trim(),emoji:$('#f_emoji').value||'✦'})}
+const readAb=()=>{const g=k=>$('#a_'+k).value.trim(),n=g('name');if(!n)return null;return{name:n,desc:g('desc'),fx:g('fx'),color:g('color'),text:g('text'),sub:g('sub'),cutin:$('#f_cutin').value.trim(),shake:$('#a_shake').checked,flash:$('#a_flash').checked,bars:$('#a_bars').checked,sound:g('sound')}};
+function previewScene(){const a=readAb();if(!a)return alert('Type an ability name first.');playScene(a,{image:$('#f_image').value.trim(),emoji:$('#f_emoji').value||'✦'})}
 function playAbility(id){const c=S.cards.find(x=>x.id==id);if(c&&c.ability)playScene(c.ability,c)}
 
 // ---- Floating admin button: drag it anywhere, tap to open or close the admin page ----
@@ -730,29 +817,48 @@ async function give(){
   if(error)return say(error.message);
   await load();say('Done!');
 }
+let GAL=[];
+const galDraw=()=>{const e=$('#gal');if(e)e.innerHTML=GAL.map((u,i)=>`<div class="gth" style="background:url('${esc(u)}') center/cover"><button type="button" aria-label="Remove" onclick="GAL.splice(${i},1);galDraw()">✕</button></div>`).join('')};
+async function galAdd(el){
+  const f=el.files[0];if(!f)return;
+  try{if(!f.type.startsWith('image/'))throw new Error('Please choose an image file.');
+    const b=await shrink(f,1000),p=Date.now()+'-'+Math.random().toString(36).slice(2,6)+'.'+(b.type.split('/')[1]||'img');
+    const{error}=await sb.storage.from('cards').upload(p,b,{contentType:b.type});if(error)throw error;
+    GAL.push(sb.storage.from('cards').getPublicUrl(p).data.publicUrl);galDraw();
+  }catch(e){alert('Upload failed: '+e.message)}
+  el.value='';
+}
 function cardForm(id){
-  const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false},a=c.ability||{},cur=a.color||COLORS[0];
+  const c=S.cards.find(x=>x.id==id)||{rarity:'R',hue:270,featured:false},a=c.ability||{},cur=a.color||COLORS[0];GAL=[...(c.gallery||[])];
   const f=(k,l,t='text')=>`<label>${l}<input id="f_${k}" type="${t}" value="${esc(c[k]??'')}"></label>`;
+  const T=(k,l,r)=>`<label>${l}<textarea id="f_${k}" rows="${r}">${esc(c[k]||'')}</textarea></label>`;
   const A=(k,l)=>`<label>${l}<input id="a_${k}" value="${esc(a[k]??'')}"></label>`;
   const opts=(o,v)=>Object.entries(o).map(([k,l])=>`<option value="${k}" ${k==v?'selected':''}>${l}</option>`).join('');
   modal(`<h2>${id?'Edit card':'New card'}</h2>
-    <div class="es"><h4>Basics</h4>${f('name','Name')}${f('title','Title')}
+    <details class="es" open><summary>Basics</summary>${f('name','Name')}${f('title','Title')}
       <label>Rarity<select id="f_rarity">${['R','SR','SSR'].map(r=>`<option ${r==c.rarity?'selected':''}>${r}</option>`).join('')}</select></label>
-      ${f('element','Element')}${f('emoji','Emoji (used when there is no art)')}${f('hue','Color shade (0 to 360)','number')}
-      <label>Description<textarea id="f_descr" rows="3">${esc(c.descr||'')}</textarea></label>
-      <label class="chk"><input id="f_featured" type="checkbox" ${c.featured?'checked':''}> Featured on the summon banner</label></div>
-    <div class="es"><h4>Art and banner</h4><p class="hint">The banner is the wide picture at the top of the card page.</p>${picker('image','Card art',c.image,c.hue,0)}${picker('banner','Card page banner',c.banner,c.hue,0)}</div>
-    <div class="es"><h4>Ability (optional)</h4><label class="chk"><input id="f_ab" type="checkbox" ${c.ability?'checked':''} onchange="$('#abox').style.display=this.checked?'block':'none'"> This card has an ability</label>
-      <div id="abox" style="display:${c.ability?'block':'none'}"><p class="hint">Build a cosmetic cutscene that owners can play from the card page.</p>
-        ${A('name','Ability name')}<label>Description<textarea id="a_desc" rows="2">${esc(a.desc||'')}</textarea></label>
-        <label>Cutscene effect<select id="a_fx">${opts(FXN,a.fx)}</select></label>
-        <label>Cutscene color</label><div class="sws">${COLORS.map(x=>`<button type="button" class="sw ${x==cur?'on':''}" style="background:${x}" aria-label="${x}" onclick="pickColor(this,'${x}')"></button>`).join('')}</div><input id="a_color" type="hidden" value="${cur}">
-        ${A('text','Big title in the cutscene')}${A('sub','Small line under the title')}
-        ${picker('cutin','Cut-in picture (optional, defaults to the card art)',a.cutin,c.hue,0)}
-        <label>Sound<select id="a_sound">${opts(SND,a.sound)}</select></label>
-        <div class="tg"><label><input id="a_shake" type="checkbox" ${a.shake!==false?'checked':''}> Screen shake</label><label><input id="a_flash" type="checkbox" ${a.flash!==false?'checked':''}> Flash</label><label><input id="a_bars" type="checkbox" ${a.bars!==false?'checked':''}> Cinema bars</label></div>
-        <button type="button" class="btn alt" onclick="previewScene()">▶ Preview cutscene</button></div></div>
-    <div class="sticky"><button class="btn" onclick="saveCard(${id||0})">Save card</button>${id?`<button class="btn danger" onclick="delCard(${id})">Delete card</button>`:''}<button class="btn ghost" onclick="closeM()">Cancel</button></div>`,1);
+      ${f('element','Element (Wind, Moon, Fire, Water, Star, Dark, Light, Sky, Metal, Earth)')}${f('emoji','Emoji (used when there is no art)')}${f('hue','Color shade (0 to 360)','number')}
+      ${T('descr','Short description',3)}
+      <label class="chk"><input id="f_featured" type="checkbox" ${c.featured?'checked':''}> Featured on the summon banner</label></details>
+    <details class="es"><summary>Art and banner</summary>
+      ${picker('image','Card art (a tall portrait or a transparent cutout works best)',c.image,c.hue,0)}
+      <label>How to show the art<select id="f_fit"><option value="cover" ${c.fit!='contain'?'selected':''}>Fill the whole top area</option><option value="contain" ${c.fit=='contain'?'selected':''}>Fit inside (best for transparent cutouts)</option></select></label>
+      ${picker('banner','Backdrop banner (wide picture behind the art)',c.banner,c.hue,0)}</details>
+    <details class="es"><summary>Profile page</summary><p class="hint">These fill the Profile, Dossier, Story and Gallery tabs on the card page.</p>
+      ${f('kanji','Big background text (leave empty to use the name)')}${f('origin','Series or school (shown at the top)')}${f('quote','Quote')}
+      ${T('lore','Life story',5)}${T('dossier','Dossier',6)}<p class="hint">Dossier: a line starting with # is a heading, every other line is Label: Value</p>
+      <label>Gallery images</label><div class="gals" id="gal"></div><div class="up gup"><input type="file" accept="image/*" onchange="galAdd(this)"><span>＋ Add gallery image</span></div></details>
+    <details class="es" ${c.ability?'open':''}><summary>✦ Ability (optional)</summary><p class="hint">Type an ability name to give this card an ability. Leave the name empty for no ability.</p>
+      ${A('name','Ability name')}<label>Description<textarea id="a_desc" rows="2">${esc(a.desc||'')}</textarea></label>
+      <label>Cutscene effect<select id="a_fx">${opts(FXN,a.fx)}</select></label>
+      <label>Cutscene color</label><div class="sws">${COLORS.map(x=>`<button type="button" class="sw ${x==cur?'on':''}" style="background:${x}" aria-label="${x}" onclick="pickColor(this,'${x}')"></button>`).join('')}</div><input id="a_color" type="hidden" value="${cur}">
+      ${A('text','Big title in the cutscene')}${A('sub','Small line under the title')}
+      ${picker('cutin','Cut-in picture (optional, defaults to the card art)',a.cutin,c.hue,0)}
+      <label>Sound<select id="a_sound">${opts(SND,a.sound)}</select></label>
+      <div class="tg"><label><input id="a_shake" type="checkbox" ${a.shake!==false?'checked':''}> Screen shake</label><label><input id="a_flash" type="checkbox" ${a.flash!==false?'checked':''}> Flash</label><label><input id="a_bars" type="checkbox" ${a.bars!==false?'checked':''}> Cinema bars</label></div>
+      <button type="button" class="btn alt" onclick="previewScene()">▶ Preview cutscene</button></details>
+    <div class="sticky"><button class="btn" onclick="saveCard(${id||0})">Save</button>${id?`<button class="btn danger" onclick="delCard(${id})">Delete</button>`:''}<button class="btn ghost" onclick="closeM()">Cancel</button></div>`,1);
+  galDraw();
 }
 const shrink=(f,m=1000)=>f.type=='image/gif'?Promise.resolve(f):new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,m/Math.max(i.width,i.height)),k=document.createElement('canvas');k.width=i.width*s;k.height=i.height*s;k.getContext('2d').drawImage(i,0,0,k.width,k.height);k.toBlob(b=>r(b||f),'image/webp',.9)};i.onerror=()=>r(f);i.src=URL.createObjectURL(f)});
 async function upl(el,k,pr){
@@ -771,7 +877,8 @@ async function upl(el,k,pr){
 }
 async function saveCard(id){
   const g=k=>$('#f_'+k).value.trim();
-  const row={name:g('name'),title:g('title'),rarity:g('rarity'),element:g('element'),emoji:g('emoji'),hue:+g('hue')||0,descr:g('descr'),image:g('image')||null,banner:g('banner')||null,featured:$('#f_featured').checked,ability:readAb()};
+  const row={name:g('name'),title:g('title'),rarity:g('rarity'),element:g('element'),emoji:g('emoji'),hue:+g('hue')||0,descr:g('descr'),image:g('image')||null,banner:g('banner')||null,featured:$('#f_featured').checked,
+    fit:g('fit'),kanji:g('kanji')||null,origin:g('origin')||null,quote:g('quote')||null,lore:g('lore')||null,dossier:g('dossier')||null,gallery:GAL,ability:readAb()};
   if(id)row.id=id;
   const{error}=await sb.from('cards').upsert(row);
   if(error)return alert(error.message);
