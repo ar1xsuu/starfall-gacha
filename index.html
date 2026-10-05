@@ -474,6 +474,35 @@ h3{font-size:16px;margin:12px 0 4px}
 .ab.ult{background:linear-gradient(135deg,var(--v),var(--mg));border-color:#fff}
 .ab:disabled{opacity:.45}
 .bres{position:absolute;inset:0;z-index:15;display:grid;place-items:center;padding:20px;background:#04010ced}
+/* v13: the tower */
+.wbn{display:flex;align-items:center;gap:10px;margin:10px 0;padding:16px;border-radius:22px;border:1px solid var(--bd);background:radial-gradient(120% 120% at 50% 0,hsl(var(--wh) 70% 38%),#0b0618)}
+.wbn>div{flex:1;text-align:center}.wbn h3{margin:2px 0;font-size:24px}
+.wa{width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--bd);background:#0006;color:#fff;font-size:20px}.wa:disabled{opacity:.3}
+.tw{position:relative;margin:8px 0}
+.tw::before{content:"";position:absolute;left:32px;top:8px;bottom:8px;width:2px;background:linear-gradient(#ffffff55,#ffffff11)}
+.fl{position:relative;display:flex;align-items:center;gap:12px;width:100%;margin:8px 0;padding:10px 12px;text-align:left;border-radius:18px;border:1px solid var(--bd);background:var(--gl);color:#fff;font-family:inherit}
+.fl div{flex:1}.fl small{display:block;font-size:12px;margin-top:2px}
+.fl .fn{position:relative;z-index:1;flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:linear-gradient(135deg,var(--v),var(--mg));box-shadow:0 0 0 4px #0b0618}
+.fl.boss{padding:14px 12px;border-color:#ffffff55;background:linear-gradient(135deg,#ffffff1a,#7c3aed33)}
+.fl.boss .fn{width:48px;height:48px;font-size:18px;background:#fff;color:#1a0a3a}
+.fl.cur{border-color:#fff;box-shadow:0 0 18px #a78bfa}.fl.lock{opacity:.5}.fl.lock .fn{background:#ffffff1a}
+.eprev{display:flex;gap:8px;margin:10px 0}
+.ep{flex:1;padding:10px 6px;border-radius:16px;background:var(--gl);border:1px solid var(--bd);text-align:center}
+.ep span{display:block;font-size:34px}.ep b{display:block;font-size:12px}.ep small{font-size:11px}
+.ov.b{background:radial-gradient(120% 60% at 50% 0,hsl(var(--wh) 60% 28%),#04010c 70%)}
+.bwm{position:absolute;left:0;right:0;top:16%;text-align:center;font-size:44vw;line-height:1;opacity:.07;pointer-events:none}
+.gbar small{font-size:11px;font-weight:500;margin-left:8px}
+.hb2{padding:6px 12px;border-radius:99px;border:1px solid var(--bd);background:var(--gl);color:#fff;font:700 12px Outfit,sans-serif}
+.en{padding-top:22px}.en b{display:block;font-size:11px}
+.en.bossy{max-width:200px;border-color:#fff;box-shadow:0 0 22px #a78bfa}.en.bossy .em{font-size:66px}
+.it{position:absolute;left:8px;top:5px;font-size:16px}
+.shd{position:absolute;right:4px;top:4px;z-index:3;padding:1px 6px;border-radius:99px;background:#000b;font-size:11px}
+.hpn{display:block;text-align:center;font-size:10px;color:var(--mu)}
+.fint{position:absolute;inset:0;z-index:14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#04010ce6;pointer-events:none;animation:fout .4s 1.5s forwards}
+.fint small{font-size:14px;color:var(--lc)}
+.fint b{font-size:clamp(40px,14vw,60px);font-weight:900;letter-spacing:.1em;animation:slam .5s cubic-bezier(.2,1.6,.4,1)}
+.fint em{font-style:normal;font-weight:800;font-size:22px;letter-spacing:.3em;text-shadow:0 0 18px #a78bfa;animation:tw 1s infinite}
+@keyframes fout{to{opacity:0;visibility:hidden}}
 </style>
 </head>
 <body>
@@ -519,12 +548,11 @@ const views={
     <div class="row"><span class="chip rc0">R 72%</span><span class="chip rc1">SR 25%</span><span class="chip rc2">SSR 3%</span></div>
     <div class="box pity"><div class="pr" style="--p:${S.p.pity*2}%"><b>${S.p.pity}</b></div><div><b>Pity counter</b><p class="mu" style="font-size:13px">${50-S.p.pity} summons until a guaranteed SSR.</p></div></div>
     <div class="row"><button class="btn gl sum" onclick="pull(1)">Summon 1<small>160 💎</small></button><button class="btn gold sum" onclick="pull(10)">Summon 10<small>1,600 💎</small></button></div><p id="msg"></p>`},
-  battle:()=>{const t=getTeam(),cl=S.p.stage||0;
-    return `${ttl('Campaign','BATTLE')}
-    <div class="box"><div class="dly"><h3 style="margin:0">Your team</h3><button class="btn sm" onclick="teamForm()">Edit team</button></div>
-      <div class="trow">${[0,1,2].map(i=>t[i]?`<div class="tcard">${cardHTML(t[i],0,0,0)}</div>`:'<div class="tcard empty">＋</div>').join('')}</div>
-      <p class="mu" style="font-size:12.5px">Basic abilities and ultimates you gave your heroes are used in battle. Extra copies awaken heroes for +10% stats each.</p></div>
-    <h3>Stages</h3>${STG.map((n,i)=>{const s=i+1,lock=s>cl+1,ne=stageEn(s).length;return `<button class="stg2${lock?' lock':''}${s==cl+1?' cur':''}" ${lock?'disabled':''} onclick="startBattle(${s})"><span class="sn">${s<=cl?'✓':lock?'🔒':s}</span><div><b>${n}${s%5==0?' (Boss)':''}</b><small class="mu">${EMO[i]} ${ne>1?ne+' enemies':'1 enemy'}. First clear: ${60+25*s} 💎 ${80+40*s} 🪙</small></div><span class="chip">${s<=cl?'Replay':lock?'Locked':'Fight'}</span></button>`}).join('')}`},
+  tower:()=>{const t=getTeam(),cl=S.p.stage||0,wi=S.tw==null?Math.min(cl/10|0,WORLDS.length-1):S.tw,w=WORLDS[wi],base=wi*10,done=Math.max(0,Math.min(10,cl-base));
+    return `${ttl('Starfall Terrarium','THE TOWER')}
+    <div class="wbn" style="--wh:${ph(w.hu)}"><button class="wa" aria-label="Previous world" onclick="S.tw=${wi-1};draw()" ${wi?'':'disabled'}>‹</button><div><small class="mu">World ${wi+1} of ${WORLDS.length}</small><h3>${w.n}</h3><p class="mu" style="font-size:13px">${w.t}</p><div class="bar"><span style="width:${done*10}%"></span></div><small class="mu">${done} of 10 floors cleared</small></div><button class="wa" aria-label="Next world" onclick="S.tw=${wi+1};draw()" ${wi<WORLDS.length-1?'':'disabled'}>›</button></div>
+    <div class="box"><div class="dly"><h3 style="margin:0">Your team</h3><button class="btn sm" onclick="teamForm()">Edit team</button></div><div class="trow">${[0,1,2].map(i=>t[i]?`<div class="tcard">${cardHTML(t[i],0,0,0)}</div>`:'<div class="tcard empty">＋</div>').join('')}</div></div>
+    <div class="tw">${Array.from({length:10},(_,i)=>{const f=base+10-i,k=wf(f),boss=k%5==0,lock=f>cl+1,en=floorEn(f);return `<button class="fl${boss?' boss':''}${lock?' lock':''}${f==cl+1?' cur':''}" ${lock?'disabled':''} onclick="floorSheet(${f})"><span class="fn">${f<=cl?'✓':lock?'🔒':f}</span><div><b>${boss?(k==10?'Final boss: ':'Boss: ')+en[0].n:'Floor '+f}</b><small class="mu">${en.map(e=>e.e).join(' ')} ${f<=cl?'Cleared':lock?'Locked':'Ready'}</small></div><span class="chip">${boss?(k==10?'👑':'💀'):'⚔️'}</span></button>`}).join('')}</div>`},
   cards:()=>`${ttl('Your collection','HEROES')}<p class="mu">${Object.keys(S.inv).length} of ${S.cards.length} collected</p>
     <div class="tabs">${['All','SSR','SR','R'].map(r=>`<button class="${S.f==r?'on':''}" onclick="S.f='${r}';draw()">${r}</button>`).join('')}</div>
     <div class="grid">${S.cards.filter(c=>S.f=='All'||c.rarity==S.f).map(c=>cardHTML(c,S.inv[c.id],!S.inv[c.id])).join('')}</div>`,
@@ -550,7 +578,7 @@ const views={
 };
 
 function draw(){
-  const T=[['home','🏠','Home'],['summon','✨','Summon'],['battle','⚔️','Battle'],['cards','🃏','Heroes'],['games','🎮','Games'],['me','👤','Profile']];
+  const T=[['home','🏠','Home'],['summon','✨','Summon'],['tower','🗼','Tower'],['cards','🃏','Heroes'],['games','🎮','Games'],['me','👤','Profile']];
   app.innerHTML=`<header><div onclick="tab('me')">${avHTML(S.p)}</div><div class="hi"><small>Welcome back</small><b>Hi, ${esc(S.p.display_name||S.name)}</b></div><span class="chip">💎 ${S.p.gems.toLocaleString()}</span><span class="chip">🪙 ${S.p.coins.toLocaleString()}</span></header>
     <main>${views[S.tab]()}</main>
     <nav>${T.map(([k,i,l])=>`<button class="${k==S.tab?'on':''}" aria-label="${l}" onclick="tab('${k}')"><span>${i}</span><em>${l}</em></button>`).join('')}</nav>`;
@@ -857,72 +885,118 @@ const skillsHTML=(c,can)=>{const a=c.ability,sk=c.skills||[];
 const exAll=o=>document.querySelectorAll('.es').forEach(d=>d.open=!!o);
 const readSk=()=>[0,1,2].map(j=>({name:$('#s'+j+'_name').value.trim(),icon:$('#s'+j+'_icon').value.trim(),type:$('#s'+j+'_type').value,desc:$('#s'+j+'_desc').value.trim()})).filter(s=>s.name);
 
-// ---- Campaign battles (turn based, uses basic abilities and ultimates) ----
+// ---- The Tower: 6 anime worlds, 10 floors each, boss on every 5th floor ----
 let B=null;
-const BASE={R:[120,24],SR:[170,34],SSR:[230,46]};
-const STG=['Starlit Meadow','Whispering Woods','Moonlit Ruins','Ember Caves','Tidal Gate','Cloud Bridge','Eclipse Hollow','Storm Peaks','Voidlight Spire','Starfall Summit'];
-const EMO=['👾','👹','🦇','🕷️','👻','🐺','🧟','🦂','🐲','😈'];
-const stageEn=n=>{const boss=n%5==0,cnt=boss?1:1+(n>=3)+(n>=6),hp=Math.round((90+36*n)*(boss?2.8:.9)),atk=Math.round((13+5*n)*(boss?1.4:1));return Array.from({length:cnt},()=>({e:boss?(n==5?'👹':'😈'):EMO[n-1],hp,mhp:hp,atk}))};
+const BASE={R:[120,24],SR:[170,34],SSR:[230,46]},MAXF=60;
+const WORLDS=[
+ {n:'Naruto',t:'Hidden Village Trials',hu:20,en:[['🥷','Rogue Ninja','Wind'],['🦊','Shadow Fox','Fire'],['🪨','Stone Puppet','Earth']],bs:[['🗡️','The Rogue Swordsman','Water'],['🐍','The Serpent Sage','Earth']]},
+ {n:'One Piece',t:'The Grand Sea',hu:200,en:[['🏴‍☠️','Sea Raider','Water'],['🦈','Reef Shark','Water'],['🐙','Deep Kraken','Dark']],bs:[['🔱','Warlord of the Tides','Water'],['🐲','Emperor of the Deep','Dark']]},
+ {n:'Demon Slayer',t:'The Endless Night',hu:330,en:[['👹','Night Demon','Dark'],['🦇','Blood Bat','Wind'],['🕸️','Web Weaver','Earth']],bs:[['🌙','Twin-Moon Demon','Moon'],['😈','The Demon King','Dark']]},
+ {n:'Dragon Ball',t:'The Martial Arena',hu:50,en:[['🥋','Arena Brawler','Fire'],['🤖','Battle Android','Metal'],['🦖','Wild Saurian','Earth']],bs:[['🦾','The Android Warrior','Metal'],['👽','The Cosmic Tyrant','Star']]},
+ {n:'Jujutsu Kaisen',t:'Cursed Grounds',hu:260,en:[['👻','Lesser Curse','Dark'],['🎭','Masked Curse','Moon'],['🕯️','Ember Curse','Fire']],bs:[['🥚','The Womb Curse','Dark'],['👑','The King of Curses','Dark']]},
+ {n:'Attack on Titan',t:'Beyond the Walls',hu:100,en:[['🗿','Wandering Titan','Earth'],['🦍','Beast Titan','Earth'],['🏹','Scout Raider','Wind']],bs:[['🛡️','The Armored Titan','Metal'],['🦴','The Founding Colossus','Earth']]}];
+const wOf=f=>WORLDS[Math.min((f-1)/10|0,WORLDS.length-1)],wf=f=>(f-1)%10+1;
+const floorEn=f=>{const w=wOf(f),k=wf(f),boss=k%5==0,fin=k==10,pw=1+.06*(f-1);
+  if(boss){const b=w.bs[fin?1:0],hp=Math.round(90*pw*(fin?5:3.5));return[{e:b[0],n:b[1],el:b[2],hp,mhp:hp,atk:Math.round(13*pw*(fin?1.7:1.4)),boss:1}]}
+  return Array.from({length:k<3?1:k<7?2:3},(_,i)=>{const t=w.en[(k+i)%3],hp=Math.round(90*pw*.85);return{e:t[0],n:t[1],el:t[2],hp,mhp:hp,atk:Math.round(13*pw)}})};
+const floorRw=f=>{const m=f%10==0?3:f%5==0?2:1;return[(30+10*f)*m,(50+20*f)*m]};
+const EG={Fire:'f',Wind:'w',Sky:'w',Earth:'e',Metal:'e',Water:'a',Moon:'a',Light:'l',Star:'l',Dark:'d'},BEATS={f:'w',w:'e',e:'a',a:'f',l:'d',d:'l'};
+const mulEl=(a,d)=>{const x=EG[a],y=EG[d];return !x||!y?1:BEATS[x]==y?1.3:BEATS[y]==x?.8:1};
+const weakTo=el=>Object.keys(EG).filter(k=>BEATS[EG[k]]==EG[el]).join(', ');
+const INT={atk:'⚔️',heavy:'⚡',aoe:'🌪️',stun:'💫'};
+const intent=e=>e.stun?'stun':e.boss?(e.hp<e.mhp/2?'heavy':B.round%2==0?'aoe':'atk'):(B.round%3==0?'heavy':'atk');
 const getTeam=()=>{let ids=[];try{ids=JSON.parse(localStorage.getItem('team')||'[]')}catch(e){}
   let t=ids.map(id=>S.cards.find(c=>c.id==id)).filter(c=>c&&S.inv[c.id]);
   if(!t.length)t=S.cards.filter(c=>S.inv[c.id]).sort((a,b)=>RK[b.rarity]-RK[a.rarity]||S.inv[b.id]-S.inv[a.id]);
   return t.slice(0,3)};
 function teamForm(){
   const own=S.cards.filter(c=>S.inv[c.id]),cur=getTeam().map(c=>c.id);
-  modal(`<h2>Choose your team</h2><p class="mu" style="font-size:13px">Pick up to 3 heroes.</p><div class="grid" id="tm">${own.map(c=>`<div class="pk${cur.includes(c.id)?' on':''}" data-id="${c.id}" onclick="pickTeam(this)">${cardHTML(c,0,0,0)}</div>`).join('')||'<p class="mu">Summon some heroes first.</p>'}</div><div class="sticky"><button class="btn" onclick="saveTeam()">Save team</button><button class="btn ghost" onclick="closeM()">Cancel</button></div>`,1);
+  modal(`<h2>Choose your team</h2><p class="mu" style="font-size:13px">Pick up to 3 heroes. Mix elements to exploit enemy weaknesses.</p><div class="grid" id="tm">${own.map(c=>`<div class="pk${cur.includes(c.id)?' on':''}" data-id="${c.id}" onclick="pickTeam(this)">${cardHTML(c,0,0,0)}</div>`).join('')||'<p class="mu">Summon some heroes first.</p>'}</div><div class="sticky"><button class="btn" onclick="saveTeam()">Save team</button><button class="btn ghost" onclick="closeM()">Cancel</button></div>`,1);
 }
 const pickTeam=el=>{if(!el.classList.contains('on')&&document.querySelectorAll('#tm .on').length>=3)return alert('Your team can have up to 3 heroes.');el.classList.toggle('on')};
 function saveTeam(){localStorage.setItem('team',JSON.stringify([...document.querySelectorAll('#tm .on')].map(e=>+e.dataset.id)));closeM();draw()}
-const wait=ms=>new Promise(r=>tm(r,ms));
+function floorSheet(f){
+  const w=wOf(f),k=wf(f),en=floorEn(f),[g,c]=floorRw(f),t=getTeam();
+  modal(`<h2>Floor ${f}${k%5==0?(k==10?': Final Boss':': Boss'):''}</h2><p class="mu">${w.n}: ${w.t}</p>
+    <div class="eprev">${en.map(e=>`<div class="ep"><span>${e.e}</span><b>${esc(e.n)}</b><small class="mu">${EI[e.el]||''} ${e.el}</small></div>`).join('')}</div>
+    <p class="mu" style="font-size:13px">Weak to: ${[...new Set(en.map(e=>weakTo(e.el)))].join(' or ')}. A matching element deals +30% damage, a losing one -20%.</p>
+    <div class="box"><b>Rewards</b><p class="mu" style="font-size:13px">First clear: ${g} 💎 ${c} 🪙. Replays: ${6+f} 💎 ${15+4*f} 🪙 every 3 minutes.</p></div>
+    <div class="trow">${[0,1,2].map(i=>t[i]?`<div class="tcard">${cardHTML(t[i],0,0,0)}</div>`:'<div class="tcard empty">＋</div>').join('')}</div>
+    <div class="sticky"><button class="btn" onclick="closeM();startBattle(${f})">Start battle</button><button class="btn ghost" onclick="teamForm()">Edit team</button></div>`,1);
+}
+const wait=ms=>new Promise(r=>tm(r,ms/(B?B.sp:1)));
 const sceneEnd=()=>new Promise(r=>{const i=setInterval(()=>{if(!$('#scene')){clearInterval(i);r()}},150);TM.push(i)});
 const say2=t=>{const e=$('#lg');if(e)e.textContent=t};
 const ctr=sel=>{const e=document.querySelector(sel);if(!e)return[innerWidth/2,innerHeight/2];const r=e.getBoundingClientRect();return[r.x+r.width/2,r.y+r.height/3]};
-const hurt=(sel,d,heal)=>{fxAt(...ctr(sel),heal?5:8,(heal?'+':'-')+d);const n=$(sel);if(n&&!heal){n.classList.remove('hurt');void n.offsetWidth;n.classList.add('hurt')}tone(heal?660:180,0,.15,heal?'sine':'square',.1,heal?880:90)};
+const hurt=(sel,d,heal,pre)=>{fxAt(...ctr(sel),heal?5:8,(pre||'')+(d?(heal?'+':'-')+d:'Blocked'));const n=$(sel);if(n&&!heal){n.classList.remove('hurt');void n.offsetWidth;n.classList.add('hurt')}tone(heal?660:180,0,.15,heal?'sine':'square',.1,heal?880:90)};
 const pcount=()=>B.team.filter(x=>x.hp>0).reduce((n,x)=>n+(x.c.skills||[]).filter(s=>s.type=='Passive').length,0);
-const acts=h=>{const a=[{k:'strike',n:'Strike',i:'⚔️'}];(h.c.skills||[]).slice(0,3).forEach((s,j)=>{if(s.type!='Passive')a.push({k:'skill',j,n:s.name,i:s.icon||'✦',t:s.type})});if(h.c.ability)a.push({k:'ult',n:h.c.ability.name,i:'✦',ult:1});return a};
+const unit=c=>{const[hp,atk]=BASE[c.rarity],m=1+.1*awk(S.inv[c.id]);return{c,hp:Math.round(hp*m),mhp:Math.round(hp*m),atk:Math.round(atk*m),g:40,cd:[0,0,0],sh:0}};
+const acts=h=>{const a=[{k:'strike',n:'Strike',i:'⚔️',fx:'single',m:1,cd:0}];let ai=0;
+  (h.c.skills||[]).slice(0,3).forEach((s,j)=>{if(s.type=='Passive')return;
+    if(s.type=='Support')a.push({k:'skill',j,n:s.name,i:s.icon||'✦',fx:'heal',t:'Heal',cd:3});
+    else{const F=[['single',1.5,1,'Single'],['aoe',.8,2,'All'],['stun',1.3,3,'Stun']][Math.min(ai++,2)];a.push({k:'skill',j,n:s.name,i:s.icon||'✦',fx:F[0],m:F[1],cd:F[2],t:F[3]})}});
+  if(h.c.ability)a.push({k:'ult',n:h.c.ability.name,i:'✦',fx:'ult',ult:1});
+  a.forEach(x=>{x.off=x.ult?h.g<100:(x.k=='skill'&&h.cd[x.j]>0)});return a};
+const autoPick=h=>{const a=acts(h).filter(x=>!x.off),al=B.en.filter(e=>e.hp>0).length,low=B.team.some(x=>x.hp>0&&x.hp<x.mhp*.5);
+  return a.find(x=>x.ult)||(low&&a.find(x=>x.fx=='heal'))||(al>1&&a.find(x=>x.fx=='aoe'))||(B.en.some(e=>e.boss&&e.hp>0)&&a.find(x=>x.fx=='stun'))||a.filter(x=>x.k=='skill'&&x.fx!='heal').pop()||a[0]};
+const autoStep=()=>{if(!B||B.over||B.lock||!B.auto)return;const a=autoPick(B.team[B.i]);act(a.k,a.j??0)};
+const toggleAuto=()=>{B.auto=!B.auto;$('#au').textContent='Auto: '+(B.auto?'on':'off');if(B.auto)autoStep()};
+const toggleSpeed=()=>{B.sp=B.sp==1?2:1;$('#sp').textContent='x'+B.sp};
 function bdraw(){
-  const h=B.team[B.i],t=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0);
-  $('#er').innerHTML=B.en.map((e,i)=>`<div class="en${e.hp<=0?' dead':''}${i==t?' tg':''}" id="e${i}" onclick="B.t=${i};bdraw()"><span class="em">${e.e}</span><div class="hb"><span style="width:${e.hp/e.mhp*100}%"></span></div><small>${e.hp}</small></div>`).join('');
-  $('#pr').innerHTML=B.team.map((x,i)=>`<div class="hr${x.hp<=0?' dead':''}${i==B.i?' act':''}" id="h${i}">${cardHTML(x.c,0,0,0)}<div class="hb"><span style="width:${x.hp/x.mhp*100}%"></span></div><div class="ug"><span style="width:${x.g}%"></span></div></div>`).join('');
-  $('#ac').innerHTML=h&&!B.over?acts(h).map(a=>`<button class="ab${a.ult?' ult':''}" ${a.ult&&h.g<100?'disabled':''} onclick="act('${a.k}',${a.j??0})"><i>${a.i}</i><b>${esc(a.n)}</b><small>${a.ult?(h.g<100?h.g+'%':'READY'):esc(a.t||'Basic')}</small></button>`).join(''):'';
-  $('#rd').textContent='Round '+B.round;
+  const h=B.team[B.i],t=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0),hel=h&&h.c.element;
+  $('#er').innerHTML=B.en.map((e,i)=>{const m=hel?mulEl(hel,e.el):1;return `<div class="en${e.boss?' bossy':''}${e.hp<=0?' dead':''}${i==t?' tg':''}" id="e${i}" onclick="B.t=${i};bdraw()"><span class="it">${e.hp>0?INT[intent(e)]:''}</span><span class="em">${e.e}</span><b>${esc(e.n)}</b><div class="hb"><span style="width:${e.hp/e.mhp*100}%"></span></div><small>${EI[e.el]||''} ${e.hp}${m>1?' ▲':m<1?' ▼':''}</small></div>`}).join('');
+  $('#pr').innerHTML=B.team.map((x,i)=>`<div class="hr${x.hp<=0?' dead':''}${i==B.i?' act':''}" id="h${i}">${cardHTML(x.c,0,0,0)}${x.sh>0?`<span class="shd">🛡️${x.sh}</span>`:''}<div class="hb"><span style="width:${x.hp/x.mhp*100}%"></span></div><small class="hpn">${x.hp}/${x.mhp}</small><div class="ug"><span style="width:${x.g}%"></span></div></div>`).join('');
+  $('#ac').innerHTML=h&&!B.over?acts(h).map(a=>`<button class="ab${a.ult?' ult':''}" ${a.off||B.lock?'disabled':''} onclick="act('${a.k}',${a.j??0})"><i>${a.i}</i><b>${esc(a.n)}</b><small>${a.ult?(h.g<100?h.g+'%':'READY'):a.k=='skill'&&h.cd[a.j]>0?'Cooldown '+h.cd[a.j]:esc(a.t||'Basic')}</small></button>`).join(''):'';
 }
-function startBattle(s){
+function startBattle(f){
   const t=getTeam();if(!t.length)return alert('You need at least one hero. Summon some first!');
-  closeG();const o=document.createElement('div');o.className='ov g b';o.id='game';
-  o.innerHTML=`<div class="gbar"><button class="back" onclick="closeG()">‹</button><b>⚔️ ${STG[s-1]}</b><span class="gscore" id="rd">Round 1</span></div><div class="bfield"><div class="erow" id="er"></div><p class="log" id="lg">${esc(t[0].name)}'s turn. Tap an enemy to target it.</p><div class="prow" id="pr"></div></div><div class="acts" id="ac"></div>`;
+  const w=wOf(f),k=wf(f);closeG();const o=document.createElement('div');o.className='ov g b';o.id='game';o.style.setProperty('--wh',ph(w.hu));
+  o.innerHTML=`<div class="gbar"><button class="back" onclick="closeG()">‹</button><b>Floor ${f}<small class="mu">${w.n}</small></b><button class="hb2" id="au" onclick="toggleAuto()">Auto: off</button><button class="hb2" id="sp" onclick="toggleSpeed()">x1</button></div><div class="bwm">${w.en[0][0]}</div>
+    <div class="bfield"><div class="erow" id="er"></div><p class="log" id="lg"></p><div class="prow" id="pr"></div></div><div class="acts" id="ac"></div>
+    <div class="fint"><small>${w.n}</small><b>FLOOR ${f}</b>${k%5==0?`<em>${k==10?'FINAL BOSS':'BOSS'}</em>`:''}</div>`;
   document.body.append(o);
-  B={s,round:1,i:0,t:0,lock:0,over:0,team:t.map(c=>{const[hp,atk]=BASE[c.rarity],m=1+.1*awk(S.inv[c.id]);return{c,hp:Math.round(hp*m),mhp:Math.round(hp*m),atk:Math.round(atk*m),g:40}}),en:stageEn(s)};
-  bdraw();
+  B={f,round:1,i:0,t:0,lock:1,over:0,sp:1,auto:0,team:t.map(unit),en:floorEn(f)};bdraw();
+  tm(()=>{B.lock=0;say2(`${B.team[0].c.name}'s turn. Tap an enemy to target it.`);bdraw()},1900);
 }
 async function act(k,j){
-  if(B.lock||B.over)return;B.lock=1;
-  const h=B.team[B.i],atk=h.atk*(1+.08*pcount()),rn=()=>.9+Math.random()*.2,ti=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0);
-  const dmgTo=(i,m)=>{const d=Math.round(atk*m*rn());B.en[i].hp=Math.max(0,B.en[i].hp-d);bdraw();hurt('#e'+i,d)};
-  if(k=='ult'){h.g=0;say2(`${h.c.name}: ${h.c.ability.name}!`);bdraw();playScene(h.c.ability,h.c);await sceneEnd();B.en.forEach((e,i)=>{if(e.hp>0)dmgTo(i,2.4)});shk();gflash()}
-  else if(k=='skill'&&h.c.skills[j].type=='Support'){const hl=Math.round(atk*.6);h.g=Math.min(100,h.g+25);B.team.forEach(x=>{if(x.hp>0)x.hp=Math.min(x.mhp,x.hp+hl)});bdraw();B.team.forEach((x,i)=>{if(x.hp>0)hurt('#h'+i,hl,1)});say2(`${h.c.name} uses ${h.c.skills[j].name}. The team heals ${hl}.`)}
-  else{h.g=Math.min(100,h.g+(k=='strike'?20:30));say2(k=='strike'?`${h.c.name} strikes!`:`${h.c.name} uses ${h.c.skills[j].name}!`);dmgTo(ti,k=='strike'?1:1.3+.2*j)}
-  await wait(800);
+  if(B.lock||B.over)return;
+  const h=B.team[B.i],a=acts(h).find(x=>x.k==k&&(k!='skill'||x.j==j));if(!a||a.off)return;
+  B.lock=1;
+  const atk=h.atk*(1+.08*pcount()),al=()=>B.en.map((e,i)=>i).filter(i=>B.en[i].hp>0),ti=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:al()[0];
+  const dmgTo=(i,m)=>{const e=B.en[i],el=mulEl(h.c.element,e.el),cr=Math.random()<.1,d=Math.round(atk*m*el*(.9+Math.random()*.2)*(cr?1.5:1));e.hp=Math.max(0,e.hp-d);bdraw();hurt('#e'+i,d,0,(cr?'CRIT ':'')+(el>1?'▲ ':el<1?'▼ ':''))};
+  if(a.ult){h.g=0;say2(`${h.c.name}: ${a.n}!`);bdraw();playScene(h.c.ability,h.c);await sceneEnd();al().forEach(i=>dmgTo(i,2.4));shk();gflash()}
+  else if(a.fx=='heal'){const hl=Math.round(atk*.4);B.team.forEach(x=>{if(x.hp>0){x.hp=Math.min(x.mhp,x.hp+hl);x.sh=(x.sh||0)+hl}});h.g=Math.min(100,h.g+25);bdraw();B.team.forEach((x,i)=>{if(x.hp>0)hurt('#h'+i,hl,1)});say2(`${h.c.name} uses ${a.n}. The team heals and gains a shield.`)}
+  else{h.g=Math.min(100,h.g+(a.k=='strike'?20:30));say2(a.k=='strike'?`${h.c.name} strikes!`:`${h.c.name} uses ${a.n}!`);
+    if(a.fx=='aoe')al().forEach(i=>dmgTo(i,a.m));else{dmgTo(ti,a.m);if(a.fx=='stun'&&B.en[ti].hp>0){B.en[ti].stun=1;say2(`${B.en[ti].n} is stunned!`)}}}
+  if(a.k=='skill')h.cd[a.j]=a.cd;
+  bdraw();await wait(800);
   if(!B.en.some(e=>e.hp>0))return bend(1);
   let n=B.i+1;while(n<B.team.length&&B.team[n].hp<=0)n++;
   if(n<B.team.length)B.i=n;
-  else{say2('The enemies strike back!');await wait(500);
-    for(const e of B.en){if(e.hp<=0)continue;const al=B.team.map((x,q)=>q).filter(q=>B.team[q].hp>0);if(!al.length)break;
-      const q=al[Math.random()*al.length|0],d=Math.round(e.atk*rn());B.team[q].hp=Math.max(0,B.team[q].hp-d);B.team[q].g=Math.min(100,B.team[q].g+10);bdraw();hurt('#h'+q,d);await wait(650)}
+  else{say2('The enemies strike back!');bdraw();await wait(500);
+    const hitH=(e,q,m)=>{const x=B.team[q];let d=Math.round(e.atk*m*(.9+Math.random()*.2)),ab=Math.min(x.sh||0,d);x.sh=(x.sh||0)-ab;d-=ab;x.hp=Math.max(0,x.hp-d);x.g=Math.min(100,x.g+10);bdraw();hurt('#h'+q,d)};
+    for(const e of B.en){if(e.hp<=0)continue;
+      if(e.stun){e.stun=0;say2(`${e.n} is stunned and loses its turn.`);bdraw();await wait(650);continue}
+      if(e.boss&&!e.rage&&e.hp<e.mhp/2){e.rage=1;e.atk=Math.round(e.atk*1.25);say2(`${e.n} is enraged!`);shk();await wait(700)}
+      const it=intent(e),al2=B.team.map((x,q)=>q).filter(q=>B.team[q].hp>0);if(!al2.length)break;
+      say2(`${e.n} uses ${it=='heavy'?'a heavy blow':it=='aoe'?'a sweeping attack':'an attack'}!`);
+      if(it=='aoe')al2.forEach(q=>hitH(e,q,.9));else hitH(e,al2[Math.random()*al2.length|0],it=='heavy'?1.8:1);
+      await wait(700)}
     if(!B.team.some(x=>x.hp>0))return bend(0);
-    B.round++;B.i=B.team.findIndex(x=>x.hp>0)}
-  B.lock=0;say2(`${B.team[B.i].c.name}'s turn.`);bdraw();
+    B.round++;B.team.forEach(x=>x.cd=x.cd.map(v=>Math.max(0,v-1)));B.i=B.team.findIndex(x=>x.hp>0)}
+  B.lock=0;say2(`${B.team[B.i].c.name}'s turn.`);bdraw();if(B.auto)tm(autoStep,500/B.sp);
 }
+async function nextFloor(f){closeG();await load();if(f<MAXF&&f+1<=S.p.stage+1)startBattle(f+1)}
 async function bend(win){
-  B.over=1;bdraw();const o=$('#game');if(!o)return;
-  if(!win){tone(200,0,.6,'sine',.3,60);o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><h2>Defeat</h2><p class="mu">Try a different team, use your ultimates, or awaken heroes with extra copies.</p><button class="btn" onclick="startBattle(${B.s})">Retry</button><button class="btn ghost" onclick="closeG()">Back</button></div></div>`);return}
-  const{data,error}=await sb.rpc('battle_win',{s:B.s}),st=B.team.filter(x=>x.hp>0).length;
+  B.over=1;B.lock=1;bdraw();const o=$('#game');if(!o)return;const f=B.f;
+  if(!win){tone(200,0,.6,'sine',.3,60);o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><h2>Defeat</h2><p class="mu">Try other elements, use your ultimates and abilities, or awaken heroes with extra copies.</p><button class="btn" onclick="startBattle(${f})">Retry</button><button class="btn ghost" onclick="closeG()">Back to tower</button></div></div>`);return}
+  const{data,error}=await sb.rpc('tower_win',{f}),st=B.team.filter(x=>x.hp>0).length;
   play('card2');fxAt(...mid(),30);
-  o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><h2>Victory!</h2>${error?`<p class="mu">${esc(error.message)}</p>`:`<p class="rw">+${data.gems} 💎 +${data.coins} 🪙</p><p class="mu">${data.first?'First clear bonus!':'Replay reward'}</p>`}<button class="btn" onclick="closeG();load()">Collect</button></div></div>`);
+  o.insertAdjacentHTML('beforeend',`<div class="bres"><div class="res"><div class="stars">${'★'.repeat(st)}${'☆'.repeat(3-st)}</div><h2>${f%10==0?'World cleared!':'Floor cleared!'}</h2>${error?`<p class="mu">${esc(error.message)}</p>`:`<p class="rw">+${data.gems} 💎 +${data.coins} 🪙</p><p class="mu">${data.first?'First clear bonus!':'Replay reward'}</p>`}${f<MAXF?`<button class="btn" onclick="nextFloor(${f})">Next floor</button>`:''}<button class="btn ghost" onclick="closeG();load()">Back to tower</button></div></div>`);
 }
 
 // Header gets a dark background once you scroll
-const _draw=draw;draw=function(){_draw();const m=$('main'),h=$('header');if(m&&h)m.onscroll=()=>h.classList.toggle('sc',m.scrollTop>20);setFab()};
+const _draw=draw;draw=function(){_draw();const m=$('main'),h=$('header');if(m&&h)m.onscroll=()=>h.classList.toggle('sc',m.scrollTop>20);setFab();if(S.tab=='tower'){const c=document.querySelector('.fl.cur');if(c)c.scrollIntoView({block:'center'})}};
 const _auth=authScreen;authScreen=function(m){const f=$('#fab');if(f)f.remove();_auth(m)};
 
 async function daily(){
