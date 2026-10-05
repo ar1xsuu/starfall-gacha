@@ -570,13 +570,13 @@ h3{font-size:16px;margin:12px 0 4px}
 .ab{position:relative;min-height:62px;padding:6px 4px;gap:1px;justify-content:center;border-radius:14px;overflow:hidden}
 .ab i{font-size:20px}.ab b{max-width:100%;font-size:11.5px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cdn{position:absolute;inset:0;display:grid;place-items:center;background:#000a;font-size:26px;font-weight:800}
-.ult{flex:none;width:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;border-radius:24px;border:1px solid var(--bd);background:linear-gradient(160deg,#ffffff10,#7c3aed22);color:#fff;font-family:inherit}
+.ubtn{flex:none;width:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;border-radius:24px;border:1px solid var(--bd);background:linear-gradient(160deg,#ffffff10,#7c3aed22);color:#fff;font-family:inherit}
 .ugr{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#fff calc(var(--g)*1%),#ffffff22 0)}
 .ugr::after{content:"✦";width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#12082a}
-.ult b{max-width:100%;font-size:12px;line-height:1.1;text-align:center}.ult small{font-size:11px;font-weight:800;color:var(--lc)}
-.ult.rdy{border-color:#fff;background:linear-gradient(160deg,#ffffff30,#a855f755);animation:pulseg 1.2s ease-in-out infinite}
-.ult.rdy .ugr{box-shadow:0 0 22px #fff}
-.ult:disabled{opacity:.55}.ult.rdy:disabled{opacity:1}
+.ubtn b{max-width:100%;font-size:12px;line-height:1.1;text-align:center}.ubtn small{font-size:11px;font-weight:800;color:var(--lc)}
+.ubtn.rdy{border-color:#fff;background:linear-gradient(160deg,#ffffff30,#a855f755);animation:pulseg 1.2s ease-in-out infinite}
+.ubtn.rdy .ugr{box-shadow:0 0 22px #fff}
+.ubtn:disabled{opacity:.55}.ubtn.rdy:disabled{opacity:1}
 .tbn{position:absolute;left:0;right:0;top:36%;z-index:13;text-align:center;pointer-events:none;animation:tb 1.1s ease-out forwards}
 .tbn b{display:inline-block;padding:6px 30px;font-size:30px;font-weight:900;letter-spacing:.12em;color:#fff;text-shadow:0 0 18px #a78bfa;background:linear-gradient(90deg,transparent,#7c3aedcc 20%,#7c3aedcc 80%,transparent)}
 .tbn small{display:block;margin-top:2px;font-size:12px;letter-spacing:.3em;color:var(--lc)}
@@ -596,6 +596,23 @@ h3{font-size:16px;margin:12px 0 4px}
 .bnm{position:absolute;left:0;right:0;bottom:12%;text-align:center;opacity:0;animation:slam .5s 2s cubic-bezier(.2,1.6,.4,1) forwards}
 .bnm small{display:block;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--lc)}
 .bnm b{display:block;font-size:clamp(26px,9vw,40px);font-weight:900;letter-spacing:.05em;text-shadow:0 0 22px #a78bfa}
+/* v15: ability categories, calmer turn indicator */
+.ah i{background:#12082a;border:2px solid var(--ac);color:var(--ac);box-shadow:0 0 14px var(--ac)}
+.efx{margin-top:6px;padding:6px 10px;border-radius:10px;background:#ffffff0d;font-size:12px;line-height:1.35;color:var(--lc)}
+.tag.catActive{background:#7c3aed66}.tag.catSupport{background:#ffffff2e}.tag.catPassive{background:#6366f166}
+.phase{display:flex;align-items:center;gap:8px;white-space:normal}
+.phase.chg{animation:pop2 .4s}
+@keyframes pop2{50%{transform:scale(1.1)}}
+.phase.en2{background:#0008;color:#fff}
+.pt{padding:2px 10px;border-radius:99px;font-weight:800;background:linear-gradient(135deg,var(--v),var(--mg))}
+.pt.foe{background:#fff;color:#1a0a3a}
+.phase em{font-style:normal;font-size:11.5px;color:var(--lc)}
+.ov.b.foe .hr{opacity:.55}
+.ov.b.foe .en:not(.dead){filter:drop-shadow(0 0 10px #ffffff55)}
+.en{transition:transform .25s,filter .25s}
+.en.acting{z-index:3;transform:translateY(22px) scale(1.12);filter:drop-shadow(0 0 16px #fff)}
+.stt{position:absolute;left:6px;top:2px;z-index:2;font-size:16px}
+.stt.h{left:auto;right:4px;top:auto;bottom:70px}
 </style>
 </head>
 <body>
@@ -973,13 +990,42 @@ function setFab(){
   f.textContent=S.tab=='admin'?'✕':'🛠️';
 }
 
+// ---- Ability library: 8 Active, 8 Support and 8 Passive effects ----
+const ABIL={
+ strike:{c:'Active',n:'Power strike',l:'Single',d:'150% damage to one enemy',m:1.5,cd:1},
+ cleave:{c:'Active',n:'Cleave',l:'All enemies',d:'80% damage to all enemies',m:.8,aoe:1,cd:2},
+ twin:{c:'Active',n:'Twin strike',l:'2 hits',d:'Two hits of 80% damage',m:.8,hits:2,cd:2},
+ breaker:{c:'Active',n:'Guard breaker',l:'Break',d:'120% damage and breaks 2 guard pips',m:1.2,brk:2,cd:3},
+ burn:{c:'Active',n:'Searing blow',l:'Burn',d:'100% damage and burns for 3 rounds',m:1,dot:1,cd:3},
+ stun:{c:'Active',n:'Stunning blow',l:'Stun',d:'130% damage and stuns (bosses resist)',m:1.3,stun:1,cd:3},
+ execute:{c:'Active',n:'Execute',l:'Execute',d:'120% damage, double on enemies under 35% health',m:1.2,exec:1,cd:3},
+ drain:{c:'Active',n:'Life drain',l:'Drain',d:'110% damage and heals you for half of it',m:1.1,drain:.5,cd:2},
+ heal:{c:'Support',n:'Heal team',l:'Heal all',d:'Heals all allies for 50% of your attack',heal:.5,cd:3},
+ mend:{c:'Support',n:'Mend',l:'Mend',d:'Heals the weakest ally for 120% of your attack',mend:1.2,cd:2},
+ shield:{c:'Support',n:'Team shield',l:'Shield all',d:'Shields all allies for 60% of your attack',shield:.6,cd:3},
+ ward:{c:'Support',n:'Ward',l:'Ward',d:'Shields the weakest ally for 140% of your attack',ward:1.4,cd:2},
+ rally:{c:'Support',n:'Rally',l:'Rally',d:'Your team deals +25% damage for 2 rounds',buff:.25,cd:4},
+ surge:{c:'Support',n:'Power surge',l:'Charge',d:'Gives all allies +35% ultimate charge',surge:35,cd:4},
+ renew:{c:'Support',n:'Renewal',l:'Regen',d:'Heals all allies for 25% of your attack each round for 3 rounds',regen:.25,cd:4},
+ revive:{c:'Support',n:'Revive',l:'Revive',d:'Revives a fallen ally at 35% health',revive:.35,cd:6},
+ might:{c:'Passive',n:'Battle fervor',l:'Passive',d:'Your team deals +8% damage',atk:.08},
+ iron:{c:'Passive',n:'Iron will',l:'Passive',d:'You take 15% less damage',dr:.15},
+ vital:{c:'Passive',n:'Vitality',l:'Passive',d:'+20% maximum health',hp:.2},
+ keen:{c:'Passive',n:'Keen eye',l:'Passive',d:'+15% critical chance',crit:.15},
+ regen:{c:'Passive',n:'Second wind',l:'Passive',d:'Heal 6% of your maximum health each round',rg:.06},
+ thorns:{c:'Passive',n:'Counterstrike',l:'Passive',d:'30% chance to strike back when hit',ctr:.3},
+ leech:{c:'Passive',n:'Lifesteal',l:'Passive',d:'Heal for 15% of the damage you deal',ls:.15},
+ charge:{c:'Passive',n:'Quick charge',l:'Passive',d:'Gain +10% ultimate charge with every action',ug:10}};
+const DEFFX={Active:['strike','cleave','stun'],Support:['heal','shield','mend'],Passive:['might','iron','vital']};
+const skillList=c=>{const cnt={};return(c.skills||[]).slice(0,3).map((s,j)=>{const ok=s.fx&&ABIL[s.fx],t=ok?ABIL[s.fx].c:(DEFFX[s.type]?s.type:'Active');cnt[t]=cnt[t]||0;const k=ok?s.fx:DEFFX[t][Math.min(cnt[t],2)];cnt[t]++;return{s,j,k,p:ABIL[k]}})};
+const fxOpts=v=>['Active','Support','Passive'].map(cat=>`<optgroup label="${cat}">${Object.entries(ABIL).filter(([k,p])=>p.c==cat).map(([k,p])=>`<option value="${k}" ${k==v?'selected':''}>${p.n}: ${p.d}</option>`).join('')}</optgroup>`).join('');
 // ---- Basic abilities, ultimate display, editor helpers ----
-const skillsHTML=(c,can)=>{const a=c.ability,sk=c.skills||[];
-  if(!sk.length&&!a)return '<p class="mu">This hero has no abilities yet.</p>';
-  return (sk.length?`<h3 class="sh">Basic abilities</h3>${sk.map(s=>`<div class="sk3"><i>${esc(s.icon||'✦')}</i><div><b>${esc(s.name)}</b><span class="tag">${esc(s.type||'Active')}</span><p>${esc(s.desc||'')}</p></div></div>`).join('')}`:'')
+const skillsHTML=(c,can)=>{const a=c.ability,sl=skillList(c);
+  if(!sl.length&&!a)return '<p class="mu">This hero has no abilities yet.</p>';
+  return (sl.length?`<h3 class="sh">Basic abilities</h3>${sl.map(({s,p})=>`<div class="sk3"><i>${esc(s.icon||'✦')}</i><div><b>${esc(s.name)}</b><span class="tag cat${p.c}">${p.c}</span><p>${esc(s.desc||'')}</p><div class="efx">${esc(p.n)}: ${esc(p.d)}. ${p.cd?'Cooldown: '+p.cd+' rounds.':'Always active.'}</div></div></div>`).join('')}`:'')
    +(a?`<h3 class="sh">Ultimate</h3><div class="abil ult" style="--ac:${esc(a.color||'#a855f7')}"><div class="ah"><i>✦</i><div><b>${esc(a.name||'Ultimate')}</b>${a.sub?`<small class="qs">${esc(a.sub)}</small>`:''}</div></div><p>${esc(a.desc||'')}</p>${can?`<button class="btn" onclick="playAbility(${c.id})">▶ Play ultimate cutscene</button>`:'<p class="mu" style="font-size:13px">🔒 Own this hero to unlock the cutscene.</p>'}</div>`:'')};
 const exAll=o=>document.querySelectorAll('.es').forEach(d=>d.open=!!o);
-const readSk=()=>[0,1,2].map(j=>({name:$('#s'+j+'_name').value.trim(),icon:$('#s'+j+'_icon').value.trim(),type:$('#s'+j+'_type').value,desc:$('#s'+j+'_desc').value.trim()})).filter(s=>s.name);
+const readSk=()=>[0,1,2].map(j=>{const fx=$('#s'+j+'_fx').value;return{name:$('#s'+j+'_name').value.trim(),icon:$('#s'+j+'_icon').value.trim(),fx,type:ABIL[fx].c,desc:$('#s'+j+'_desc').value.trim()}}).filter(s=>s.name);
 
 // ---- The Tower: 6 anime worlds, 10 floors each, boss on every 5th floor ----
 let B=null;
@@ -1026,31 +1072,32 @@ const say2=t=>{const e=$('#lg');if(e)e.textContent=t};
 const ctr=sel=>{const e=document.querySelector(sel);if(!e)return[innerWidth/2,innerHeight/2];const r=e.getBoundingClientRect();return[r.x+r.width/2,r.y+r.height/3]};
 const hurt=(sel,d,heal,pre)=>{fxAt(...ctr(sel),heal?5:8,(pre||'')+(d?(heal?'+':'-')+d:'Blocked'));const n=$(sel);if(n&&!heal){n.classList.remove('hurt');void n.offsetWidth;n.classList.add('hurt')}tone(heal?660:180,0,.15,heal?'sine':'square',.1,heal?880:90)};
 const banner=(t,s,foe)=>{const o=$('#game');if(!o)return;const b=document.createElement('div');b.className='tbn'+(foe?' foe':'');b.innerHTML=`<b>${esc(t)}</b><small>${s}</small>`;o.append(b);tm(()=>b.remove(),1150)};
-const pcount=()=>B.team.filter(x=>x.hp>0).reduce((n,x)=>n+(x.c.skills||[]).filter(s=>s.type=='Passive').length,0);
-const unit=c=>{const[hp,atk]=BASE[c.rarity],m=1+.1*awk(S.inv[c.id]);return{c,hp:Math.round(hp*m),mhp:Math.round(hp*m),atk:Math.round(atk*m),g:40,cd:[0,0,0],sh:0,dmg:0}};
-const acts=h=>{const a=[{k:'strike',n:'Strike',i:'⚔️',fx:'single',m:1,cd:0}];let ai=0;
-  (h.c.skills||[]).slice(0,3).forEach((s,j)=>{if(s.type=='Passive')return;
-    if(s.type=='Support')a.push({k:'skill',j,n:s.name,i:s.icon||'✦',fx:'heal',t:'Heal team',cd:3});
-    else{const F=[['single',1.5,1,'Single'],['aoe',.8,2,'All enemies'],['stun',1.3,3,'Stun']][Math.min(ai++,2)];a.push({k:'skill',j,n:s.name,i:s.icon||'✦',fx:F[0],m:F[1],cd:F[2],t:F[3]})}});
-  if(h.c.ability)a.push({k:'ult',n:h.c.ability.name,i:'✦',fx:'ult',ult:1});
-  a.forEach(x=>{x.off=x.ult?h.g<100:(x.k=='skill'&&h.cd[x.j]>0)});return a};
-const autoPick=h=>{const a=acts(h).filter(x=>!x.off),al=B.en.filter(e=>e.hp>0).length,low=B.team.some(x=>x.hp>0&&x.hp<x.mhp*.5);
-  return a.find(x=>x.ult)||(low&&a.find(x=>x.fx=='heal'))||(al>1&&a.find(x=>x.fx=='aoe'))||(B.en.some(e=>e.boss&&e.hp>0)&&a.find(x=>x.fx=='stun'))||a.filter(x=>x.k=='skill'&&x.fx!='heal').pop()||a[0]};
+const tb=()=>1+B.team.filter(x=>x.hp>0).reduce((n,x)=>n+x.am,0)+(B.buff?B.buff.v:0);
+const unit=c=>{const[hp,atk]=BASE[c.rarity],m=1+.1*awk(S.inv[c.id]),ps=skillList(c).map(x=>x.p).filter(p=>p.c=='Passive'),sm=k=>ps.reduce((n,p)=>n+(p[k]||0),0),H=Math.round(hp*m*(1+sm('hp')));
+  return{c,hp:H,mhp:H,atk:Math.round(atk*m),g:40,cd:[0,0,0],sh:0,dmg:0,dr:sm('dr'),crit:.1+sm('crit'),rg:sm('rg'),ctr:sm('ctr'),ls:sm('ls'),ug:sm('ug'),am:sm('atk')}};
+const acts=h=>{const a=[{k:'strike',n:'Strike',i:'⚔️',l:'Basic',P:{m:1,cd:0,c:'Active'}}];
+  skillList(h.c).forEach(({s,j,k,p})=>{if(p.c!='Passive')a.push({k:'skill',j,fx:k,n:s.name,i:s.icon||'✦',l:p.l,P:p})});
+  if(h.c.ability)a.push({k:'ult',n:h.c.ability.name,i:'✦',ult:1,l:'Ultimate',P:{c:'Ultimate'}});
+  a.forEach(x=>{x.off=x.ult?h.g<100:x.k=='skill'&&(h.cd[x.j]>0||(x.fx=='revive'&&!B.team.some(y=>y.hp<=0)))});return a};
+const autoPick=h=>{const a=acts(h).filter(x=>!x.off),has=f=>a.find(x=>x.fx==f),al=B.en.filter(e=>e.hp>0),low=B.team.some(x=>x.hp>0&&x.hp<x.mhp*.55),dead=B.team.some(x=>x.hp<=0);
+  return a.find(x=>x.ult)||(dead&&has('revive'))||(low&&(has('heal')||has('mend')||has('ward')||has('shield')))||(!B.buff&&has('rally'))||(B.team.some(x=>x.g<60)&&has('surge'))||(al.some(e=>e.hp<e.mhp*.35)&&has('execute'))||(al.length>1&&has('cleave'))||(al.some(e=>e.boss)&&(has('breaker')||has('stun')))||a.filter(x=>x.k=='skill'&&x.P.c=='Active').pop()||a[0]};
 const autoStep=()=>{if(!B||B.over||B.lock||!B.auto)return;const a=autoPick(B.team[B.i]);act(a.k,a.j??0)};
 const toggleAuto=()=>{B.auto=!B.auto;$('#au').textContent='Auto: '+(B.auto?'on':'off');if(B.auto)autoStep()};
 const toggleSpeed=()=>{B.sp=B.sp==1?2:1;$('#sp').textContent='x'+B.sp};
 const bossIntro=(e,k,w)=>`<div class="bint"><div class="wn a"><span>WARNING</span><span>WARNING</span><span>WARNING</span></div><div class="wn b"><span>WARNING</span><span>WARNING</span><span>WARNING</span></div><div class="bsil">${e.e}</div><div class="bnm"><small>${esc(w.n)} ${k==10?'final boss':'boss'}</small><b>${esc(e.n)}</b></div></div>`;
 function bdraw(){
-  const h=B.team[B.i],t=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0),hel=h&&h.c.element,dl=`-${((Date.now()%4800)/1000).toFixed(2)}s`,pe=$('#ph');
-  pe.className='phase'+(B.enemyTurn?' en2':'');pe.textContent=`Round ${B.round}  ${B.enemyTurn?'Enemy turn':'Your turn'}${B.chain>1&&!B.enemyTurn?'  Chain x'+B.chain:''}`;
-  $('#er').innerHTML=B.en.map((e,i)=>{const m=hel?mulEl(hel,e.el):1,it=intent(e);return `<div class="en${e.boss?' bossy':''}${e.hp<=0?' dead':''}${e.brk?' brk':''}" id="e${i}" style="--dl:${dl}" onclick="B.t=${i};bdraw()">${e.hp>0?`<div class="itb ${it}">${INT[it]} ${INL[it]}</div>`:''}<div class="eb">${i==t?'<i class="rt"></i>':''}<span class="em">${e.e}</span><i class="eel">${EI[e.el]||''}</i>${e.brk?'<span class="bk">BREAK</span>':''}</div><b>${esc(e.n)}</b><div class="hb"><span style="width:${e.hp/e.mhp*100}%"></span></div><div class="gp">${Array.from({length:e.mg},(_,q)=>`<i class="${q<e.gd?'on':''}"></i>`).join('')}</div><small>${e.hp}/${e.mhp}${m>1?' ▲':m<1?' ▼':''}</small></div>`}).join('');
-  $('#pr').innerHTML=B.team.map((x,i)=>{const on=i==B.i&&!B.enemyTurn&&x.hp>0;return `<div class="hr${x.hp<=0?' dead':''}${on?' act':''}" id="h${i}" style="--dl:${dl}">${on?'<i class="mk">▼</i>':''}${cardHTML(x.c,0,0,0)}${x.sh>0?`<span class="shd">🛡️${x.sh}</span>`:''}<div class="hb"><span style="width:${x.hp/x.mhp*100}%"></span></div><small class="hpn">${x.hp}/${x.mhp}</small><div class="ug${x.g>=100?' full':''}"><span style="width:${x.g}%"></span></div></div>`}).join('');
+  const h=B.team[B.i],t=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:B.en.findIndex(e=>e.hp>0),hel=h&&h.c.element,dl=`-${((Date.now()%4800)/1000).toFixed(2)}s`,pe=$('#ph'),key=B.round+':'+B.enemyTurn,chg=B.lp!==key;B.lp=key;
+  pe.className='phase'+(chg?' chg':'');
+  pe.innerHTML=`<b>Round ${B.round}</b><span class="pt${B.enemyTurn?' foe':''}">${B.enemyTurn?'Enemy turn':'Your turn'}</span>${B.chain>1&&!B.enemyTurn?`<em>Chain x${B.chain}</em>`:''}${B.buff?`<em>ATK +${Math.round(B.buff.v*100)}%</em>`:''}`;
+  $('#game').classList.toggle('foe',!!B.enemyTurn);
+  $('#er').innerHTML=B.en.map((e,i)=>{const m=hel?mulEl(hel,e.el):1,it=intent(e);return `<div class="en${e.boss?' bossy':''}${e.hp<=0?' dead':''}${e.brk?' brk':''}${i==B.acting?' acting':''}" id="e${i}" style="--dl:${dl}" onclick="B.t=${i};bdraw()">${e.hp>0?`<div class="itb ${it}">${INT[it]} ${INL[it]}</div>`:''}<div class="eb">${i==t&&!B.enemyTurn?'<i class="rt"></i>':''}<span class="em">${e.e}</span><i class="eel">${EI[e.el]||''}</i>${e.burn?'<span class="stt">🔥</span>':''}${e.brk?'<span class="bk">BREAK</span>':''}</div><b>${esc(e.n)}</b><div class="hb"><span style="width:${e.hp/e.mhp*100}%"></span></div><div class="gp">${Array.from({length:e.mg},(_,q)=>`<i class="${q<e.gd?'on':''}"></i>`).join('')}</div><small>${e.hp}/${e.mhp}${m>1?' ▲':m<1?' ▼':''}</small></div>`}).join('');
+  $('#pr').innerHTML=B.team.map((x,i)=>{const on=i==B.i&&!B.enemyTurn&&x.hp>0;return `<div class="hr${x.hp<=0?' dead':''}${on?' act':''}" id="h${i}" style="--dl:${dl}">${on?'<i class="mk">▼</i>':''}${cardHTML(x.c,0,0,0)}${x.sh>0?`<span class="shd">🛡️${x.sh}</span>`:''}${x.hot?'<span class="stt h">💚</span>':''}<div class="hb"><span style="width:${x.hp/x.mhp*100}%"></span></div><small class="hpn">${x.hp}/${x.mhp}</small><div class="ug${x.g>=100?' full':''}"><span style="width:${x.g}%"></span></div></div>`}).join('');
   if(!h||B.over){$('#ac').innerHTML='';return}
   const ac=acts(h),ul=ac.find(a=>a.ult),sk=ac.filter(a=>!a.ult),av=h.c.image?`<i style="background:url('${esc(h.c.image)}') center/cover"></i>`:`<i>${esc(h.c.emoji)}</i>`;
-  $('#ac').innerHTML=`<div class="cl"><div class="who">${av}<div><b>${esc(h.c.name)}</b><small>${B.lock?'Wait...':'Choose an action'}</small></div></div><div class="cg">${sk.map(a=>`<button class="ab" ${a.off||B.lock?'disabled':''} onclick="act('${a.k}',${a.j??0})"><i>${a.i}</i><b>${esc(a.n)}</b><small>${esc(a.t||'Basic')}</small>${a.k=='skill'&&h.cd[a.j]>0?`<span class="cdn">${h.cd[a.j]}</span>`:''}</button>`).join('')}</div></div>
-    <button class="ult${ul&&h.g>=100?' rdy':''}" style="--g:${h.g}" ${!ul||h.g<100||B.lock?'disabled':''} onclick="act('ult',0)"><span class="ugr"></span><b>${ul?esc(ul.n):'No ultimate'}</b><small>${ul?(h.g>=100?'READY':h.g+'%'):'-'}</small></button>`;
+  $('#ac').innerHTML=`<div class="cl"><div class="who">${av}<div><b>${esc(h.c.name)}</b><small>${B.lock?(B.enemyTurn?'Enemy turn':'Acting...'):'Choose an action'}</small></div></div><div class="cg">${sk.map(a=>`<button class="ab" ${a.off||B.lock?'disabled':''} onclick="act('${a.k}',${a.j??0})"><i>${a.i}</i><b>${esc(a.n)}</b><small>${esc(a.l)}</small>${a.k=='skill'&&h.cd[a.j]>0?`<span class="cdn">${h.cd[a.j]}</span>`:''}</button>`).join('')}</div></div>
+    <button class="ubtn${ul&&h.g>=100?' rdy':''}" style="--g:${h.g}" ${!ul||h.g<100||B.lock?'disabled':''} onclick="act('ult',0)"><span class="ugr"></span><b>${ul?esc(ul.n):'No ultimate'}</b><small>${ul?(h.g>=100?'READY':h.g+'%'):'-'}</small></button>`;
 }
-function startTurn(){B.enemyTurn=0;B.lock=0;const h=B.team[B.i];say2('Tap an enemy to change your target.');bdraw();banner(h.c.name,'YOUR TURN');if(B.auto)tm(autoStep,1000/B.sp)}
+function startTurn(){B.enemyTurn=0;B.acting=-1;B.lock=0;say2('Tap an enemy to change your target.');bdraw();if(B.auto)tm(autoStep,1000/B.sp)}
 function startBattle(f){
   const t=getTeam();if(!t.length)return alert('You need at least one hero. Summon some first!');
   const w=wOf(f),k=wf(f),boss=k%5==0,en=floorEn(f);closeG();
@@ -1067,30 +1114,52 @@ async function act(k,j){
   if(B.lock||B.over)return;
   const h=B.team[B.i],a=acts(h).find(x=>x.k==k&&(k!='skill'||x.j==j));if(!a||a.off)return;
   B.lock=1;B.chain++;bdraw();
-  const atk=h.atk*(1+.08*pcount())*(1+.15*(B.chain-1)),al=()=>B.en.map((e,i)=>i).filter(i=>B.en[i].hp>0),ti=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:al()[0];
-  const dmgTo=(i,m,u)=>{const e=B.en[i],el=mulEl(h.c.element,e.el),cr=Math.random()<.1,d=Math.round(atk*m*el*(e.brk?1.5:1)*(.9+Math.random()*.2)*(cr?1.5:1));let pre=(cr?'CRIT ':'')+(el>1?'▲ ':el<1?'▼ ':'');
-    e.hp=Math.max(0,e.hp-d);h.dmg+=d;
-    if(el>1&&e.gd>0&&e.hp>0){e.gd-=u?2:1;if(e.gd<=0){e.gd=0;e.brk=1;e.stun=1;pre='BREAK! '}}
+  const P=a.P,atk=h.atk*tb()*(1+.15*(B.chain-1)),al=()=>B.en.map((e,i)=>i).filter(i=>B.en[i].hp>0),ti=(B.en[B.t]&&B.en[B.t].hp>0)?B.t:al()[0];
+  const heal=(x,v)=>{x.hp=Math.min(x.mhp,x.hp+Math.round(v))};
+  const dmgTo=(i,m,u)=>{const e=B.en[i];if(e.hp<=0)return;const el=mulEl(h.c.element,e.el),cr=Math.random()<h.crit,ex=P.exec&&e.hp<e.mhp*.35?1.67:1,d=Math.round(atk*m*ex*el*(e.brk?1.5:1)*(.9+Math.random()*.2)*(cr?1.5:1));let pre=(cr?'CRIT ':'')+(el>1?'▲ ':el<1?'▼ ':'');
+    e.hp=Math.max(0,e.hp-d);h.dmg+=d;if(h.ls)heal(h,d*h.ls);if(P.drain)heal(h,d*P.drain);
+    const gd=(el>1?(u?2:1):0)+(P.brk||0);if(gd&&e.gd>0&&e.hp>0){e.gd=Math.max(0,e.gd-gd);if(!e.gd){e.brk=1;e.stun=1;pre='BREAK! '}}
+    if(P.dot&&e.hp>0)e.burn={t:3,v:Math.max(1,Math.round(atk*.25))};
     bdraw();hurt('#e'+i,d,0,pre)};
   if(a.ult){h.g=0;say2(`${h.c.name}: ${a.n}!`);bdraw();playScene(h.c.ability,h.c);await sceneEnd();al().forEach(i=>dmgTo(i,2.4,1));shk();gflash()}
-  else if(a.fx=='heal'){const hl=Math.round(atk*.4);B.team.forEach(x=>{if(x.hp>0){x.hp=Math.min(x.mhp,x.hp+hl);x.sh=(x.sh||0)+hl}});h.g=Math.min(100,h.g+25);bdraw();B.team.forEach((x,i)=>{if(x.hp>0)hurt('#h'+i,hl,1)});say2(`${h.c.name} uses ${a.n}. The team heals and gains a shield.`)}
-  else{h.g=Math.min(100,h.g+(a.k=='strike'?20:30));say2(a.k=='strike'?`${h.c.name} strikes!`:`${h.c.name} uses ${a.n}!`);
-    if(a.fx=='aoe')al().forEach(i=>dmgTo(i,a.m));else{dmgTo(ti,a.m);if(a.fx=='stun'&&B.en[ti].hp>0&&!B.en[ti].stun){B.en[ti].stun=1;say2(`${B.en[ti].n} is stunned!`)}}}
-  if(a.k=='skill')h.cd[a.j]=a.cd;
+  else if(P.c=='Support'){
+    h.g=Math.min(100,h.g+25+h.ug);
+    const al2=B.team.map((x,i)=>i).filter(i=>B.team[i].hp>0),wk=al2.slice().sort((p,q)=>B.team[p].hp/B.team[p].mhp-B.team[q].hp/B.team[q].mhp)[0],fx=[];
+    const hl=(i,v)=>{heal(B.team[i],v);fx.push([i,'+'+Math.round(v)])},sh=(i,v)=>{B.team[i].sh+=Math.round(v);fx.push([i,'🛡️+'+Math.round(v)])};
+    if(P.heal)al2.forEach(i=>hl(i,atk*P.heal));
+    if(P.mend)hl(wk,atk*P.mend);
+    if(P.shield)al2.forEach(i=>sh(i,atk*P.shield));
+    if(P.ward)sh(wk,atk*P.ward);
+    if(P.buff){B.buff={v:P.buff,t:2};fx.push([B.i,'TEAM ATK UP'])}
+    if(P.surge)al2.forEach(i=>{B.team[i].g=Math.min(100,B.team[i].g+P.surge);fx.push([i,'+'+P.surge+'% CHARGE'])});
+    if(P.regen)al2.forEach(i=>{B.team[i].hot={v:Math.round(atk*P.regen),t:3};fx.push([i,'REGEN'])});
+    if(P.revive){const q=B.team.findIndex(x=>x.hp<=0);if(q>=0){B.team[q].hp=Math.round(B.team[q].mhp*P.revive);fx.push([q,'REVIVED'])}}
+    bdraw();fx.forEach(([i,t])=>fxAt(...ctr('#h'+i),5,t));tone(660,0,.3,'sine',.1,990);say2(`${h.c.name} uses ${a.n}!`)}
+  else{h.g=Math.min(100,h.g+(a.k=='strike'?20:30)+h.ug);say2(a.k=='strike'?`${h.c.name} strikes!`:`${h.c.name} uses ${a.n}!`);
+    const tg=P.aoe?al():[ti],hits=P.hits||1;
+    for(let q=0;q<hits;q++){for(const i of tg)dmgTo(i,P.m||1);if(hits>1)await wait(300)}
+    if(P.stun&&B.en[ti].hp>0){const e=B.en[ti];if(e.boss)say2(`${e.n} is immune to stun!`);else{e.stun=1;say2(`${e.n} is stunned!`)}}}
+  if(a.k=='skill')h.cd[a.j]=P.cd;
   bdraw();await wait(800);
   if(!B.en.some(e=>e.hp>0))return bend(1);
   let n=B.i+1;while(n<B.team.length&&B.team[n].hp<=0)n++;
   if(n<B.team.length)B.i=n;
-  else{B.enemyTurn=1;say2('The enemies strike back!');bdraw();banner('ENEMY TURN','BRACE YOURSELF',1);await wait(1000);
-    const hitH=(e,q,m)=>{const x=B.team[q];let d=Math.round(e.atk*m*(.9+Math.random()*.2)),ab=Math.min(x.sh||0,d);x.sh=(x.sh||0)-ab;d-=ab;x.hp=Math.max(0,x.hp-d);x.g=Math.min(100,x.g+10);bdraw();hurt('#h'+q,d)};
-    for(const e of B.en){if(e.hp<=0)continue;
+  else{B.enemyTurn=1;say2('The enemies strike back!');bdraw();await wait(900);
+    const hitH=(e,q,m)=>{const x=B.team[q];let d=Math.round(e.atk*m*(.9+Math.random()*.2)*(1-x.dr)),ab=Math.min(x.sh,d);x.sh-=ab;d-=ab;x.hp=Math.max(0,x.hp-d);x.g=Math.min(100,x.g+10);bdraw();hurt('#h'+q,d);
+      if(x.ctr&&x.hp>0&&e.hp>0&&Math.random()<x.ctr){const c2=Math.round(x.atk*.6);e.hp=Math.max(0,e.hp-c2);x.dmg+=c2;bdraw();hurt('#e'+B.en.indexOf(e),c2,0,'COUNTER ')}};
+    for(const e of B.en){if(e.hp<=0)continue;const ei=B.en.indexOf(e);B.acting=ei;
+      if(e.burn){const d=e.burn.v;e.hp=Math.max(0,e.hp-d);if(--e.burn.t<=0)e.burn=null;bdraw();hurt('#e'+ei,d,0,'BURN ');await wait(550);if(e.hp<=0)continue}
       if(e.stun){e.stun=0;if(e.brk){e.brk=0;e.gd=e.mg}say2(`${e.n} is stunned and loses its turn.`);bdraw();await wait(650);continue}
       if(e.boss&&!e.rage&&e.hp<e.mhp/2){e.rage=1;e.atk=Math.round(e.atk*1.25);say2(`${e.n} is enraged!`);shk();gflash();bdraw();await wait(800)}
       const it=intent(e),al2=B.team.map((x,q)=>q).filter(q=>B.team[q].hp>0);if(!al2.length)break;
-      say2(`${e.n} uses ${it=='heavy'?'a heavy blow':it=='aoe'?'a sweeping attack':'an attack'}!`);
+      say2(`${e.n} uses ${it=='heavy'?'a heavy blow':it=='aoe'?'a sweeping attack':'an attack'}!`);bdraw();await wait(350);
       if(it=='aoe')al2.forEach(q=>hitH(e,q,.9));else hitH(e,al2[Math.random()*al2.length|0],it=='heavy'?1.8:1);
-      await wait(700)}
+      await wait(650)}
+    B.acting=-1;
+    if(!B.en.some(e=>e.hp>0))return bend(1);
     if(!B.team.some(x=>x.hp>0))return bend(0);
+    B.team.forEach((x,i)=>{if(x.hp<=0)return;const r=Math.round(x.mhp*x.rg)+(x.hot?x.hot.v:0);if(x.hot&&--x.hot.t<=0)x.hot=null;if(r){heal(x,r);bdraw();fxAt(...ctr('#h'+i),4,'+'+r)}});
+    if(B.buff&&--B.buff.t<=0)B.buff=null;
     B.round++;B.chain=0;B.team.forEach(x=>x.cd=x.cd.map(v=>Math.max(0,v-1)));B.i=B.team.findIndex(x=>x.hp>0)}
   startTurn();
 }
@@ -1153,8 +1222,8 @@ function cardForm(id){
       ${f('kanji','Big background text (leave empty to use the name)')}${f('origin','Series or school (shown at the top)')}${f('quote','Quote')}
       ${T('lore','Life story',5)}${T('dossier','Dossier',6)}<p class="hint">Dossier: a line starting with # is a heading, every other line is Label: Value</p>
       <label>Gallery images</label><div class="gals" id="gal"></div><div class="up gup"><input type="file" accept="image/*" onchange="galAdd(this)"><span>＋ Add gallery image</span></div></details>
-    <details class="es" ${(c.skills||[]).length?'open':''}><summary>Basic abilities (up to 3)</summary><p class="hint">Leave a name empty to skip that slot.</p>
-      ${[0,1,2].map(j=>{const s=(c.skills||[])[j]||{};return `<div class="skr"><b>Ability ${j+1}</b><div class="row"><input id="s${j}_icon" maxlength="4" placeholder="Icon" value="${esc(s.icon||'')}" style="max-width:80px"><input id="s${j}_name" placeholder="Name" value="${esc(s.name||'')}"></div><select id="s${j}_type">${['Active','Passive','Support'].map(t=>`<option ${t==(s.type||'Active')?'selected':''}>${t}</option>`).join('')}</select><textarea id="s${j}_desc" rows="2" placeholder="Description">${esc(s.desc||'')}</textarea></div>`}).join('')}</details>
+    <details class="es" ${(c.skills||[]).length?'open':''}><summary>Basic abilities (up to 3)</summary><p class="hint">Leave a name empty to skip a slot. Pick what each ability does: Active hits enemies, Support helps allies, Passive is always on.</p>
+      ${[0,1,2].map(j=>{const s=(c.skills||[])[j]||{};return `<div class="skr"><b>Ability ${j+1}</b><div class="row"><input id="s${j}_icon" maxlength="4" placeholder="Icon" value="${esc(s.icon||'')}" style="max-width:80px"><input id="s${j}_name" placeholder="Name" value="${esc(s.name||'')}"></div><select id="s${j}_fx">${fxOpts((skillList(c)[j]||{}).k)}</select><textarea id="s${j}_desc" rows="2" placeholder="Description">${esc(s.desc||'')}</textarea></div>`}).join('')}</details>
     <details class="es" ${c.ability?'open':''}><summary>✦ Ultimate (cutscene)</summary><p class="hint">Type an ultimate name to give this card an ultimate. Leave the name empty for none.</p>
       ${A('name','Ultimate name (main title)')}${A('sub','Subtitle or quote')}<label>Description<textarea id="a_desc" rows="2">${esc(a.desc||'')}</textarea></label>
       <label>Cutscene effect<select id="a_fx">${opts(FXN,a.fx)}</select></label>
